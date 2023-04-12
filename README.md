@@ -1,6 +1,6 @@
 # antimeridian
 
-A Python package to correct [shapely](https://shapely.readthedocs.io/en/stable/manual.html) polygons that cross the antimeridian.
+A Python package to correct polygons that cross the antimeridian.
 
 ## Usage
 
@@ -12,15 +12,17 @@ Then, in your code:
 
 ```python
 import antimeridian
+
+# If you have a shapely polygon, returns a polygon or a multi-polygon.
 fixed = antimeridian.fix_polygon(polygon)
 
-# If you have a dictionary named `shape`
-fixed = antimeridian.fix_shape(shape)  # returns a GeoJSON-like `Dict[str, Any]`
+# If you have a dictionary or something with a __geo_interface__, returns a GeoJSON-like `Dict[str, Any]`
+fixed = antimeridian.fix_shape(shape)  
 ```
 
 ## Background
 
-#### What's the antimeridian?
+### What's the antimeridian?
 
 Also known as the [180th meridian](https://en.wikipedia.org/wiki/180th_meridian), the antimeridian is the line of longitude on the opposite side of the world from the prime meridian.
 It can be either 180° east or west.
