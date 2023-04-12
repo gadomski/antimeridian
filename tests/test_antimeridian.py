@@ -61,3 +61,17 @@ def test_close_polygon_with_interior_fails() -> None:
     )
     with pytest.raises(ValueError):
         antimeridian.fix_polygon(polygon)
+
+
+def test_fix_shape() -> None:
+    shape = {
+        "type": "Polygon",
+        "coordinates": [[[100, 40], [100, 50], [90, 50], [90, 40], [100, 40]]],
+    }
+    antimeridian.fix_shape(shape)
+
+
+def test_fix_not_a_polygon() -> None:
+    shape = {"type": "Point", "coordinates": [100, 40]}
+    with pytest.raises(ValueError):
+        antimeridian.fix_shape(shape)

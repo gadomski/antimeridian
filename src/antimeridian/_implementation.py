@@ -1,10 +1,23 @@
 from __future__ import annotations
 
-from typing import List, Tuple, Union
+from typing import Any, Dict, List, Protocol, Tuple, Union, cast
 
+import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
 
 Point = Tuple[float, float]
+
+
+class GeoInterface(Protocol):
+    def __geo_interface__(self) -> Dict[str, Any]:
+        ...
+
+
+def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
+    polygon = shapely.geometry.shape(shape)
+    if not isinstance(polygon, Polygon):
+        raise ValueError(f"shape is not a polygon: {polygon.geom_type}")
+    return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(polygon)))
 
 
 def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
