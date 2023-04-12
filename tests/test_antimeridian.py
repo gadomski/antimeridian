@@ -49,7 +49,7 @@ def inputs_and_outputs(
 
 @pytest.mark.parametrize(("input", "output"), inputs_and_outputs(NAMES), ids=NAMES)
 def test_close_polygon(input: Polygon, output: Polygon | MultiPolygon) -> None:
-    closed = antimeridian.close_polygon(input).normalize()
+    closed = antimeridian.fix_polygon(input).normalize()
     assert closed.is_valid
     assert closed == output.normalize()
 
@@ -60,4 +60,4 @@ def test_close_polygon_with_interior_fails() -> None:
         holes=[((10, 10), (20, 10), (20, 20), (10, 20), (10, 10))],
     )
     with pytest.raises(ValueError):
-        antimeridian.close_polygon(polygon)
+        antimeridian.fix_polygon(polygon)

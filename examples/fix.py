@@ -1,9 +1,8 @@
 import json
 import sys
 
-import shapely.geometry
-
 import antimeridian
+import shapely.geometry
 
 with open(sys.argv[1]) as f:
     data = json.load(f)
