@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Protocol, Tuple, Union, cast
+from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
@@ -47,6 +47,7 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
     else:
         raise ValueError("geometry does not start and end with the same point")
 
+    segments = extend_over_poles(segments)
     polygons = build_polygons(segments)
     assert polygons
     if len(polygons) > 1:
@@ -71,6 +72,31 @@ def crossing_latitude(start: Point, end: Point) -> float:
         )
 
 
+def extend_over_poles(segments: List[List[Point]]) -> List[List[Point]]:
+    left_starts = list()
+    right_starts = list()
+    left_ends = list()
+    right_ends = list()
+    for i, segment in enumerate(segments):
+        if segment[0][0] == -180:
+            left_starts.append((i, segment[0][1]))
+        else:
+            right_starts.append((i, segment[0][1]))
+        if segment[-1][0] == -180:
+            left_ends.append((i, segment[-1][1]))
+        else:
+            right_ends.append((i, segment[-1][1]))
+    left_ends.sort(key=lambda v: v[1])
+    left_starts.sort(key=lambda v: v[1])
+    right_ends.sort(key=lambda v: v[1], reverse=True)
+    right_starts.sort(key=lambda v: v[1], reverse=True)
+    if left_ends and (not left_starts or left_ends[0][1] < left_starts[0][1]):
+        segments[left_ends[0][0]] += [(-180, -90), (180, -90)]
+    if right_ends and (not right_starts or right_ends[0][1] > right_starts[0][1]):
+        segments[right_ends[0][0]] += [(180, 90), (-180, 90)]
+    return segments
+
+
 def build_polygons(
     segments: List[List[Point]],
 ) -> List[Polygon]:
@@ -80,7 +106,14 @@ def build_polygons(
     right = (
         segment[-1][0] == 180
     )  # all segments should start and end at abs(180) longitude
-    candidates = list()  # list of (index, latitude, is_start)
+    candidates: List[
+        Tuple[Optional[int], float, bool]
+    ] = list()  # list of (index, latitude, is_start)
+    if segment[0][0] == segment[-1][0] and (
+        (right and segment[0][1] > segment[-1][1])
+        or (not right and segment[0][1] < segment[-1][1])
+    ):
+        candidates.append((None, segment[0][1], True))
     for i, s in enumerate(segments):
         if s[0][0] == segment[-1][0]:
             if (right and s[0][1] > segment[-1][1]) or (
@@ -99,54 +132,10 @@ def build_polygons(
         index = None
 
     if index is not None:
-        # Join the polygons then recurse.
         segment = segments.pop(index) + segment
         segments.append(segment)
         return build_polygons(segments)
-
-    if segment[0][0] == segment[-1][0]:
-        if (right and segment[0][1] > segment[-1][1]) or (
-            not right and segment[0][1] < segment[-1][1]
-        ):
-            # This is a closed section that doesn't touch a pole, so we can let
-            # shapely close the polygon itself.
-            polygons = build_polygons(segments)
-            polygons.append(Polygon(segment))
-            return polygons
-
-        # This is a "loop" on the antimeridian that needs to extend up to
-        # the pole. Add the pole points, then recurse with the new segment
-        # next up. We insert this segment at the front so we process it next
-        # again -- the start might not be linked up right, so we need to ensure
-        # we use its new end right away. AKA its hacky.
-        elif segment[-1][0] == 180:
-            # North pole
-            segment.append((180, 90))
-            segment.append((-180, 90))
-            segments.insert(0, segment)
-            return build_polygons(segments)
-        else:
-            # South pole
-            segment.append((-180, -90))
-            segment.append((180, -90))
-            segments.insert(0, segment)
-            return build_polygons(segments)
-
-    # The segment goes all the way around the world (-180 to 180) and encloses a
-    # pole.
     else:
-        # Build the rest of the polygons
         polygons = build_polygons(segments)
-
-        if segment[-1][0] == 180:
-            # North pole
-            segment.append((180, 90))
-            segment.append((-180, 90))
-            polygons.append(Polygon(segment))
-        else:
-            # South pole
-            segment.append((-180, -90))
-            segment.append((180, -90))
-            polygons.append(Polygon(segment))
-
+        polygons.append(Polygon(segment))
         return polygons

@@ -15,6 +15,7 @@ NAMES = [
     "both-poles",
     "complex-split",
     "crossing-latitude",
+    "extra-crossing",
     "north-pole",
     "simple",
     "south-pole",
