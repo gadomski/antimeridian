@@ -10,8 +10,6 @@ Point = Tuple[float, float]
 def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
     if bool(polygon.interiors):
         raise ValueError("cannot fix a polygon with interior rings")
-    # TODO check for validity so we don't correct already-corrected
-    # TODO test for 3D points
     coords = polygon.exterior.coords
     segment = []
     segments = []
@@ -45,7 +43,6 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
 
 
 def crossing_latitude(start: Point, end: Point) -> float:
-    # TODO test this
     latitude_delta = end[1] - start[1]
     if end[0] > 0:
         return round(
