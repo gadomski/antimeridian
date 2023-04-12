@@ -2,21 +2,23 @@ import json
 from pathlib import Path
 from typing import List, Tuple
 
-import antimeridian
 import pytest
 import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
+
+import antimeridian
 
 TEST_DATA_DIRECTORY = Path(__file__).parent / "data"
 INPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "input"
 OUTPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "output"
 NAMES = [
-    "simple",
-    "north-pole",
-    "south-pole",
-    "split",
+    "both-poles",
     "complex-split",
     "crossing-latitude",
+    "north-pole",
+    "simple",
+    "south-pole",
+    "split",
 ]
 
 

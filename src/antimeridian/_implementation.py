@@ -32,6 +32,7 @@ def close_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
         return Polygon(segment)
     elif coords[-1] == segments[0][0]:
         segments[0] = segment + segments[0]
+        segment = []
     else:
         raise ValueError("geometry does not start and end with the same point")
 
@@ -93,21 +94,49 @@ def build_polygons(
         segments.append(segment)
         return build_polygons(segments)
 
-    # This segment doesn't need any more polygons, so we can build that list
-    # now.
-    polygons = build_polygons(segments)
     if segment[0][0] == segment[-1][0]:
-        # We can let shapely close the polygon itself
-        polygons.append(Polygon(segment))
-    elif segment[-1][0] == 180:
-        # North pole
-        segment.append((180, 90))
-        segment.append((-180, 90))
-        polygons.append(Polygon(segment))
-    else:
-        # South pole
-        segment.append((-180, -90))
-        segment.append((180, -90))
-        polygons.append(Polygon(segment))
+        if (right and segment[0][1] > segment[-1][1]) or (
+            not right and segment[0][1] < segment[-1][1]
+        ):
+            # This is a closed section that doesn't touch a pole, so we can let
+            # shapely close the polygon itself.
+            polygons = build_polygons(segments)
+            polygons.append(Polygon(segment))
+            return polygons
 
-    return polygons
+        # This is a "loop" on the antimeridian that needs to extend up to
+        # the pole. Add the pole points, then recurse with the new segment
+        # next up. We insert this segment at the front so we process it next
+        # again -- the start might not be linked up right, so we need to ensure
+        # we use its new end right away. AKA its hacky.
+        elif segment[-1][0] == 180:
+            # North pole
+            segment.append((180, 90))
+            segment.append((-180, 90))
+            segments.insert(0, segment)
+            return build_polygons(segments)
+        else:
+            # South pole
+            segment.append((-180, -90))
+            segment.append((180, -90))
+            segments.insert(0, segment)
+            return build_polygons(segments)
+
+    # The segment goes all the way around the world (-180 to 180) and encloses a
+    # pole.
+    else:
+        # Build the rest of the polygons
+        polygons = build_polygons(segments)
+
+        if segment[-1][0] == 180:
+            # North pole
+            segment.append((180, 90))
+            segment.append((-180, 90))
+            polygons.append(Polygon(segment))
+        else:
+            # South pole
+            segment.append((-180, -90))
+            segment.append((180, -90))
+            polygons.append(Polygon(segment))
+
+        return polygons
