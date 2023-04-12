@@ -12,7 +12,7 @@ Then, in your code:
 
 ```python
 import antimeridian
-fixed = antimeridian.close_polygon(polygon)
+fixed = antimeridian.fix_polygon(polygon)
 ```
 
 ## Background
