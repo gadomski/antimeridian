@@ -28,9 +28,9 @@ It can be either 180° east or west.
 
 The GeoJSON specification [recommends cutting geometries at the antimeridian](https://www.rfc-editor.org/rfc/rfc7946#section-3.1.9).
 Many real-world geometries, however, don't follow this recommendation.
-It's very common to, for example, create a geometry in a projected coordinate system, then reproject that geometry to WGS84 for its GeoJSON representation.
+It's very common to create a geometry in a projected coordinate system, then reproject that geometry to WGS84 to use it in GeoJSON.
 The reprojection process usually does not split the output geometry across the antimeridian, leading to invalid geometries.
-Here's a simple example, taken from landsat:
+Here's a simple example, taken from a real-world [Landsat](https://landsat.gsfc.nasa.gov/) [STAC](https://stacspec.org) item:
 
 ```json
 {
@@ -84,3 +84,15 @@ In the before picture, you can see the strange artifacts created by the invalid 
 After correction, it's more clear that the data covers both poles:
 
 ![Sentinel 5p after](./img/sentinel-5p-after.png)
+
+Our library also handles splitting complex polygons that cross the antimeridian:
+
+![Complex split](./img/complex-split.png)
+
+## Contributing
+
+Github [issues](https://github.com/gadomski/antimeridian/issues) and [pull requests](https://github.com/gadomski/antimeridian/pulls), please and thank you!
+
+## License
+
+[Apache-2.0](./LICENSE)
