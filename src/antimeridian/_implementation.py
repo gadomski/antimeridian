@@ -46,8 +46,18 @@ def close_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
 def crossing_latitude(start: Point, end: Point) -> float:
     # TODO test this
     latitude_delta = end[1] - start[1]
-    longitude_delta = end[0] + 360 - start[0]
-    return start[1] + (180 - abs(start[0])) * latitude_delta / longitude_delta
+    if end[0] > 0:
+        return round(
+            start[1]
+            + (180.0 - start[0]) * latitude_delta / (end[0] + 360.0 - start[0]),
+            7,
+        )
+    else:
+        return round(
+            start[1]
+            + (start[0] + 180.0) * latitude_delta / (start[0] + 360.0 - end[0]),
+            7,
+        )
 
 
 def build_polygons(
