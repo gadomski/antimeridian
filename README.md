@@ -71,7 +71,7 @@ As you can see, a tiny corner of the polygon crosses the antimeridian, leading t
 
 ![Landsat problem](./img/landsat-problem.png)
 
-The issue also arises when geometries cross over the pole.
+The issue also arises when geometries cross over a pole.
 
 ### How do we fix it?
 
