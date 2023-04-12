@@ -13,6 +13,9 @@ Then, in your code:
 ```python
 import antimeridian
 fixed = antimeridian.fix_polygon(polygon)
+
+# If you have a dictionary named `shape`
+fixed = antimeridian.fix_shape(shape)  # returns a GeoJSON-like `Dict[str, Any]`
 ```
 
 ## Background
