@@ -16,9 +16,11 @@ from antimeridian import GeoInterface
         "crossing-latitude",
         "extra-crossing",
         "north-pole",
+        "one-hole",
         "simple",
         "south-pole",
         "split",
+        "two-holes",
     ],
 )
 def test_fix_polygon(
@@ -33,15 +35,6 @@ def test_fix_polygon(
     fixed = antimeridian.fix_polygon(input).normalize()
     assert fixed.is_valid
     assert fixed == output.normalize()
-
-
-def test_fix_polygon_with_interior_fails() -> None:
-    polygon = Polygon(
-        shell=((0, 0), (30, 0), (30, 30), (0, 30), (0, 0)),
-        holes=[((10, 10), (20, 10), (20, 20), (10, 20), (10, 10))],
-    )
-    with pytest.raises(ValueError):
-        antimeridian.fix_polygon(polygon)
 
 
 def test_fix_shape(read_input: Callable[[str], GeoInterface]) -> None:

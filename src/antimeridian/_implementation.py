@@ -39,9 +39,30 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
 
 
 def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
-    if bool(polygon.interiors):
-        raise ValueError("cannot fix a polygon with interior rings")
-    coords = polygon.exterior.coords
+    segments = segment(polygon.exterior.coords)
+    if not segments:
+        return [polygon]
+    else:
+        interiors = []
+        for interior in polygon.interiors:
+            interior_segments = segment(interior.coords)
+            if interior_segments:
+                segments.extend(interior_segments)
+            else:
+                interiors.append(interior)
+    segments = extend_over_poles(segments)
+    polygons = build_polygons(segments)
+    assert polygons
+    for interior in interiors:
+        for i, polygon in enumerate(polygons):
+            if polygon.contains(interior):
+                interiors = list(polygon.interiors)
+                interiors.append(interior)
+                polygons[i] = Polygon(polygon.exterior, interiors)
+    return polygons
+
+
+def segment(coords: List[Point]) -> List[List[Point]]:
     segment = []
     segments = []
     for start, end in zip(coords, coords[1:]):
@@ -58,17 +79,11 @@ def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
             segment = [(-180, latitude)]
     if not segments:
         # No antimeridian crossings
-        return [Polygon(segment)]
+        return []
     elif coords[-1] == segments[0][0]:
+        # Join polygons
         segments[0] = segment + segments[0]
-        segment = []
-    else:
-        raise ValueError("geometry does not start and end with the same point")
-
-    segments = extend_over_poles(segments)
-    polygons = build_polygons(segments)
-    assert polygons
-    return polygons
+    return segments
 
 
 def crossing_latitude(start: Point, end: Point) -> float:
