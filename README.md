@@ -4,7 +4,7 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](./LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](./CODE_OF_CONDUCT)
 
-A Python package to correct polygons that cross the antimeridian.
+A Python package to correct GeoJSON shapes that cross the antimeridian.
 
 ## Usage
 
@@ -16,12 +16,7 @@ Then, in your code:
 
 ```python
 import antimeridian
-
-# If you have a shapely polygon, returns a polygon or a multi-polygon.
-fixed = antimeridian.fix_polygon(polygon)
-
-# If you have a dictionary or something with a __geo_interface__, returns a GeoJSON-like `Dict[str, Any]`
-fixed = antimeridian.fix_shape(shape)
+fixed = antimeridian.fix_geojson(geojson)
 ```
 
 ## Background
