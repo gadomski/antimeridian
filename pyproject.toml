@@ -35,6 +35,7 @@ dev = [
 fix-antimeridian = "antimeridian:main"
 
 [tool.setuptools_scm]
+local_scheme = "no-local-version"
 
 [tool.mypy]
 strict = true
