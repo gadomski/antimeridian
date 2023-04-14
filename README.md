@@ -12,7 +12,7 @@ A Python package to correct GeoJSON shapes that cross the antimeridian.
 ## Usage
 
 ```shell
-pip install git+https://github.com/gadomski/antimeridian
+pip install antimeridian
 ```
 
 Then, in your code:
