@@ -20,16 +20,14 @@ def main() -> int:
     import fileinput
     import json
     import sys
-    from pathlib import Path
 
-    name = Path(sys.argv[0]).stem
     if len(sys.argv) > 2:
         print("ERROR: more than one argument provided")
-        print(f"USAGE: {name} [filename]")
+        print("USAGE: fix-antimeridian [filename]")
         return 1
     elif len(sys.argv) == 1 or sys.argv[1] in ("-h", "--help"):
         print(
-            f"""Fixes antimeridian issues in GeoJSON geometries.
+            """Fixes antimeridian issues in GeoJSON geometries.
 
 The output geometry will be printed to standard output. No formatting options
 are provided; use jq (https://stedolan.github.io/jq/) or another, similar tool
@@ -42,17 +40,17 @@ underlying algorithm.
 
 Reads GeoJSON from a file and redirect it into a new file:
 
-    {name} polygon.json > fixed.json
+    fix-antimeridian polygon.json > fixed.json
 
 Reads GeoJSON from standard input and prints it to standard output:
 
-    {name} -
+    fix-antimeridian -
 
 Prints this help:
 
-    {name}
-    {name} -h
-    {name} --help
+    fix-antimeridian
+    fix-antimeridian -h
+    fix-antimeridian --help
 """
         )
         return 0
