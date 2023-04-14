@@ -25,9 +25,11 @@ dev = [
     "black~=23.3",
     "mypy~=1.2",
     "pre-commit~=3.2",
-    "pydata-sphinx-theme~=0.13",
     "pytest~=7.3",
     "ruff==0.0.261",
+]
+docs = [
+    "pydata-sphinx-theme~=0.13",
     "sphinx~=6.1",
 ]
 

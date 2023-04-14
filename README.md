@@ -108,10 +108,10 @@ Clone and install in editable mode with the development optional dependencies:
 
 ```shell
 git clone https://github.com/gadomski/antimeridian
-pip install -e '.[dev]'
+pip install -e '.[dev,docs]'
 ```
 
-We use [pytest](https://docs.pytest.org) for test:
+We use [pytest](https://docs.pytest.org) for tests:
 
 ```shell
 pytest
