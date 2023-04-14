@@ -4,5 +4,6 @@ requires = ["setuptools ~= 58.0", "cython ~= 0.29.0"]
 [tool.mypy]
 strict = true
 
-[tool.ruff.isort]
-profile = "black"
+[[tool.mypy.overrides]]
+module = ["shapely", "shapely.geometry"]
+ignore_missing_imports = true

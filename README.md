@@ -21,7 +21,7 @@ import antimeridian
 fixed = antimeridian.fix_polygon(polygon)
 
 # If you have a dictionary or something with a __geo_interface__, returns a GeoJSON-like `Dict[str, Any]`
-fixed = antimeridian.fix_shape(shape)  
+fixed = antimeridian.fix_shape(shape)
 ```
 
 ## Background

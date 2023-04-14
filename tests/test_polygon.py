@@ -1,5 +1,3 @@
-from typing import Callable
-
 import pytest
 import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
