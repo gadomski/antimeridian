@@ -67,12 +67,12 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     segments = []
     for start, end in zip(coords, coords[1:]):
         segment.append(start)
-        if end[0] - start[0] > 180:  # left
+        if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left
             latitude = crossing_latitude(start, end)
             segment.append((-180, latitude))
             segments.append(segment)
             segment = [(180, latitude)]
-        elif start[0] - end[0] > 180:  # right
+        elif (start[0] - end[0] > 180) and (start[0] - end[0] != 360):  # right
             latitude = crossing_latitude(end, start)
             segment.append((180, latitude))
             segments.append(segment)

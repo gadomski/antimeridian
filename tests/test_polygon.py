@@ -5,7 +5,8 @@ import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
 
 import antimeridian
-from antimeridian import GeoInterface
+
+from .conftest import Reader
 
 
 @pytest.mark.parametrize(
@@ -15,6 +16,7 @@ from antimeridian import GeoInterface
         "complex-split",
         "crossing-latitude",
         "extra-crossing",
+        "latitude-band",
         "north-pole",
         "one-hole",
         "simple",
@@ -25,8 +27,8 @@ from antimeridian import GeoInterface
 )
 def test_fix_polygon(
     name: str,
-    read_input: Callable[[str], GeoInterface],
-    read_output: Callable[[str], GeoInterface],
+    read_input: Reader,
+    read_output: Reader,
 ) -> None:
     input = read_input(name)
     assert isinstance(input, Polygon)
@@ -37,7 +39,18 @@ def test_fix_polygon(
     assert fixed == output.normalize()
 
 
-def test_fix_shape(read_input: Callable[[str], GeoInterface]) -> None:
+def test_fix_shape(read_input: Reader) -> None:
     # Just a smoke test
     input = shapely.geometry.mapping(read_input("simple"))
     antimeridian.fix_shape(input)
+
+
+def test_double_fix(
+    read_input: Reader,
+    read_output: Reader,
+) -> None:
+    input = read_input("north-pole")
+    output = read_output("north-pole")
+    fixed = antimeridian.fix_polygon(input)
+    fixed = antimeridian.fix_polygon(input)
+    assert fixed.normalize() == output.normalize()
