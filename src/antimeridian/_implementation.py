@@ -13,6 +13,28 @@ class GeoInterface(Protocol):
         ...
 
 
+def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
+    type_ = geojson.get("type", None)
+    if type_ is None:
+        raise ValueError("no 'type' field found in GeoJSON")
+    elif type_ == "Feature":
+        geometry = geojson.get("geometry", None)
+        if geometry is None:
+            raise ValueError("no 'geometry' field found in GeoJSON Feature")
+        geojson["geometry"] = fix_shape(geometry)
+        return geojson
+    elif type_ == "FeatureCollection":
+        features = geojson.get("features", None)
+        if features is None:
+            raise ValueError("no 'features' field found in GeoJSON FeatureCollection")
+        for i, feature in enumerate(features):
+            features[i] = fix_geojson(feature)
+        geojson["features"] = features
+        return geojson
+    else:
+        return fix_shape(geojson)
+
+
 def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
