@@ -29,6 +29,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
+          cache-dependency-path: pyproject.toml
       - name: Install with development dependencies
         run: pip install .[dev]
       - name: Build docs
