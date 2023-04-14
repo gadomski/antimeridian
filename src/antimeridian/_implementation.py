@@ -9,11 +9,29 @@ Point = Tuple[float, float]
 
 
 class GeoInterface(Protocol):
+    """A simple protocol for things that have a ``__geo_interface__`` method.
+
+    The ``__geo_interface__`` protocol is described `here
+    <https://gist.github.com/sgillies/2217756>`_, and is used within `shapely
+    <https://shapely.readthedocs.io/en/stable/manual.html>`_ to
+    extract geometries from objects.
+    """
+
     def __geo_interface__(self) -> Dict[str, Any]:
         ...
 
 
 def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
+    """Fixes GeoJSON object that crosses the antimeridian.
+
+    If the object does not cross the antimeridian, it is returned unchanged.
+
+    Args:
+        geojson: A GeoJSON object as a dictionary
+
+    Return:
+        The same GeoJSON with a fixed geometry or geometries
+    """
     type_ = geojson.get("type", None)
     if type_ is None:
         raise ValueError("no 'type' field found in GeoJSON")
@@ -36,6 +54,16 @@ def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
+    """Fixes a shape that crosses the antimeridian.
+
+    Args:
+        shape: A polygon or multi-polygon, either as a dictionary or as a
+            :py:class:`GeoInterface`. Uses :py:func:`shapely.geometry.shape`
+            under the hood.
+
+    Returns:
+        The fixed shape as a dictionary
+    """
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
         return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(geom)))
@@ -46,6 +74,14 @@ def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
 
 
 def fix_multi_polygon(multi_polygon: MultiPolygon) -> MultiPolygon:
+    """Fixes a :py:class:`shapely.geometry.MultiPolygon`.
+
+    Args:
+        multi_polygon: The multi-polygon
+
+    Returns:
+        The fixed multi-polygon
+    """
     polygons = list()
     for polygon in multi_polygon.geoms:
         polygons += fix_polygon_to_list(polygon)
@@ -53,6 +89,15 @@ def fix_multi_polygon(multi_polygon: MultiPolygon) -> MultiPolygon:
 
 
 def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
+    """Fixes a :py:class:`shapely.geometry.Polygon`.
+
+    Args:
+        polygon: The input polygon
+
+    Returns:
+        The fixed polygon, either as a single polygon or a multi-polygon (if it
+        was split)
+    """
     polygons = fix_polygon_to_list(polygon)
     if len(polygons) == 1:
         return polygons[0]

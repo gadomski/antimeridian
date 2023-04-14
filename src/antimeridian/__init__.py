@@ -1,3 +1,5 @@
+"""Fix antimeridian crossings in GeoJSON objects and shapely geometries."""
+
 from ._implementation import (
     GeoInterface,
     fix_geojson,
@@ -8,6 +10,13 @@ from ._implementation import (
 
 
 def main() -> int:
+    """Runs :py:func:`fix_geojson` on a file (or standard input) and print the
+    result to standard output.
+
+    Returns:
+        The exit code.
+    """
+
     import fileinput
     import json
     import sys

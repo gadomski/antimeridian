@@ -24,3 +24,5 @@ jobs:
         run: pre-commit run --all-files
       - name: Test
         run: pytest
+      - name: Check docs
+        run: sphinx-build -W docs docs/_build/html
