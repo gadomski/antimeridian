@@ -2,6 +2,7 @@
 
 [![CI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge&label=CI)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
 [![Docs Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/pages.yaml?style=for-the-badge&label=Docs)](http://www.gadom.ski/antimeridian/)
+[![Test PyPI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/release.yaml?style=for-the-badge&label=Test+PyPI)](https://test.pypi.org/project/antimeridian/)
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](./LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](./CODE_OF_CONDUCT)
 
