@@ -1,6 +1,7 @@
 from typing import Callable
 
 import pytest
+import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
 
 import antimeridian
@@ -41,3 +42,9 @@ def test_fix_polygon_with_interior_fails() -> None:
     )
     with pytest.raises(ValueError):
         antimeridian.fix_polygon(polygon)
+
+
+def test_fix_shape(read_input: Callable[[str], GeoInterface]) -> None:
+    # Just a smoke test
+    input = shapely.geometry.mapping(read_input("simple"))
+    antimeridian.fix_shape(input)

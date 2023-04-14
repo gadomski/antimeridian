@@ -14,13 +14,31 @@ class GeoInterface(Protocol):
 
 
 def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
-    polygon = shapely.geometry.shape(shape)
-    if not isinstance(polygon, Polygon):
-        raise ValueError(f"shape is not a polygon: {polygon.geom_type}")
-    return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(polygon)))
+    geom = shapely.geometry.shape(shape)
+    if geom.geom_type == "Polygon":
+        return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(geom)))
+    elif geom.geom_type == "MultiPolygon":
+        return cast(Dict[str, Any], shapely.geometry.mapping(fix_multi_polygon(geom)))
+    else:
+        raise ValueError(f"unsupported geom_type: {geom.geom_type}")
+
+
+def fix_multi_polygon(multi_polygon: MultiPolygon) -> MultiPolygon:
+    polygons = list()
+    for polygon in multi_polygon.geoms:
+        polygons += fix_polygon_to_list(polygon)
+    return MultiPolygon(polygons)
 
 
 def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
+    polygons = fix_polygon_to_list(polygon)
+    if len(polygons) == 1:
+        return polygons[0]
+    else:
+        return MultiPolygon(polygons)
+
+
+def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
     if bool(polygon.interiors):
         raise ValueError("cannot fix a polygon with interior rings")
     coords = polygon.exterior.coords
@@ -40,7 +58,7 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
             segment = [(-180, latitude)]
     if not segments:
         # No antimeridian crossings
-        return Polygon(segment)
+        return [Polygon(segment)]
     elif coords[-1] == segments[0][0]:
         segments[0] = segment + segments[0]
         segment = []
@@ -50,10 +68,7 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
     segments = extend_over_poles(segments)
     polygons = build_polygons(segments)
     assert polygons
-    if len(polygons) > 1:
-        return MultiPolygon(polygons)
-    else:
-        return polygons[0]
+    return polygons
 
 
 def crossing_latitude(start: Point, end: Point) -> float:
