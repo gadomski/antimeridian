@@ -100,6 +100,27 @@ Our library also handles splitting complex polygons that cross the antimeridian:
 
 ![Complex split](./img/complex-split.png)
 
+## Developing
+
+Clone and install in editable mode with the development optional dependencies:
+
+```shell
+git clone https://github.com/gadomski/antimeridian
+pip install -e '.[dev]'
+```
+
+We use [pytest](https://docs.pytest.org) for test:
+
+```shell
+pytest
+```
+
+We use [Sphinx](https://www.sphinx-doc.org) for docs:
+
+```shell
+make -C docs html
+```
+
 ## Contributing
 
 Github [issues](https://github.com/gadomski/antimeridian/issues) and [pull requests](https://github.com/gadomski/antimeridian/pulls), please and thank you!

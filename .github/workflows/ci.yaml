@@ -19,7 +19,7 @@ jobs:
           cache: "pip"
           cache-dependency-path: setup.cfg
       - name: Install with development dependencies
-        run: pip install . -r requirements-dev.txt
+        run: pip install .[dev]
       - name: Check with pre-commit
         run: pre-commit run --all-files
       - name: Test

@@ -1,5 +1,40 @@
 [build-system]
-requires = ["setuptools ~= 58.0", "cython ~= 0.29.0"]
+requires = ["setuptools >= 64", "setuptools_scm[toml]>=6.2"]
+
+[project]
+name = "antimeridian"
+authors = [
+    {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
+]
+description = "Fix GeoJSON geometries that cross the antimeridian"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["geojson", "antimeridian", "shapely"]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+]
+dependencies = [
+    "shapely>=1.8"
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "black~=23.3",
+    "mypy~=1.2",
+    "pre-commit~=3.2",
+    "pydata-sphinx-theme~=0.13",
+    "pytest~=7.3",
+    "ruff==0.0.261",
+    "sphinx~=6.1",
+]
+
+[project.scripts]
+fix-antimeridian = "antimeridian:main"
+
+[tool.setuptools_scm]
 
 [tool.mypy]
 strict = true
