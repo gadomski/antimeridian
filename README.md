@@ -1,6 +1,6 @@
 # antimeridian
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yml?style=for-the-badge)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](./LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](./CODE_OF_CONDUCT)
 
