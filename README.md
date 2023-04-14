@@ -1,6 +1,7 @@
 # antimeridian
 
 [![CI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge&label=CI)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
+[![PyPI](https://img.shields.io/pypi/v/antimeridian?style=for-the-badge)](https://pypi.org/project/antimeridian/)
 [![Docs Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/pages.yaml?style=for-the-badge&label=Docs)](http://www.gadom.ski/antimeridian/)
 [![Test PyPI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/release.yaml?style=for-the-badge&label=Test+PyPI)](https://test.pypi.org/project/antimeridian/)
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](./LICENSE)
