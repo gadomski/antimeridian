@@ -1,10 +1,10 @@
-import antimeridian
+import importlib.metadata
 
 project = "antimeridian"
 copyright = "2023, Pete Gadomski"
 author = "Pete Gadomski"
-version = "v" + antimeridian.__version__
-release = "v" + antimeridian.__version__
+version = importlib.metadata.version("antimeridian")
+release = importlib.metadata.version("antimeridian")
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx", "sphinx.ext.napoleon"]
 
