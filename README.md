@@ -19,6 +19,12 @@ import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
+There's a command-line entrypoint, too:
+
+```shell
+fix-antimeridian input.json > output.json
+```
+
 ## Background
 
 ### What's the antimeridian?
