@@ -20,6 +20,11 @@ dependencies = [
     "shapely>=1.8"
 ]
 
+[project.urls]
+documentation = "https://antimeridian.readthedocs.io"
+repository = "https://github.com/gadomski/antimeridan"
+changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
 dev = [
     "black~=23.3",
