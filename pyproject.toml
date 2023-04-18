@@ -3,7 +3,7 @@ requires = ["setuptools >= 64"]
 
 [project]
 name = "antimeridian"
-version = "0.0.2.post0"
+version = "0.1.0"
 authors = [
     {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
 ]
