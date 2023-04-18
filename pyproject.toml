@@ -1,8 +1,9 @@
 [build-system]
-requires = ["setuptools >= 64", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools >= 64"]
 
 [project]
 name = "antimeridian"
+version = "0.0.2.post0"
 authors = [
     {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
 ]
@@ -18,7 +19,6 @@ classifiers = [
 dependencies = [
     "shapely>=1.8"
 ]
-dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
@@ -35,9 +35,6 @@ docs = [
 
 [project.scripts]
 fix-antimeridian = "antimeridian:main"
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
 
 [tool.mypy]
 strict = true
