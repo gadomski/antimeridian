@@ -1,11 +1,11 @@
 # antimeridian
 
 [![CI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge&label=CI)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
-[![PyPI](https://img.shields.io/pypi/v/antimeridian?style=for-the-badge)](https://pypi.org/project/antimeridian/)
 [![Read the Docs](https://img.shields.io/readthedocs/antimeridian?style=for-the-badge)](https://antimeridian.readthedocs.io/en/latest/)
-[![Test PyPI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/release.yaml?style=for-the-badge&label=Test+PyPI)](https://test.pypi.org/project/antimeridian/)
-[![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](./LICENSE)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](./CODE_OF_CONDUCT)
+[![PyPI](https://img.shields.io/pypi/v/antimeridian?style=for-the-badge)](https://pypi.org/project/antimeridian/)
+
+[![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
 A Python package to correct GeoJSON shapes that cross the antimeridian.
 
@@ -77,7 +77,7 @@ Here's a simple example, taken from a real-world [Landsat](https://landsat.gsfc.
 
 As you can see, a tiny corner of the polygon crosses the antimeridian, leading to an invalid item:
 
-![Landsat problem](./img/landsat-problem.png)
+![Landsat problem](https://raw.githubusercontent.com/gadomski/antimeridian/main/img/landsat-problem.png)
 
 The issue also arises when geometries cross over a pole.
 
@@ -92,15 +92,15 @@ Here's before and after pictures of some Sentinel 5p data.
 These are swath data that enclose both poles.
 In the before picture, you can see the strange artifacts created by the invalid geometry:
 
-![Sentinel 5p before](./img/sentinel-5p-before.png)
+![Sentinel 5p before](https://raw.githubusercontent.com/gadomski/antimeridian/main/img/sentinel-5p-before.png)
 
 After correction, it's more clear that the data covers both poles:
 
-![Sentinel 5p after](./img/sentinel-5p-after.png)
+![Sentinel 5p after](https://raw.githubusercontent.com/gadomski/antimeridian/main/img/sentinel-5p-after.png)
 
 Our library also handles splitting complex polygons that cross the antimeridian:
 
-![Complex split](./img/complex-split.png)
+![Complex split](https://raw.githubusercontent.com/gadomski/antimeridian/main/img/complex-split.png)
 
 ## Developing
 
@@ -129,4 +129,4 @@ Github [issues](https://github.com/gadomski/antimeridian/issues) and [pull reque
 
 ## License
 
-[Apache-2.0](./LICENSE)
+[Apache-2.0](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
