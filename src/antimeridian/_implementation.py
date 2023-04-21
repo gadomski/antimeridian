@@ -1,3 +1,11 @@
+"""Implementation module for the antimeridian package.
+
+This is a "private" module that is not part of our public API. Downstream users
+should not use these functions and objects directly; instead, use the functions
+explicitly imported into the top-level of the package. The interfaces in this
+module can change at any time without warning.
+"""
+
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
@@ -106,13 +114,13 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
 
 
 def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
-    segments = segment(polygon.exterior.coords)
+    segments = segment(list(polygon.exterior.coords))
     if not segments:
         return [polygon]
     else:
         interiors = []
         for interior in polygon.interiors:
-            interior_segments = segment(interior.coords)
+            interior_segments = segment(list(interior.coords))
             if interior_segments:
                 segments.extend(interior_segments)
             else:
@@ -132,6 +140,8 @@ def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
 def segment(coords: List[Point]) -> List[List[Point]]:
     segment = []
     segments = []
+    for i, point in enumerate(coords):
+        coords[i] = (((point[0] + 180) % 360) - 180, point[1])
     for start, end in zip(coords, coords[1:]):
         segment.append(start)
         if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left

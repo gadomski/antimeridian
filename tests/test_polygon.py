@@ -1,8 +1,7 @@
+import antimeridian
 import pytest
 import shapely.geometry
 from shapely.geometry import MultiPolygon, Polygon
-
-import antimeridian
 
 from .conftest import Reader
 
@@ -17,6 +16,7 @@ from .conftest import Reader
         "latitude-band",
         "north-pole",
         "one-hole",
+        "over-180",
         "simple",
         "south-pole",
         "split",

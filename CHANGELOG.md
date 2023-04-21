@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Protect against longitudes outside of 180 or -180 ([#8](https://github.com/gadomski/antimeridian/pull/8))
+
 ## [0.1.0] - 2023-04-18
 
 This v0.1.0 release is to indicate that we think that this package is ready to use!
