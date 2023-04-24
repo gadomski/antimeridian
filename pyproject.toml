@@ -31,7 +31,7 @@ dev = [
     "mypy~=1.2",
     "pre-commit~=3.2",
     "pytest~=7.3",
-    "ruff==0.0.261",
+    "ruff==0.0.262",
 ]
 docs = [
     "pydata-sphinx-theme~=0.13",
