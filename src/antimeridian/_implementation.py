@@ -128,12 +128,14 @@ def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
     segments = extend_over_poles(segments)
     polygons = build_polygons(segments)
     assert polygons
-    for interior in interiors:
-        for i, polygon in enumerate(polygons):
+    for i, polygon in enumerate(polygons):
+        for j, interior in enumerate(interiors):
             if polygon.contains(interior):
-                interiors = list(polygon.interiors)
-                interiors.append(interior)
-                polygons[i] = Polygon(polygon.exterior, interiors)
+                interior = interiors.pop(j)
+                polygon_interiors = list(polygon.interiors)
+                polygon_interiors.append(interior)
+                polygons[i] = Polygon(polygon.exterior, polygon_interiors)
+    assert not interiors
     return polygons
 
 
