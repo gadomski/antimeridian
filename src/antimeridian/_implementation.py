@@ -120,7 +120,7 @@ def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[Point]]:
     elif geom.geom_type == "MultiPolygon":
         segments = list()
         for polygon in geom.geoms:
-            segments += segment_polygon(geom)
+            segments += segment_polygon(polygon)
         return segments
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
@@ -201,6 +201,7 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     segment = []
     segments = []
     for i, point in enumerate(coords):
+        # Ensure all longitudes are between -180 and 180
         coords[i] = (((point[0] + 180) % 360) - 180, point[1])
     for start, end in zip(coords, coords[1:]):
         segment.append(start)
@@ -257,6 +258,8 @@ def extend_over_poles(segments: List[List[Point]]) -> List[List[Point]]:
     left_starts.sort(key=lambda v: v[1])
     right_ends.sort(key=lambda v: v[1], reverse=True)
     right_starts.sort(key=lambda v: v[1], reverse=True)
+    # If there's no segment ends between a start and the pole, extend the
+    # segment over the pole.
     if left_ends and (not left_starts or left_ends[0][1] < left_starts[0][1]):
         segments[left_ends[0][0]] += [(-180, -90), (180, -90)]
     if right_ends and (not right_starts or right_ends[0][1] > right_starts[0][1]):
@@ -270,39 +273,54 @@ def build_polygons(
     if not segments:
         return []
     segment = segments.pop()
-    right = (
-        segment[-1][0] == 180
-    )  # all segments should start and end at abs(180) longitude
-    candidates: List[
-        Tuple[Optional[int], float, bool]
-    ] = list()  # list of (index, latitude, is_start)
-    if segment[0][0] == segment[-1][0] and (
-        (right and segment[0][1] > segment[-1][1])
-        or (not right and segment[0][1] < segment[-1][1])
-    ):
-        candidates.append((None, segment[0][1], True))
+    is_right = segment[-1][0] == 180
+    candidates: List[Tuple[Optional[int], float]] = list()
+    if is_self_closing(segment):
+        # Self-closing segments might end up joining up with themselves. They
+        # might not, e.g. donuts.
+        candidates.append((None, segment[0][1]))
     for i, s in enumerate(segments):
+        # Is the start of s on the same side as the end of segment?
         if s[0][0] == segment[-1][0]:
-            if (right and s[0][1] > segment[-1][1]) or (
-                not right and s[0][1] < segment[-1][1]
+            # If so, check the following:
+            # - Is the start of s closer to the pole than the end of segment, and
+            # - is the end of s on the other side, or
+            # - is the end of s further away from the pole than the start of
+            #   segment (e.g. donuts)?
+            if (
+                is_right
+                and s[0][1] > segment[-1][1]
+                and (not is_self_closing(s) or s[-1][1] < segment[0][1])
+            ) or (
+                not is_right
+                and s[0][1] < segment[-1][1]
+                and (not is_self_closing(s) or s[-1][1] > segment[0][1])
             ):
-                candidates.append((i, s[0][1], True))
-        if s[-1][0] == segment[-1][0]:
-            if (right and s[-1][1] > segment[-1][1]) or (
-                not right and s[-1][1] < segment[-1][1]
-            ):
-                candidates.append((i, s[-1][1], False))
-    candidates.sort(key=lambda c: c[1], reverse=not right)
-    if candidates and candidates[0][2]:
+                candidates.append((i, s[0][1]))
+
+    # Sort the candidates so the closest point is first in the list.
+    candidates.sort(key=lambda c: c[1], reverse=not is_right)
+    if candidates:
         index = candidates[0][0]
     else:
         index = None
 
     if index is not None:
-        segment = segments.pop(index) + segment
+        # Join the segments, then re-add them to the list and recurse.
+        segment = segment + segments.pop(index)
         segments.append(segment)
         return build_polygons(segments)
     else:
+        # This segment should self-joining, so just build the rest of the
+        # polygons without it.
         polygons = build_polygons(segments)
         polygons.append(Polygon(segment))
         return polygons
+
+
+def is_self_closing(segment: List[Point]) -> bool:
+    is_right = segment[-1][0] == 180
+    return segment[0][0] == segment[-1][0] and (
+        (is_right and segment[0][1] > segment[-1][1])
+        or (not is_right and segment[0][1] < segment[-1][1])
+    )
