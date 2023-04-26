@@ -6,9 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Segmentation functions to the public API ([#12](https://github.com/gadomski/antimeridian/pull/12))
+- click-based command line interface ([#12](https://github.com/gadomski/antimeridian/pull/12))
+
 ### Fixed
 
 - Protect against longitudes outside of 180 or -180 ([#8](https://github.com/gadomski/antimeridian/pull/8))
+
+### Removed
+
+- The ability to run the module as a script via `__main__` ([#12](https://github.com/gadomski/antimeridian/pull/12))
 
 ## [0.1.0] - 2023-04-18
 

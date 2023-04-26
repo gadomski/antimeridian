@@ -52,6 +52,14 @@ def read_input() -> Reader:
 
 
 @pytest.fixture
+def input_path() -> Callable[[str], Path]:
+    def input_path(name: str) -> Path:
+        return (INPUT_DATA_DIRECTORY / name).with_suffix(".json")
+
+    return input_path
+
+
+@pytest.fixture
 def read_output() -> Reader:
     def read_output(
         name: str,

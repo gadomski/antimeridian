@@ -29,3 +29,10 @@ def test_fix_feature_collection(read_input: Reader) -> None:
     assert fixed["features"][0]["properties"]["foo"] == "bar"
     assert fixed["features"][1]["properties"]["baz"] == "boz"
     assert fixed["another"] == "property"
+
+
+def test_segment_feature(read_input: Reader) -> None:
+    input = read_input("split")
+    feature = {"type": "Feature", "geometry": input}
+    fixed = antimeridian.segment_geojson(feature)
+    assert len(fixed.geoms) == 2

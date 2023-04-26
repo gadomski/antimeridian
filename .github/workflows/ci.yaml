@@ -9,6 +9,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        # We can't just install without the cli extra, because black depends on click
+        with-click: [true, false]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,7 +24,10 @@ jobs:
           cache: "pip"
           cache-dependency-path: pyproject.toml
       - name: Install with development dependencies
-        run: pip install .[dev]
+        run: pip install .[cli,dev]
+      - name: Uninstall click
+        if: ${{ !matrix.with-click }}
+        run: pip uninstall -y click
       - name: Check with pre-commit
         run: pre-commit run --all-files
       - name: Test

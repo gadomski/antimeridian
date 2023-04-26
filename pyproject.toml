@@ -26,11 +26,15 @@ repository = "https://github.com/gadomski/antimeridan"
 changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
+cli = [
+    "click~=8.1"
+]
 dev = [
     "black~=23.3",
     "mypy~=1.2",
     "pre-commit~=3.2",
     "pytest~=7.3",
+    "pytest-console-scripts~=1.3",
     "ruff==0.0.262",
 ]
 docs = [
@@ -39,7 +43,7 @@ docs = [
 ]
 
 [project.scripts]
-fix-antimeridian = "antimeridian:main"
+antimeridian = "antimeridian._cli:cli"
 
 [tool.mypy]
 strict = true
