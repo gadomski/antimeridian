@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2023-04-26
+
 ### Added
 
 - Segmentation functions to the public API ([#12](https://github.com/gadomski/antimeridian/pull/12))
@@ -47,7 +49,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/gadomsk/antimeridian/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/gadomsk/antimeridian/compare/v0.0.2...v0.1.0
 [0.0.2]: https://github.com/gadomsk/antimeridian/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/gadomski/antimeridian/releases/tag/v0.0.1
