@@ -11,7 +11,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import shapely.geometry
-from shapely.geometry import MultiPolygon, Polygon
+from shapely.geometry import MultiLineString, MultiPolygon, Polygon
 
 Point = Tuple[float, float]
 
@@ -61,6 +61,38 @@ def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
         return fix_shape(geojson)
 
 
+def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
+    """Segments a GeoJSON object into a MultiLineString.
+
+    If the object does not cross the antimeridian, its exterior and interior
+    line strings are returned unchanged.
+
+    Args:
+        geojson: A GeoJSON object as a dictionary
+
+    Return:
+        A MutliLineString of segments.
+    """
+    type_ = geojson.get("type", None)
+    if type_ is None:
+        raise ValueError("no 'type' field found in GeoJSON")
+    elif type_ == "Feature":
+        geometry = geojson.get("geometry", None)
+        if geometry is None:
+            raise ValueError("no 'geometry' field found in GeoJSON Feature")
+        return MultiLineString(segment_shape(geometry))
+    elif type_ == "FeatureCollection":
+        features = geojson.get("features", None)
+        if features is None:
+            raise ValueError("no 'features' field found in GeoJSON FeatureCollection")
+        segments = list()
+        for feature in features:
+            segments.extend(segment_geojson(feature))
+        return MultiLineString(segments)
+    else:
+        return MultiLineString(segment_shape(geojson))
+
+
 def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
@@ -77,6 +109,19 @@ def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
         return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(geom)))
     elif geom.geom_type == "MultiPolygon":
         return cast(Dict[str, Any], shapely.geometry.mapping(fix_multi_polygon(geom)))
+    else:
+        raise ValueError(f"unsupported geom_type: {geom.geom_type}")
+
+
+def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[Point]]:
+    geom = shapely.geometry.shape(shape)
+    if geom.geom_type == "Polygon":
+        return segment_polygon(geom)
+    elif geom.geom_type == "MultiPolygon":
+        segments = list()
+        for polygon in geom.geoms:
+            segments += segment_polygon(geom)
+        return segments
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
@@ -111,6 +156,19 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
         return polygons[0]
     else:
         return MultiPolygon(polygons)
+
+
+def segment_polygon(polygon: Polygon) -> List[List[Point]]:
+    segments = segment(list(polygon.exterior.coords))
+    if not segments:
+        segments = [list(polygon.exterior.coords)]
+    for interior in polygon.interiors:
+        interior_segments = segment(list(interior.coords))
+        if interior_segments:
+            segments.extend(interior_segments)
+        else:
+            segments.append(list(interior.coords))
+    return segments
 
 
 def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:

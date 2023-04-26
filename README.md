@@ -22,10 +22,11 @@ import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
-There's a command-line entrypoint, too:
+If you'd like to use the command line interface:
 
 ```shell
-fix-antimeridian input.json > output.json
+pip install 'antimeridian[cli]'
+antimeridian --help
 ```
 
 ## Background
