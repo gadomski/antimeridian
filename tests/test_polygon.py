@@ -12,6 +12,7 @@ from .conftest import Reader
         "both-poles",
         "complex-split",
         "crossing-latitude",
+        "cw-only",
         "extra-crossing",
         "latitude-band",
         "north-pole",
