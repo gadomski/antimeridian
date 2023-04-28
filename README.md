@@ -45,6 +45,7 @@ Clone and install in editable mode with the development optional dependencies:
 
 ```shell
 git clone https://github.com/gadomski/antimeridian
+cd antimeridian
 pip install -e '.[dev,docs]'
 ```
 
