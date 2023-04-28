@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
+import shapely
 import shapely.geometry
 from shapely.geometry import MultiLineString, MultiPolygon, Polygon
 
@@ -144,6 +145,10 @@ def fix_multi_polygon(multi_polygon: MultiPolygon) -> MultiPolygon:
 def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
     """Fixes a :py:class:`shapely.geometry.Polygon`.
 
+    If the input polygon is a single polygon that is wound clockwise and doesn't
+    cross the antimeridian, it will be corrected by adding a counter-clockwise
+    polygon from (-180, -90) to (180, 90) as its exterior.
+
     Args:
         polygon: The input polygon
 
@@ -153,7 +158,14 @@ def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
     """
     polygons = fix_polygon_to_list(polygon)
     if len(polygons) == 1:
-        return polygons[0]
+        polygon = polygons[0]
+        if shapely.is_ccw(polygon.exterior):
+            return polygon
+        else:
+            return Polygon(
+                [(-180, 90), (-180, -90), (180, -90), (180, 90)],
+                [polygon.exterior.coords],
+            )
     else:
         return MultiPolygon(polygons)
 
