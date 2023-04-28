@@ -6,7 +6,13 @@ author = "Pete Gadomski"
 version = importlib.metadata.version("antimeridian")
 release = importlib.metadata.version("antimeridian")
 
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx", "sphinx.ext.napoleon"]
+extensions = [
+    "nbsphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+    "sphinx_click",
+]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -16,3 +22,5 @@ html_static_path = ["_static"]
 html_theme_options = {"github_url": "https://github.com/gadomski/antimeridian"}
 
 intersphinx_mapping = {"shapely": ("https://shapely.readthedocs.io/en/stable", None)}
+
+nbsphinx_custom_formats = {".md": "jupytext.reads"}
