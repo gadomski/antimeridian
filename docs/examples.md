@@ -16,13 +16,17 @@ Our test suite exercises the antimeridian algorithm in a variety of ways.
 Here, we visualize some our test cases in two projections.
 
 ```python
+import warnings
 import json
 
 import shapely.geometry
 from cartopy.crs import Mollweide, PlateCarree
+from cartopy.io import DownloadWarning
 from matplotlib import pyplot
 
 import antimeridian
+
+warnings.filterwarnings("ignore", category=DownloadWarning)
 
 
 def plot(name: str) -> None:
