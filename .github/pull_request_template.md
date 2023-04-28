@@ -1,10 +1,7 @@
-## Closes
+## Related issues and pull requests
 
-- #XXX (any issues closed by this pull request)
-
-## Relates to
-
-- #XXX (any issues or pull requests related to this pull request)
+- Closes #XXX (any issues closed by this pull request)
+- Related to #XXX (any issues or pull requests related to this pull request)
 
 ## Description
 
