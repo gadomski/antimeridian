@@ -7,8 +7,9 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
-A Python package to correct GeoJSON shapes that cross the antimeridian.
+A lightweight Python package to correct GeoJSON shapes that cross the antimeridian.
 See [the documentation](https://antimeridian.readthedocs.io) for information about the underlying algorithm.
+Its only dependency is [shapely](https://shapely.readthedocs.io).
 
 ## Usage
 
