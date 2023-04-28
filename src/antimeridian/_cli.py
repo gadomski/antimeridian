@@ -29,14 +29,30 @@ def cli() -> None:
 
 @cli.command()
 @click.argument("infile", type=str)
-def fix(infile: str) -> None:
+@click.option(
+    "--force-north-pole",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Force the fixed polygon to enclose the north pole",
+)
+@click.option(
+    "--force-south-pole",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Force the fixed polygon to enclose the south pole",
+)
+def fix(infile: str, force_north_pole: bool, force_south_pole: bool) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
     Writes the fixed GeoJSON to standard output.
     """
     with open(infile) as f:
         data = json.load(f)
-    fixed = antimeridian.fix_geojson(data)
+    fixed = antimeridian.fix_geojson(
+        data, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+    )
     print(json.dumps(fixed))
 
 

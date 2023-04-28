@@ -30,13 +30,25 @@ class GeoInterface(Protocol):
         ...
 
 
-def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
+def fix_geojson(
+    geojson: Dict[str, Any],
+    *,
+    force_north_pole: bool = False,
+    force_south_pole: bool = False,
+) -> Dict[str, Any]:
     """Fixes GeoJSON object that crosses the antimeridian.
 
     If the object does not cross the antimeridian, it is returned unchanged.
 
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
+    ``force_south_pole`` arguments.
+
     Args:
         geojson: A GeoJSON object as a dictionary
+        force_north_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the north pole.
+        force_south_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the south pole.
 
     Return:
         The same GeoJSON with a fixed geometry or geometries
@@ -48,18 +60,30 @@ def fix_geojson(geojson: Dict[str, Any]) -> Dict[str, Any]:
         geometry = geojson.get("geometry", None)
         if geometry is None:
             raise ValueError("no 'geometry' field found in GeoJSON Feature")
-        geojson["geometry"] = fix_shape(geometry)
+        geojson["geometry"] = fix_shape(
+            geometry,
+            force_north_pole=force_north_pole,
+            force_south_pole=force_south_pole,
+        )
         return geojson
     elif type_ == "FeatureCollection":
         features = geojson.get("features", None)
         if features is None:
             raise ValueError("no 'features' field found in GeoJSON FeatureCollection")
         for i, feature in enumerate(features):
-            features[i] = fix_geojson(feature)
+            features[i] = fix_geojson(
+                feature,
+                force_north_pole=force_north_pole,
+                force_south_pole=force_south_pole,
+            )
         geojson["features"] = features
         return geojson
     else:
-        return fix_shape(geojson)
+        return fix_shape(
+            geojson,
+            force_north_pole=force_north_pole,
+            force_south_pole=force_south_pole,
+        )
 
 
 def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
@@ -94,22 +118,52 @@ def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
         return MultiLineString(segment_shape(geojson))
 
 
-def fix_shape(shape: Dict[str, Any] | GeoInterface) -> Dict[str, Any]:
+def fix_shape(
+    shape: Dict[str, Any] | GeoInterface,
+    *,
+    force_north_pole: bool = False,
+    force_south_pole: bool = False,
+) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
+
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
+    ``force_south_pole`` arguments.
 
     Args:
         shape: A polygon or multi-polygon, either as a dictionary or as a
             :py:class:`GeoInterface`. Uses :py:func:`shapely.geometry.shape`
             under the hood.
+        force_north_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the north pole.
+        force_south_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the south pole.
 
     Returns:
         The fixed shape as a dictionary
     """
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
-        return cast(Dict[str, Any], shapely.geometry.mapping(fix_polygon(geom)))
+        return cast(
+            Dict[str, Any],
+            shapely.geometry.mapping(
+                fix_polygon(
+                    geom,
+                    force_north_pole=force_north_pole,
+                    force_south_pole=force_south_pole,
+                )
+            ),
+        )
     elif geom.geom_type == "MultiPolygon":
-        return cast(Dict[str, Any], shapely.geometry.mapping(fix_multi_polygon(geom)))
+        return cast(
+            Dict[str, Any],
+            shapely.geometry.mapping(
+                fix_multi_polygon(
+                    geom,
+                    force_north_pole=force_north_pole,
+                    force_south_pole=force_south_pole,
+                )
+            ),
+        )
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
@@ -127,36 +181,65 @@ def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[Point]]:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
 
-def fix_multi_polygon(multi_polygon: MultiPolygon) -> MultiPolygon:
+def fix_multi_polygon(
+    multi_polygon: MultiPolygon,
+    *,
+    force_north_pole: bool = False,
+    force_south_pole: bool = False,
+) -> MultiPolygon:
     """Fixes a :py:class:`shapely.geometry.MultiPolygon`.
+
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
+    ``force_south_pole`` arguments.
 
     Args:
         multi_polygon: The multi-polygon
+        force_north_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the north pole.
+        force_south_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the south pole.
 
     Returns:
         The fixed multi-polygon
     """
     polygons = list()
     for polygon in multi_polygon.geoms:
-        polygons += fix_polygon_to_list(polygon)
+        polygons += fix_polygon_to_list(
+            polygon, force_north_pole=False, force_south_pole=False
+        )
     return MultiPolygon(polygons)
 
 
-def fix_polygon(polygon: Polygon) -> Union[Polygon, MultiPolygon]:
+def fix_polygon(
+    polygon: Polygon, *, force_north_pole: bool = False, force_south_pole: bool = False
+) -> Union[Polygon, MultiPolygon]:
     """Fixes a :py:class:`shapely.geometry.Polygon`.
 
     If the input polygon is a single polygon that is wound clockwise and doesn't
     cross the antimeridian, it will be corrected by adding a counter-clockwise
     polygon from (-180, -90) to (180, 90) as its exterior.
 
+    In rare cases, the underlying algorithm might need a little help to fix the polygon.
+    For example, a polygon that just barely crosses over a pole might have very
+    few points at high latitudes, leading to ambiguous antimeridian crossing
+    points and invalid geometries. We provide two flags, ``force_north_pole``
+    and ``force_south_pole``, for those cases. Most users can ignore these
+    flags.
+
     Args:
         polygon: The input polygon
+        force_north_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the north pole.
+        force_south_pole: If the polygon crosses the antimeridian, force the
+            joined segments to enclose the south pole.
 
     Returns:
         The fixed polygon, either as a single polygon or a multi-polygon (if it
         was split)
     """
-    polygons = fix_polygon_to_list(polygon)
+    polygons = fix_polygon_to_list(
+        polygon, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+    )
     if len(polygons) == 1:
         polygon = polygons[0]
         if shapely.is_ccw(polygon.exterior):
@@ -183,7 +266,9 @@ def segment_polygon(polygon: Polygon) -> List[List[Point]]:
     return segments
 
 
-def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
+def fix_polygon_to_list(
+    polygon: Polygon, *, force_north_pole: bool, force_south_pole: bool
+) -> List[Polygon]:
     segments = segment(list(polygon.exterior.coords))
     if not segments:
         return [polygon]
@@ -195,7 +280,9 @@ def fix_polygon_to_list(polygon: Polygon) -> List[Polygon]:
                 segments.extend(interior_segments)
             else:
                 interiors.append(interior)
-    segments = extend_over_poles(segments)
+    segments = extend_over_poles(
+        segments, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+    )
     polygons = build_polygons(segments)
     assert polygons
     for i, polygon in enumerate(polygons):
@@ -252,7 +339,12 @@ def crossing_latitude(start: Point, end: Point) -> float:
         )
 
 
-def extend_over_poles(segments: List[List[Point]]) -> List[List[Point]]:
+def extend_over_poles(
+    segments: List[List[Point]],
+    *,
+    force_north_pole: bool,
+    force_south_pole: bool,
+) -> List[List[Point]]:
     left_starts = list()
     right_starts = list()
     left_ends = list()
@@ -272,9 +364,13 @@ def extend_over_poles(segments: List[List[Point]]) -> List[List[Point]]:
     right_starts.sort(key=lambda v: v[1], reverse=True)
     # If there's no segment ends between a start and the pole, extend the
     # segment over the pole.
-    if left_ends and (not left_starts or left_ends[0][1] < left_starts[0][1]):
+    if left_ends and (
+        force_south_pole or not left_starts or left_ends[0][1] < left_starts[0][1]
+    ):
         segments[left_ends[0][0]] += [(-180, -90), (180, -90)]
-    if right_ends and (not right_starts or right_ends[0][1] > right_starts[0][1]):
+    if right_ends and (
+        force_north_pole or not right_starts or right_ends[0][1] > right_starts[0][1]
+    ):
         segments[right_ends[0][0]] += [(180, 90), (-180, 90)]
     return segments
 

@@ -53,3 +53,10 @@ def test_double_fix(
     fixed = antimeridian.fix_polygon(input)
     fixed = antimeridian.fix_polygon(input)
     assert fixed.normalize() == output.normalize()
+
+
+def test_force_north_pole(read_input: Reader, read_output: Reader) -> None:
+    input = read_input("force-north-pole")
+    output = read_output("force-north-pole")
+    fixed = antimeridian.fix_polygon(input, force_north_pole=True)
+    assert fixed.normalize() == output.normalize()
