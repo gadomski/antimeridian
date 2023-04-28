@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Boolean flags to force a polygon to enclose the north or south poles ([#17](https://github.com/gadomski/antimeridian/pull/17))
+
 ## [0.2.1] - 2023-04-28
 
 ### Added
