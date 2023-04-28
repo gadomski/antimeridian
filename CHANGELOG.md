@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Support for unsplit clockwise inputs ([#13](https://github.com/gadomski/antimeridian/pull/13))
+- More documentation ([#14](https://github.com/gadomski/antimeridian/pull/14))
 
 ## [0.2.0] - 2023-04-26
 

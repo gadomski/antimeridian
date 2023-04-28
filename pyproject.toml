@@ -38,8 +38,14 @@ dev = [
     "ruff==0.0.262",
 ]
 docs = [
+    "cartopy~=0.21",
+    "ipykernel~=6.22",
+    "jupytext~=1.14",
+    "nbsphinx~=0.9",
     "pydata-sphinx-theme~=0.13",
+    "scipy~=1.10",
     "sphinx~=6.1",
+    "sphinx-click~=4.4",
 ]
 
 [project.scripts]
