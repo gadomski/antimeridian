@@ -64,7 +64,8 @@ def fix(infile: str, force_north_pole: bool, force_south_pole: bool) -> None:
 def segment(infile: str, index: Optional[int]) -> None:
     """Segments the exterior coordinates of a GeoJSON file
 
-    Prints the resulting MultiLineString to standard output.
+    Prints the resulting MultiLineString to standard output. Useful mostly for
+    debugging problems with `fix`.
     """
     with open(infile) as f:
         data = json.load(f)

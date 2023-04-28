@@ -7,9 +7,15 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
-A lightweight Python package to correct GeoJSON shapes that cross the antimeridian.
+Fix polygons that cross the antimeridian.
 See [the documentation](https://antimeridian.readthedocs.io) for information about the underlying algorithm.
-Its only dependency is [shapely](https://shapely.readthedocs.io).
+Depends on [shapely](https://shapely.readthedocs.io).
+
+Can fix:
+
+- Shapely [`Polygon`](https://shapely.readthedocs.io/en/stable/reference/shapely.Polygon.html#shapely.Polygon) and [`MultiPolygon`](https://shapely.readthedocs.io/en/stable/reference/shapely.MultiPolygon.html#shapely.MultiPolygon) objects
+- GeoJSON [Polygons](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6), [MultiPolygons](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.7), [Features](https://datatracker.ietf.org/doc/html/rfc7946#section-3.2) and [FeatureCollections](https://datatracker.ietf.org/doc/html/rfc7946#section-3.3), as dictionaries
+- Anything that has a [`__geo_interface__`](https://gist.github.com/sgillies/2217756)
 
 ## Usage
 
@@ -17,14 +23,16 @@ Its only dependency is [shapely](https://shapely.readthedocs.io).
 pip install antimeridian
 ```
 
-Then, in your code:
+Then:
 
 ```python
 import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
-If you'd like to use the command line interface:
+### Command line interface
+
+Use the `cli` optional dependency to install the `antimeridian` CLI:
 
 ```shell
 pip install 'antimeridian[cli]'
