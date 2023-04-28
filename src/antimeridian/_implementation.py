@@ -36,7 +36,7 @@ def fix_geojson(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
 ) -> Dict[str, Any]:
-    """Fixes GeoJSON object that crosses the antimeridian.
+    """Fixes a GeoJSON object that crosses the antimeridian.
 
     If the object does not cross the antimeridian, it is returned unchanged.
 
@@ -205,7 +205,9 @@ def fix_multi_polygon(
     polygons = list()
     for polygon in multi_polygon.geoms:
         polygons += fix_polygon_to_list(
-            polygon, force_north_pole=False, force_south_pole=False
+            polygon,
+            force_north_pole=force_north_pole,
+            force_south_pole=force_south_pole,
         )
     return MultiPolygon(polygons)
 
