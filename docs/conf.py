@@ -1,4 +1,7 @@
 import importlib.metadata
+import os
+
+os.environ["PYDEVD_DISABLE_FILE_VALIDATION"] = "1"
 
 project = "antimeridian"
 copyright = "2023, Pete Gadomski"
