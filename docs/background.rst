@@ -50,7 +50,7 @@ Here's a simple example, taken from a real-world `Landsat <https://landsat.gsfc.
 
 As you can see, one corner of the polygon crosses the antimeridian, leading to an invalid item:
 
-.. image:: https://raw.githubusercontent.com/gadomski/antimeridian/main/img/landsat-problem.png
+.. image:: img/landsat-problem.png
 
 The issue also arises when geometries cross over a pole.
 
@@ -66,12 +66,12 @@ Here's before and after pictures of some Sentinel 5p data.
 These are swath data that enclose both poles.
 In the before picture, you can see the strange artifacts created by the invalid geometry:
 
-.. image:: https://raw.githubusercontent.com/gadomski/antimeridian/main/img/sentinel-5p-before.png
+.. image:: img/sentinel-5p-before.png
 
 After correction, it's more clear that the data covers both poles:
 
-.. image:: https://raw.githubusercontent.com/gadomski/antimeridian/main/img/sentinel-5p-after.png
+.. image:: img/sentinel-5p-after.png
 
 Our library also handles splitting complex polygons that cross the antimeridian:
 
-.. image:: https://raw.githubusercontent.com/gadomski/antimeridian/main/img/complex-split.png
+.. image:: img/complex-split.png
