@@ -18,6 +18,8 @@ Here, we visualize some our test cases in two projections.
 ```python
 import warnings
 import json
+from pathlib import Path
+from typing import Any, Dict
 
 import shapely.geometry
 from cartopy.crs import Mollweide, PlateCarree
@@ -29,9 +31,13 @@ import antimeridian
 warnings.filterwarnings("ignore", category=DownloadWarning)
 
 
+def read_json(path: Path) -> Dict[str, Any]:
+    with open(path) as f:
+        return json.load(f)
+
+
 def plot(name: str) -> None:
-    with open(f"../tests/data/input/{name}.json") as f:
-        data = json.load(f)
+    data = read_json(f"../tests/data/input/{name}.json")
     input = shapely.geometry.shape(data)
     output = shapely.geometry.shape(antimeridian.fix_geojson(data))
 
@@ -64,6 +70,14 @@ def plot(name: str) -> None:
 
     pyplot.show()
 
-for name in ["split", "north-pole", "both-poles", "complex-split", "multi-split", "overlap"]:
+
+for name in [
+    "split",
+    "north-pole",
+    "both-poles",
+    "complex-split",
+    "multi-split",
+    "overlap",
+]:
     plot(name)
 ```
