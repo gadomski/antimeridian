@@ -44,7 +44,7 @@ docs = [
     "nbsphinx~=0.9",
     "pydata-sphinx-theme~=0.13",
     "scipy~=1.10",
-    "sphinx~=6.1",
+    "sphinx>=6.1,<8.0",
     "sphinx-click~=4.4",
 ]
 
