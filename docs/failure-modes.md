@@ -1,7 +1,7 @@
 # Failure modes
 
 Our algorithm doesn't always work.
-It breaks down when a geometry's edge comes very close to the north pole, which usually means the GeoJSON geometry is especially strange.
+It breaks down when a geometry's edge comes very close to a pole, which usually means the GeoJSON geometry is especially strange.
 Here's one real-world example from a [Sentinel 3](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-3) [STAC](https://stacspec.org/) Item:
 
 ```python
