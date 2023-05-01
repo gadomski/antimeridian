@@ -27,6 +27,7 @@ Then:
 
 ```python
 import antimeridian
+
 fixed = antimeridian.fix_geojson(geojson)
 ```
 

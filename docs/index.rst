@@ -83,6 +83,7 @@ Our library also handles splitting complex polygons that cross the antimeridian:
    :caption: Contents:
 
    examples
+   failure-modes
    api
    cli
 
