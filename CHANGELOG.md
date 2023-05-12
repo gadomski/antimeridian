@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.4] - 2023-05-12
+
+### Fixed
+
+- Minimum shapely version needs to be 2.0 ([#27](https://github.com/gadomski/antimeridian/pull/27))
+
 ## [0.2.3] - 2023-04-28
 
 ## Fixed
@@ -68,7 +74,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.3...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/gadomsk/antimeridian/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/gadomsk/antimeridian/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/gadomsk/antimeridian/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/gadomsk/antimeridian/compare/v0.2.0...v0.2.1

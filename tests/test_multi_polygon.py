@@ -1,7 +1,6 @@
+import antimeridian
 import shapely.geometry
 from shapely.geometry import MultiPolygon
-
-import antimeridian
 
 from .conftest import Reader
 
