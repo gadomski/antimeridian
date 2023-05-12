@@ -35,6 +35,26 @@ jobs:
         run: pre-commit run --all-files
       - name: Test
         run: pytest
+  min-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install geos
+        run: sudo apt-get install libgeos-dev
+      - name: Install with development dependencies
+        run: pip install .[cli,dev]
+      - name: Install minimum versions of dependencies
+        run: scripts/install-min-dependencies
+      - name: Check with pre-commit
+        run: pre-commit run --all-files
+      - name: Test
+        run: pytest
   docs:
     runs-on: ubuntu-latest
     defaults:
