@@ -1,6 +1,7 @@
 """Fix antimeridian crossings in GeoJSON objects and shapely geometries."""
 
 from ._implementation import (
+    FixWindingWarning,
     GeoInterface,
     bbox,
     fix_geojson,
@@ -12,12 +13,13 @@ from ._implementation import (
 )
 
 __all__ = [
+    "FixWindingWarning",
+    "GeoInterface",
     "bbox",
-    "fix_polygon",
     "fix_geojson",
     "fix_multi_polygon",
+    "fix_polygon",
     "fix_shape",
-    "GeoInterface",
     "segment_geojson",
     "segment_shape",
 ]

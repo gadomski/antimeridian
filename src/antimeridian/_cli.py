@@ -43,7 +43,18 @@ def cli() -> None:
     default=False,
     help="Force the fixed polygon to enclose the south pole",
 )
-def fix(infile: str, force_north_pole: bool, force_south_pole: bool) -> None:
+@click.option(
+    "--fix-winding/--no-fix-winding",
+    show_default=True,
+    default=True,
+    help=(
+        "Automatically fix clockwise polygons to be the correct counterclockwise "
+        "winding order"
+    ),
+)
+def fix(
+    infile: str, force_north_pole: bool, force_south_pole: bool, fix_winding: bool
+) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
     Writes the fixed GeoJSON to standard output.
@@ -51,7 +62,10 @@ def fix(infile: str, force_north_pole: bool, force_south_pole: bool) -> None:
     with open(infile) as f:
         data = json.load(f)
     fixed = antimeridian.fix_geojson(
-        data, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+        data,
+        force_north_pole=force_north_pole,
+        force_south_pole=force_south_pole,
+        fix_winding=fix_winding,
     )
     print(json.dumps(fixed))
 
