@@ -51,7 +51,7 @@ def test_double_fix(
     input = read_input("north-pole")
     output = read_output("north-pole")
     fixed = antimeridian.fix_polygon(input)
-    fixed = antimeridian.fix_polygon(input)
+    fixed = antimeridian.fix_polygon(fixed)
     assert fixed.normalize() == output.normalize()
 
 
