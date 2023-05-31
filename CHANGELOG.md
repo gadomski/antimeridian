@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Clockwise input polygons are reversed by default, though this behavior can be overridden ([#39](https://github.com/gadomski/antimeridian/pull/39))
+
 ## [0.2.6] - 2023-05-31
 
 ### Fixed

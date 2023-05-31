@@ -8,13 +8,38 @@ module can change at any time without warning.
 
 from __future__ import annotations
 
+import copy
+import warnings
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import shapely
 import shapely.geometry
-from shapely.geometry import MultiLineString, MultiPolygon, Polygon
+from shapely.geometry import LinearRing, MultiLineString, MultiPolygon, Polygon
 
 Point = Tuple[float, float]
+
+
+class AntimeridianWarning(UserWarning):
+    """Base class for all package-specific warnings."""
+
+
+class FixWindingWarning(AntimeridianWarning):
+    """The input shape is wound clockwise (instead of counter-clockwise), so
+    this package is reversing the winding order before fixing the shape.
+    """
+
+    MESSAGE = (
+        "The exterior ring of this shape is wound "
+        "clockwise. Since this is a common error in real-world "
+        "geometries, this package is reversing the exterior coordinates of the "
+        "input shape before running its algorithm. If you know that your input "
+        "shape is correct (i.e. if your data encompasses both poles), pass "
+        "`fix_winding=False`."
+    )
+
+    @classmethod
+    def warn(cls) -> None:
+        warnings.warn(cls.MESSAGE, cls, stacklevel=2)
 
 
 class GeoInterface(Protocol):
@@ -35,13 +60,14 @@ def fix_geojson(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
+    fix_winding: bool = True,
 ) -> Dict[str, Any]:
     """Fixes a GeoJSON object that crosses the antimeridian.
 
     If the object does not cross the antimeridian, it is returned unchanged.
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
-    ``force_south_pole`` arguments.
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
+    ``force_south_pole``, and ``fix_winding`` arguments.
 
     Args:
         geojson: A GeoJSON object as a dictionary
@@ -49,6 +75,8 @@ def fix_geojson(
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
+        fix_winding: If the polygon is wound clockwise, reverse its
+            coordinates before applying the algorithm.
 
     Return:
         The same GeoJSON with a fixed geometry or geometries
@@ -64,6 +92,7 @@ def fix_geojson(
             geometry,
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
+            fix_winding=fix_winding,
         )
         return geojson
     elif type_ == "FeatureCollection":
@@ -75,6 +104,7 @@ def fix_geojson(
                 feature,
                 force_north_pole=force_north_pole,
                 force_south_pole=force_south_pole,
+                fix_winding=fix_winding,
             )
         geojson["features"] = features
         return geojson
@@ -83,6 +113,7 @@ def fix_geojson(
             geojson,
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
+            fix_winding=fix_winding,
         )
 
 
@@ -123,11 +154,12 @@ def fix_shape(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
+    fix_winding: bool = True,
 ) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
-    ``force_south_pole`` arguments.
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
+    ``force_south_pole``, and ``fix_winding`` arguments.
 
     Args:
         shape: A polygon or multi-polygon, either as a dictionary or as a
@@ -137,6 +169,8 @@ def fix_shape(
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
+        fix_winding: If the polygon is wound clockwise, reverse its
+            coordinates before applying the algorithm.
 
     Returns:
         The fixed shape as a dictionary
@@ -150,6 +184,7 @@ def fix_shape(
                     geom,
                     force_north_pole=force_north_pole,
                     force_south_pole=force_south_pole,
+                    fix_winding=fix_winding,
                 )
             ),
         )
@@ -161,6 +196,7 @@ def fix_shape(
                     geom,
                     force_north_pole=force_north_pole,
                     force_south_pole=force_south_pole,
+                    fix_winding=fix_winding,
                 )
             ),
         )
@@ -186,11 +222,12 @@ def fix_multi_polygon(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
+    fix_winding: bool = True,
 ) -> MultiPolygon:
     """Fixes a :py:class:`shapely.geometry.MultiPolygon`.
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole`` and
-    ``force_south_pole`` arguments.
+    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
+    ``force_south_pole``, and ``fix_winding`` arguments.
 
     Args:
         multi_polygon: The multi-polygon
@@ -198,6 +235,8 @@ def fix_multi_polygon(
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
+        fix_winding: If the polygon is wound clockwise, reverse its
+            coordinates before applying the algorithm.
 
     Returns:
         The fixed multi-polygon
@@ -208,18 +247,24 @@ def fix_multi_polygon(
             polygon,
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
+            fix_winding=fix_winding,
         )
     return MultiPolygon(polygons)
 
 
 def fix_polygon(
-    polygon: Polygon, *, force_north_pole: bool = False, force_south_pole: bool = False
+    polygon: Polygon,
+    *,
+    force_north_pole: bool = False,
+    force_south_pole: bool = False,
+    fix_winding: bool = True,
 ) -> Union[Polygon, MultiPolygon]:
     """Fixes a :py:class:`shapely.geometry.Polygon`.
 
-    If the input polygon is a single polygon that is wound clockwise and doesn't
-    cross the antimeridian, it will be corrected by adding a counter-clockwise
-    polygon from (-180, -90) to (180, 90) as its exterior.
+    If the input polygon is wound clockwise, it will be fixed to be wound
+    counterclockwise _unless_ ``fix_winding`` is ``False``, in which case it
+    will be corrected by adding a counterclockwise polygon from (-180, -90) to
+    (180, 90) as its exterior.
 
     In rare cases, the underlying algorithm might need a little help to fix the polygon.
     For example, a polygon that just barely crosses over a pole might have very
@@ -228,19 +273,29 @@ def fix_polygon(
     and ``force_south_pole``, for those cases. Most users can ignore these
     flags.
 
+    If either ``force_north_pole`` or ``force_south_pole`` is ``True``,
+    ``fix_winding`` is set to ``False``.
+
     Args:
         polygon: The input polygon
         force_north_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
+        fix_winding: If the polygon is wound clockwise, reverse its
+            coordinates before applying the algorithm.
 
     Returns:
         The fixed polygon, either as a single polygon or a multi-polygon (if it
         was split)
     """
+    if force_north_pole or force_south_pole:
+        fix_winding = False
     polygons = fix_polygon_to_list(
-        polygon, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+        polygon,
+        force_north_pole=force_north_pole,
+        force_south_pole=force_south_pole,
+        fix_winding=fix_winding,
     )
     if len(polygons) == 1:
         polygon = polygons[0]
@@ -269,21 +324,42 @@ def segment_polygon(polygon: Polygon) -> List[List[Point]]:
 
 
 def fix_polygon_to_list(
-    polygon: Polygon, *, force_north_pole: bool, force_south_pole: bool
+    polygon: Polygon,
+    *,
+    force_north_pole: bool,
+    force_south_pole: bool,
+    fix_winding: bool,
 ) -> List[Polygon]:
     segments = segment(list(polygon.exterior.coords))
     if not segments:
-        return [polygon]
+        if fix_winding and (
+            not shapely.is_ccw(polygon.exterior)
+            or any(shapely.is_ccw(interior) for interior in polygon.interiors)
+        ):
+            FixWindingWarning.warn()
+            return [shapely.geometry.polygon.orient(polygon)]
+        else:
+            return [polygon]
     else:
         interiors = []
         for interior in polygon.interiors:
             interior_segments = segment(list(interior.coords))
             if interior_segments:
+                if fix_winding:
+                    unwrapped_linearring = LinearRing(
+                        list((x % 360, y) for x, y in interior.coords)
+                    )
+                    if shapely.is_ccw(unwrapped_linearring):
+                        FixWindingWarning.warn()
+                        interior_segments = segment(list(reversed(interior.coords)))
                 segments.extend(interior_segments)
             else:
                 interiors.append(interior)
     segments = extend_over_poles(
-        segments, force_north_pole=force_north_pole, force_south_pole=force_south_pole
+        segments,
+        force_north_pole=force_north_pole,
+        force_south_pole=force_south_pole,
+        fix_winding=fix_winding,
     )
     polygons = build_polygons(segments)
     assert polygons
@@ -347,6 +423,7 @@ def extend_over_poles(
     *,
     force_north_pole: bool,
     force_south_pole: bool,
+    fix_winding: bool,
 ) -> List[List[Point]]:
     left_starts = list()
     right_starts = list()
@@ -365,17 +442,37 @@ def extend_over_poles(
     left_starts.sort(key=lambda v: v[1])
     right_ends.sort(key=lambda v: v[1], reverse=True)
     right_starts.sort(key=lambda v: v[1], reverse=True)
+    is_over_north_pole = False
+    is_over_south_pole = False
+    original_segments = copy.deepcopy(segments)
     # If there's no segment ends between a start and the pole, extend the
     # segment over the pole.
     if left_ends and (
         force_south_pole or not left_starts or left_ends[0][1] < left_starts[0][1]
     ):
+        is_over_south_pole = True
         segments[left_ends[0][0]] += [(-180, -90), (180, -90)]
     if right_ends and (
         force_north_pole or not right_starts or right_ends[0][1] > right_starts[0][1]
     ):
+        is_over_north_pole = True
         segments[right_ends[0][0]] += [(180, 90), (-180, 90)]
-    return segments
+    if fix_winding and is_over_north_pole and is_over_south_pole:
+        # These assertions are here because we're assuming that we set
+        # `fix_winding` to `False` up in `fix_polygon` if either of the
+        # `force_*` variables are set.
+        assert not force_north_pole
+        assert not force_south_pole
+
+        # If we're over both poles and we haven't explicitly disabled the
+        # fix behavior, reverse all segments, effectively reversing the
+        # winding order.
+        FixWindingWarning.warn()
+        for segment in original_segments:
+            segment.reverse()
+        return original_segments
+    else:
+        return segments
 
 
 def build_polygons(
