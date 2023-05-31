@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.5] - 2023-05-31
+
 ### Added
 
 - Calculate spec-conforming bounding boxes ([#35](https://github.com/gadomski/antimeridian/pull/35))
@@ -78,7 +80,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.4...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/gadomsk/antimeridian/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/gadomsk/antimeridian/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/gadomsk/antimeridian/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/gadomsk/antimeridian/compare/v0.2.1...v0.2.2
