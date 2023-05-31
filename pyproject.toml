@@ -1,6 +1,6 @@
 [project]
 name = "antimeridian"
-version = "0.2.5"
+version = "0.2.6"
 authors = [
     {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
 ]
