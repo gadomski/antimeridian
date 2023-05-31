@@ -1,9 +1,6 @@
-[build-system]
-requires = ["setuptools >= 64"]
-
 [project]
 name = "antimeridian"
-version = "0.2.4"
+version = "0.2.5"
 authors = [
     {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
 ]
@@ -63,3 +60,6 @@ strict = true
 [[tool.mypy.overrides]]
 module = ["shapely", "shapely.geometry"]
 ignore_missing_imports = true
+
+[build-system]
+requires = ["setuptools >= 64"]

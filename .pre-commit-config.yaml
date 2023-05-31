@@ -24,6 +24,6 @@ repos:
           - click~=8.1
           - pytest~=7.3
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.265
+    rev: v0.0.270
     hooks:
       - id: ruff
