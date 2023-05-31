@@ -60,3 +60,10 @@ def test_force_north_pole(read_input: Reader, read_output: Reader) -> None:
     output = read_output("force-north-pole")
     fixed = antimeridian.fix_polygon(input, force_north_pole=True)
     assert fixed.normalize() == output.normalize()
+
+
+@pytest.mark.parametrize("minx,maxx", [(-180, -170), (170, 180)])
+def test_dont_segment_antimeridian_overlap(minx: float, maxx: float) -> None:
+    shape = shapely.geometry.box(minx=minx, miny=-10, maxx=maxx, maxy=10)
+    fixed = antimeridian.fix_polygon(shape)
+    assert fixed.geom_type == "Polygon"

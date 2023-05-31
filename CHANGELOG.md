@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Don't segment polygons that simply overlap the antimeridian ([#37](https://github.com/gadomski/antimeridian/pull/37))
+
 ## [0.2.5] - 2023-05-31
 
 ### Added
