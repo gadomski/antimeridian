@@ -2,6 +2,7 @@
 
 from ._implementation import (
     GeoInterface,
+    bbox,
     fix_geojson,
     fix_multi_polygon,
     fix_polygon,
@@ -11,6 +12,7 @@ from ._implementation import (
 )
 
 __all__ = [
+    "bbox",
     "fix_polygon",
     "fix_geojson",
     "fix_multi_polygon",

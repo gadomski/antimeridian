@@ -434,3 +434,54 @@ def is_self_closing(segment: List[Point]) -> bool:
         (is_right and segment[0][1] > segment[-1][1])
         or (not is_right and segment[0][1] < segment[-1][1])
     )
+
+
+def bbox(shape: Dict[str, Any] | GeoInterface) -> List[float]:
+    """Calculates a GeoJSON-spec conforming bounding box for a shape.
+
+    Per `the GeoJSON spec
+    <https://datatracker.ietf.org/doc/html/rfc7946#section-5.2>`_, an
+    antimeridian-spanning bounding box should have its larger longitude as its
+    first bounding box coordinate.
+
+    Args:
+        shape: The polygon or multipolygon for which to calculate the bounding box.
+
+    Returns:
+        List[float]: The bounding box.
+    """
+    geom = shapely.geometry.shape(shape)
+    if geom.geom_type == "Polygon":
+        return list(geom.bounds)
+    elif geom.geom_type == "MultiPolygon":
+        crosses_antimeridian = False
+        xmins = list()
+        ymin = 90
+        xmaxs = list()
+        ymax = -90
+        for polygon in geom.geoms:
+            bounds = polygon.bounds
+            xmins.append(bounds[0])
+            if bounds[1] < ymin:
+                ymin = bounds[1]
+            xmaxs.append(bounds[2])
+            if bounds[3] > ymax:
+                ymax = bounds[3]
+            if is_coincident_to_antimeridian(polygon):
+                crosses_antimeridian = True
+
+        if crosses_antimeridian:
+            return [max(xmins), ymin, min(xmaxs), ymax]
+        else:
+            return [min(xmins), ymin, max(xmaxs), ymax]
+    else:
+        raise ValueError(
+            f"unsupported geom_type for bbox calculation: {geom.geom_type}"
+        )
+
+
+def is_coincident_to_antimeridian(polygon: Polygon) -> bool:
+    for start, end in zip(polygon.exterior.coords, polygon.exterior.coords[1:]):
+        if abs(start[0]) == 180 and start[0] == end[0]:
+            return True
+    return False
