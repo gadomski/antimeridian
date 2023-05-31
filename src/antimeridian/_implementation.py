@@ -303,7 +303,8 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     segments = []
     for i, point in enumerate(coords):
         # Ensure all longitudes are between -180 and 180
-        coords[i] = (((point[0] + 180) % 360) - 180, point[1])
+        if point[0] != 180:
+            coords[i] = (((point[0] + 180) % 360) - 180, point[1])
     for start, end in zip(coords, coords[1:]):
         segment.append(start)
         if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left
