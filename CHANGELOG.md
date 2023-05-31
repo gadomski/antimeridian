@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.2.6] - 2023-05-31
+
 ### Fixed
 
 - Don't segment polygons that simply overlap the antimeridian ([#37](https://github.com/gadomski/antimeridian/pull/37))
@@ -84,7 +86,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.5...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.2.6...HEAD
+[0.2.6]: https://github.com/gadomsk/antimeridian/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/gadomsk/antimeridian/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/gadomsk/antimeridian/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/gadomsk/antimeridian/compare/v0.2.2...v0.2.3
