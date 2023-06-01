@@ -64,6 +64,11 @@ Each segment is defined by jumps of greater than 180° longitude -- it's not a p
 Segments are then joined along the antimeridian.
 Segments that enclose the poles are constructed by adding points at the top of the antimeridian at both the east and the west longitudes.
 
+For more details, see :doc:`the-algorithm`.
+
+Examples
+~~~~~~~~
+
 Here's before and after pictures of some Sentinel 5p data.
 These are swath data that enclose both poles.
 In the before picture, you can see the strange artifacts created by the invalid geometry:
@@ -79,13 +84,14 @@ Our library also handles splitting complex polygons that cross the antimeridian:
 .. image:: img/complex-split.png
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Contents:
 
-   examples
-   failure-modes
-   api
-   cli
+    the-algorithm
+    examples
+    failure-modes
+    api
+    cli
 
 
 Indices and tables
