@@ -2,6 +2,7 @@ name: antimeridian-docs
 channels:
   - conda-forge
 dependencies:
+  - cartopy~=0.21
   - geos~=3.11
   - pandoc<3
   - pip~=22.3
