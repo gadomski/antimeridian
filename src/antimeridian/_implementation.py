@@ -168,9 +168,9 @@ def fix_shape(
     ``force_south_pole``, and ``fix_winding`` arguments.
 
     Args:
-        shape: A polygon or multi-polygon, either as a dictionary or as a
-            :py:class:`GeoInterface`. Uses :py:func:`shapely.geometry.shape`
-            under the hood.
+        shape: A polygon, multi-polygon, line string, or multi-line string,
+            either as a dictionary or as a :py:class:`GeoInterface`. Uses
+            :py:func:`shapely.geometry.shape` under the hood.
         force_north_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
