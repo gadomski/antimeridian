@@ -34,7 +34,7 @@ def test_fix_polygon(
     input = read_input(name)
     assert isinstance(input, Polygon)
     output = read_output(name)
-    assert isinstance(input, Polygon | MultiPolygon)
+    assert isinstance(input, Polygon) or isinstance(input, MultiPolygon)
     fixed = antimeridian.fix_polygon(input).normalize()
     assert fixed == output.normalize()
 

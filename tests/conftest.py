@@ -1,6 +1,7 @@
 import json
+import sys
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Union
 
 import pytest
 import shapely.geometry
@@ -15,20 +16,27 @@ from shapely.geometry import (
     Polygon,
 )
 
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    from typing_extensions import TypeAlias
+
 TEST_DATA_DIRECTORY = Path(__file__).parent / "data"
 INPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "input"
 OUTPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "output"
 
-Reader = Callable[
+Reader: TypeAlias = Callable[
     [str],
-    Point
-    | MultiPoint
-    | LineString
-    | MultiLineString
-    | Polygon
-    | MultiPolygon
-    | LinearRing
-    | GeometryCollection,
+    Union[
+        Point,
+        MultiPoint,
+        LineString,
+        MultiLineString,
+        Polygon,
+        MultiPolygon,
+        LinearRing,
+        GeometryCollection,
+    ],
 ]
 
 
@@ -36,16 +44,16 @@ Reader = Callable[
 def read_input() -> Reader:
     def read_input(
         name: str,
-    ) -> (
-        Point
-        | MultiPoint
-        | LineString
-        | MultiLineString
-        | Polygon
-        | MultiPolygon
-        | LinearRing
-        | GeometryCollection
-    ):
+    ) -> Union[
+        Point,
+        MultiPoint,
+        LineString,
+        MultiLineString,
+        Polygon,
+        MultiPolygon,
+        LinearRing,
+        GeometryCollection,
+    ]:
         return read_file((INPUT_DATA_DIRECTORY / name).with_suffix(".json"))
 
     return read_input
@@ -63,16 +71,16 @@ def input_path() -> Callable[[str], Path]:
 def read_output() -> Reader:
     def read_output(
         name: str,
-    ) -> (
-        Point
-        | MultiPoint
-        | LineString
-        | MultiLineString
-        | Polygon
-        | MultiPolygon
-        | LinearRing
-        | GeometryCollection
-    ):
+    ) -> Union[
+        Point,
+        MultiPoint,
+        LineString,
+        MultiLineString,
+        Polygon,
+        MultiPolygon,
+        LinearRing,
+        GeometryCollection,
+    ]:
         return read_file((OUTPUT_DATA_DIRECTORY / name).with_suffix(".json"))
 
     return read_output
@@ -80,16 +88,16 @@ def read_output() -> Reader:
 
 def read_file(
     path: Path,
-) -> (
-    Point
-    | MultiPoint
-    | LineString
-    | MultiLineString
-    | Polygon
-    | MultiPolygon
-    | LinearRing
-    | GeometryCollection
-):
+) -> Union[
+    Point,
+    MultiPoint,
+    LineString,
+    MultiLineString,
+    Polygon,
+    MultiPolygon,
+    LinearRing,
+    GeometryCollection,
+]:
     with open(path) as f:
         data = json.load(f)
     shape = shapely.geometry.shape(data)
