@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Read from standard input in the CLI ([#48](https://github.com/gadomski/antimeridian/pull/48))
 
+### Fixed
+
+- Don't produce meaningless splits when one corner of an input polygon is on the antimeridian ([#49](https://github.com/gadomski/antimeridian/pull/49))
+
 ## [0.3.0] - 2023-06-29
 
 ### Changed
