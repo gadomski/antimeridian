@@ -14,7 +14,13 @@ from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import shapely
 import shapely.geometry
-from shapely.geometry import LinearRing, MultiLineString, MultiPolygon, Polygon
+from shapely.geometry import (
+    LinearRing,
+    LineString,
+    MultiLineString,
+    MultiPolygon,
+    Polygon,
+)
 
 Point = Tuple[float, float]
 
@@ -200,6 +206,12 @@ def fix_shape(
                 )
             ),
         )
+    elif geom.geom_type == "LineString":
+        return cast(Dict[str, Any], shapely.geometry.mapping(fix_line_string(geom)))
+    elif geom.geom_type == "MultiLineString":
+        return cast(
+            Dict[str, Any], shapely.geometry.mapping(fix_multi_line_string(geom))
+        )
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
@@ -310,6 +322,42 @@ def fix_polygon(
         return MultiPolygon(polygons)
 
 
+def fix_line_string(line_string: LineString) -> Union[LineString, MultiLineString]:
+    """Fixes a :py:class:`shapely.geometry.LineString`.
+
+    Args:
+        line_string: The input line string
+
+    Returns:
+        The fixed line string, either as a single line string or a multi-line
+        string (if it was split)
+    """
+    segments = segment(list(line_string.coords))
+    if not segments:
+        return line_string
+    else:
+        return MultiLineString(segments)
+
+
+def fix_multi_line_string(multi_line_string: MultiLineString) -> MultiLineString:
+    """Fixes a :py:class:`shapely.geometry.MultiLineString`.
+
+    Args:
+        multi_line_string: The input multi line string
+
+    Returns:
+        The fixed multi line string
+    """
+    line_strings = list()
+    for line_string in multi_line_string.geoms:
+        fixed = fix_line_string(line_string)
+        if isinstance(fixed, LineString):
+            line_strings.append(fixed)
+        else:
+            line_strings.extend(fixed.geoms)
+    return MultiLineString(line_strings)
+
+
 def segment_polygon(polygon: Polygon) -> List[List[Point]]:
     segments = segment(list(polygon.exterior.coords))
     if not segments:
@@ -399,6 +447,9 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     elif coords[-1] == segments[0][0]:
         # Join polygons
         segments[0] = segment + segments[0]
+    else:
+        segment.append(coords[-1])
+        segments.append(segment)
     return segments
 
 
