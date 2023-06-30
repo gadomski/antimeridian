@@ -18,6 +18,7 @@ from .conftest import Reader
         "one-hole",
         "over-180",
         "overlap",
+        "point-on-antimeridian",
         "simple",
         "south-pole",
         "split",

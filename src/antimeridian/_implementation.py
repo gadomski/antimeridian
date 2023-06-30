@@ -403,6 +403,10 @@ def segment(coords: List[Point]) -> List[List[Point]]:
 
 
 def crossing_latitude(start: Point, end: Point) -> float:
+    if abs(start[0]) == 180:
+        return start[1]
+    elif abs(end[0]) == 180:
+        return end[1]
     latitude_delta = end[1] - start[1]
     if end[0] > 0:
         return round(
@@ -522,7 +526,12 @@ def build_polygons(
         # This segment should self-joining, so just build the rest of the
         # polygons without it.
         polygons = build_polygons(segments)
-        polygons.append(Polygon(segment))
+        if not all(p == segment[0] for p in segment):
+            # If every point is the same, then we don't need it in the output
+            # set of polygons. This happens if, e.g., one corner of an input
+            # polygon is on the antimeridian.
+            # https://github.com/gadomski/antimeridian/issues/45#issuecomment-1614586166
+            polygons.append(Polygon(segment))
         return polygons
 
 
