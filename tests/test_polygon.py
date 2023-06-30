@@ -10,6 +10,7 @@ from .conftest import Reader
 @pytest.mark.parametrize(
     ("name"),
     [
+        "almost-180",
         "complex-split",
         "crossing-latitude",
         "extra-crossing",

@@ -12,6 +12,7 @@ import copy
 import warnings
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
+import numpy
 import shapely
 import shapely.geometry
 from shapely.geometry import (
@@ -426,8 +427,13 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     segment = []
     segments = []
     for i, point in enumerate(coords):
-        # Ensure all longitudes are between -180 and 180
-        if point[0] != 180:
+        # Ensure all longitudes are between -180 and 180, and that tiny floating
+        # point differences are ignored.
+        if numpy.isclose(point[0], 180):
+            coords[i] = (180, point[1])
+        elif numpy.isclose(point[0], -180):
+            coords[i] = (-180, point[1])
+        else:
             coords[i] = (((point[0] + 180) % 360) - 180, point[1])
     for start, end in zip(coords, coords[1:]):
         segment.append(start)

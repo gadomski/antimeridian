@@ -9,7 +9,7 @@
 
 Fix shapes that cross the antimeridian.
 See [the documentation](https://antimeridian.readthedocs.io) for information about the underlying algorithm.
-Depends on [shapely](https://shapely.readthedocs.io).
+Depends on [shapely](https://shapely.readthedocs.io) and [numpy](https://numpy.org/).
 
 Can fix:
 
