@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 - Don't produce meaningless splits when one corner of an input polygon is on the antimeridian ([#49](https://github.com/gadomski/antimeridian/pull/49))
+- Correct tiny floating point deltas on the antimeridian ([#52](https://github.com/gadomski/antimeridian/pull/52))
 
 ## [0.3.0] - 2023-06-29
 
