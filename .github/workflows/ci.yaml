@@ -18,13 +18,14 @@ jobs:
       matrix:
         # We can't just install without the cli extra, because black depends on click
         with-click: [true, false]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
       - name: Install with development dependencies
         run: pip install .[cli,dev]
