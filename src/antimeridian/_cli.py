@@ -1,3 +1,5 @@
+import fileinput
+
 try:
     import click
 except ImportError:
@@ -57,12 +59,15 @@ def fix(
 ) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
-    Writes the fixed GeoJSON to standard output.
+    Writes the fixed GeoJSON to standard output. If the filename is ``-`` the
+    input GeoJSON is read from standard input.
     """
-    with open(infile) as f:
-        data = json.load(f)
+    data = ""
+    with fileinput.input(infile) as f:
+        for line in f:
+            data += line + "\n"
     fixed = antimeridian.fix_geojson(
-        data,
+        json.loads(data),
         force_north_pole=force_north_pole,
         force_south_pole=force_south_pole,
         fix_winding=fix_winding,
