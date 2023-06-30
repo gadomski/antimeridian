@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Read from standard input in the CLI ([#48](https://github.com/gadomski/antimeridian/pull/48))
+- Support for line strings and multi-line strings ([#50](https://github.com/gadomski/antimeridian/pull/50))
 
 ### Fixed
 
