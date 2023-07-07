@@ -6,5 +6,6 @@ dependencies:
   - geos~=3.11
   - pandoc<3
   - pip~=22.3
+  - scipy~=1.10.0 # need to stay below 1.11 due to https://github.com/SciTools/cartopy/issues/2199
   - pip:
       - ..[docs]
