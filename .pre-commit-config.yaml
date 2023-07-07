@@ -21,9 +21,9 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
-          - click~=8.1
+          - click~=8.1,!=8.1.4 # https://github.com/pallets/click/issues/2558
           - pytest~=7.3
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.275
+    rev: v0.0.277
     hooks:
       - id: ruff
