@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.1] - 2023-07-10
+
 ### Added
 
 - Read from standard input in the CLI ([#48](https://github.com/gadomski/antimeridian/pull/48))
@@ -103,6 +105,7 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 Initial release.
 
 [unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.0...HEAD
+[0.3.1]: https://github.com/gadomsk/antimeridian/compare/v0.2.6...v0.3.0
 [0.3.0]: https://github.com/gadomsk/antimeridian/compare/v0.2.6...v0.3.0
 [0.2.6]: https://github.com/gadomsk/antimeridian/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/gadomsk/antimeridian/compare/v0.2.4...v0.2.5
