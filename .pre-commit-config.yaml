@@ -7,7 +7,7 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
   - repo: https://github.com/adamchainz/blacken-docs
@@ -21,9 +21,9 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
-          - click~=8.1,!=8.1.4 # https://github.com/pallets/click/issues/2558
+          - click~=8.1,<8.1.4
           - pytest~=7.3
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.277
+    rev: v0.0.278
     hooks:
       - id: ruff
