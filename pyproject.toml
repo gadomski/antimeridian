@@ -25,7 +25,7 @@ changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 cli = [
-    "click~=8.1"
+    "click~=8.1,<8.1.4"  # click typing broken above v8.1.4 for group
 ]
 dev = [
     "black~=23.3",
