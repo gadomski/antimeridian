@@ -1,22 +1,17 @@
 [project]
 name = "antimeridian"
 version = "0.3.1"
-authors = [
-    {name = "Pete Gadomski", email = "pete.gadomski@gmail.com"}
-]
+authors = [{ name = "Pete Gadomski", email = "pete.gadomski@gmail.com" }]
 description = "Fix GeoJSON geometries that cross the antimeridian"
 readme = "README.md"
 requires-python = ">=3.8"
 keywords = ["geojson", "antimeridian", "shapely"]
-license = {text = "Apache-2.0"}
+license = { text = "Apache-2.0" }
 classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 4 - Beta",
 ]
-dependencies = [
-    "numpy>=1.17.4",
-    "shapely>=2.0",
-]
+dependencies = ["numpy>=1.17.4", "shapely>=2.0"]
 
 [project.urls]
 documentation = "https://antimeridian.readthedocs.io"
@@ -24,9 +19,7 @@ repository = "https://github.com/gadomski/antimeridan"
 changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-cli = [
-    "click~=8.1,<8.1.4"  # click typing broken above v8.1.4 for group
-]
+cli = ["click~=8.1.6"]
 dev = [
     "black~=23.3",
     "blacken-docs~=1.13",
@@ -45,7 +38,7 @@ docs = [
     "jupytext~=1.14",
     "nbsphinx~=0.9",
     "pydata-sphinx-theme~=0.13",
-    "scipy~=1.10.0",  # need to stay below 1.11 due to https://github.com/SciTools/cartopy/issues/2199
+    "scipy~=1.10.0",             # need to stay below 1.11 due to https://github.com/SciTools/cartopy/issues/2199
     "sphinx~=7.0",
     "sphinx-click~=4.4",
 ]
