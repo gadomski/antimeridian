@@ -14,9 +14,9 @@ classifiers = [
 dependencies = ["numpy>=1.17.4", "shapely>=2.0"]
 
 [project.urls]
-documentation = "https://antimeridian.readthedocs.io"
-repository = "https://github.com/gadomski/antimeridan"
-changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
+Documentation = "https://antimeridian.readthedocs.io"
+Github = "https://github.com/gadomski/antimeridan"
+Changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 cli = ["click~=8.1.6"]
