@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Wrapping of centroid points ([#69](https://github.com/gadomski/antimeridian/pull/69))
+
 ## [0.3.2] - 2023-08-21
 
 ### Added
