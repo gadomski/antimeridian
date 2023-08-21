@@ -30,7 +30,7 @@ for install_requires in filter(
 ):
     requirement = Requirement(install_requires)
     assert len(requirement.specifier) == 1
-    specifier = list(requirement.specifier)[0]
+    specifier = next(iter(requirement.specifier))
     assert specifier.operator == ">="
     install_requires = install_requires.replace(">=", "==")
     requirements.append(install_requires)

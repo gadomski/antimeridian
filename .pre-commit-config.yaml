@@ -11,19 +11,19 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: "1.15.0"
+    rev: "1.16.0"
     hooks:
       - id: blacken-docs
         additional_dependencies:
           - black~=23.3
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.4.1
+    rev: v1.5.1
     hooks:
       - id: mypy
         additional_dependencies:
-          - click~=8.1,<8.1.4
+          - click~=8.1.6
           - pytest~=7.3
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.278
+    rev: v0.0.285
     hooks:
       - id: ruff
