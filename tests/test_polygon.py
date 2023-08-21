@@ -1,8 +1,10 @@
+from typing import cast
+
 import antimeridian
 import pytest
 import shapely.geometry
 from antimeridian import FixWindingWarning
-from shapely.geometry import MultiPolygon, Polygon
+from shapely.geometry import MultiPolygon, Point, Polygon
 
 from .conftest import Reader
 
@@ -130,3 +132,17 @@ def test_fix_winding_interior_segments(read_input: Reader, read_output: Reader) 
     with pytest.warns(FixWindingWarning):
         fixed = antimeridian.fix_polygon(input)
     assert fixed.normalize() == output.normalize()
+
+
+def test_centroid_simple(read_input: Reader) -> None:
+    input = read_input("simple")
+    centroid = cast(Point, antimeridian.centroid(input))
+    assert centroid.x == 95
+    assert centroid.y == 45
+
+
+def test_centroid_split(read_output: Reader) -> None:
+    input = read_output("split")
+    centroid = cast(Point, antimeridian.centroid(input))
+    assert centroid.x == 180
+    assert centroid.y == 45
