@@ -14,7 +14,9 @@ from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import numpy
 import shapely
+import shapely.affinity
 import shapely.geometry
+import shapely.validation
 from shapely.geometry import (
     LinearRing,
     LineString,
@@ -641,6 +643,38 @@ def bbox(shape: Dict[str, Any] | GeoInterface) -> List[float]:
     else:
         raise ValueError(
             f"unsupported geom_type for bbox calculation: {geom.geom_type}"
+        )
+
+
+def centroid(shape: Dict[str, Any] | GeoInterface) -> Point:
+    """Calculates the centroid for a polygon or multipolygon.
+
+    Polygons are easy, we just use :py:func:`shapely.centroid`. For
+    multi-polygons, the antimeridian is taken into account by calculating the
+    centroid from an identical multi-polygon with coordinates in [0, 360).
+
+    Args:
+        shape: The polygon or multipolygon for which to calculate the centroid.
+
+    Returns:
+        Point: The centroid.
+    """
+    # Inspired by
+    # https://github.com/stactools-packages/sentinel2/blob/f90f5fa006459e9bb59bfd327d9199e5259ec4a7/src/stactools/sentinel2/stac.py#L192-L208
+    geom = shapely.geometry.shape(shape)
+    if geom.geom_type == "Polygon":
+        return cast(Point, geom.centroid)
+    elif geom.geom_type == "MultiPolygon":
+        geoms = list()
+        for component in geom.geoms:
+            if any(c[0] < 0 for c in component.exterior.coords):
+                geoms.append(shapely.affinity.translate(component, xoff=+360))
+            else:
+                geoms.append(component)
+        return cast(Point, shapely.validation.make_valid(MultiPolygon(geoms)).centroid)
+    else:
+        raise ValueError(
+            f"unsupported geom_type for centroid calculation: {geom.geom_type}"
         )
 
 
