@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- `centroid` ([#67](https://github.com/gadomski/antimeridian/pull/67))
+
 ## [0.3.1] - 2023-07-10
 
 ### Added

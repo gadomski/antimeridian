@@ -50,7 +50,12 @@ antimeridian = "antimeridian._cli:cli"
 strict = true
 
 [[tool.mypy.overrides]]
-module = ["shapely", "shapely.geometry"]
+module = [
+    "shapely",
+    "shapely.geometry",
+    "shapely.affinity",
+    "shapely.validation",
+]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
