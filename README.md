@@ -33,6 +33,9 @@ import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
+We also have some utilities to create [bounding boxes](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.bbox) and [centroids](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.centroid) from antimeridian-crossing polygons and multipolygons.
+See [the documentation](https://antimeridian.readthedocs.io/) for a complete API reference.
+
 ### Command line interface
 
 Use the `cli` optional dependency to install the `antimeridian` CLI:
