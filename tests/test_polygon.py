@@ -2,6 +2,7 @@ from typing import cast
 
 import antimeridian
 import pytest
+import shapely.affinity
 import shapely.geometry
 from antimeridian import FixWindingWarning
 from shapely.geometry import MultiPolygon, Point, Polygon
@@ -145,4 +146,13 @@ def test_centroid_split(read_output: Reader) -> None:
     input = read_output("split")
     centroid = cast(Point, antimeridian.centroid(input))
     assert centroid.x == 180
+    assert centroid.y == 45
+
+
+def test_centroid_split_with_shift(read_input: Reader) -> None:
+    input = read_input("split")
+    input = shapely.affinity.translate(input, xoff=+1)
+    input = antimeridian.fix_polygon(input)
+    centroid = cast(Point, antimeridian.centroid(input))
+    assert centroid.x == -179
     assert centroid.y == 45

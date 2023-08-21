@@ -22,10 +22,11 @@ from shapely.geometry import (
     LineString,
     MultiLineString,
     MultiPolygon,
+    Point,
     Polygon,
 )
 
-Point = Tuple[float, float]
+XY = Tuple[float, float]
 
 
 class AntimeridianWarning(UserWarning):
@@ -219,7 +220,7 @@ def fix_shape(
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
 
-def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[Point]]:
+def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[XY]]:
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
         return segment_polygon(geom)
@@ -361,7 +362,7 @@ def fix_multi_line_string(multi_line_string: MultiLineString) -> MultiLineString
     return MultiLineString(line_strings)
 
 
-def segment_polygon(polygon: Polygon) -> List[List[Point]]:
+def segment_polygon(polygon: Polygon) -> List[List[XY]]:
     segments = segment(list(polygon.exterior.coords))
     if not segments:
         segments = [list(polygon.exterior.coords)]
@@ -425,7 +426,7 @@ def fix_polygon_to_list(
     return polygons
 
 
-def segment(coords: List[Point]) -> List[List[Point]]:
+def segment(coords: List[XY]) -> List[List[XY]]:
     segment = []
     segments = []
     for i, point in enumerate(coords):
@@ -461,7 +462,7 @@ def segment(coords: List[Point]) -> List[List[Point]]:
     return segments
 
 
-def crossing_latitude(start: Point, end: Point) -> float:
+def crossing_latitude(start: XY, end: XY) -> float:
     if abs(start[0]) == 180:
         return start[1]
     elif abs(end[0]) == 180:
@@ -482,12 +483,12 @@ def crossing_latitude(start: Point, end: Point) -> float:
 
 
 def extend_over_poles(
-    segments: List[List[Point]],
+    segments: List[List[XY]],
     *,
     force_north_pole: bool,
     force_south_pole: bool,
     fix_winding: bool,
-) -> List[List[Point]]:
+) -> List[List[XY]]:
     left_starts = list()
     right_starts = list()
     left_ends = list()
@@ -539,7 +540,7 @@ def extend_over_poles(
 
 
 def build_polygons(
-    segments: List[List[Point]],
+    segments: List[List[XY]],
 ) -> List[Polygon]:
     if not segments:
         return []
@@ -594,7 +595,7 @@ def build_polygons(
         return polygons
 
 
-def is_self_closing(segment: List[Point]) -> bool:
+def is_self_closing(segment: List[XY]) -> bool:
     is_right = segment[-1][0] == 180
     return segment[0][0] == segment[-1][0] and (
         (is_right and segment[0][1] > segment[-1][1])
@@ -671,7 +672,12 @@ def centroid(shape: Dict[str, Any] | GeoInterface) -> Point:
                 geoms.append(shapely.affinity.translate(component, xoff=+360))
             else:
                 geoms.append(component)
-        return cast(Point, shapely.validation.make_valid(MultiPolygon(geoms)).centroid)
+        centroid = cast(
+            Point, shapely.validation.make_valid(MultiPolygon(geoms)).centroid
+        )
+        if centroid.x > 180:
+            centroid = Point(centroid.x - 360, centroid.y)
+        return centroid
     else:
         raise ValueError(
             f"unsupported geom_type for centroid calculation: {geom.geom_type}"
