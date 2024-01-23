@@ -67,12 +67,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cache conda
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/conda_pkgs_dir
           key: ${{ runner.os }}-conda-${{ hashFiles('docs/environment.yaml') }}
       - name: Cache pip
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
