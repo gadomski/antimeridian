@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.4] - 2024-03-17
+### Fixed
+
+- Interpolation of latitude at antimeridian
+
 ## [0.3.3] - 2023-08-21
 
 ### Fixed
