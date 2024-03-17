@@ -468,18 +468,16 @@ def crossing_latitude(start: XY, end: XY) -> float:
     elif abs(end[0]) == 180:
         return end[1]
     latitude_delta = end[1] - start[1]
-    if end[0] > 0:
-        return round(
-            start[1]
-            + (180.0 - start[0]) * latitude_delta / (end[0] + 360.0 - start[0]),
-            7,
-        )
-    else:
-        return round(
-            start[1]
-            + (start[0] + 180.0) * latitude_delta / (start[0] + 360.0 - end[0]),
-            7,
-        )
+    start_distance = 180.0 - abs(start[0])
+    end_distance = 180.0 - abs(end[0])
+    total_distance = start_distance + end_distance
+    
+    return round(
+        start[1] +
+        start_distance * latitude_delta / total_distance,
+        7
+    )
+
 
 
 def extend_over_poles(
