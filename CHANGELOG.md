@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.4]
+
+### Fixed
+
+- Project url ([#106](https://github.com/gadomski/antimeridian/issues/106))
+
 ## [0.3.3] - 2023-08-21
 
 ### Fixed
