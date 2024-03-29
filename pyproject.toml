@@ -15,7 +15,7 @@ dependencies = ["numpy>=1.17.4", "shapely>=2.0"]
 
 [project.urls]
 Documentation = "https://antimeridian.readthedocs.io"
-Github = "https://github.com/gadomski/antimeridan"
+Github = "https://github.com/gadomski/antimeridian"
 Changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
