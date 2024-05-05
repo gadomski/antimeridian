@@ -6,11 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.5] - 2024-05-05
+
 ### Fixed
 
 - Correct the case when neighboring points are on 180 and -180 and are not part of a latitude band ([#114](https://github.com/gadomski/antimeridian/pull/114))
 
-## [0.3.4]
+## [0.3.4] - 2024-03-29
 
 ### Fixed
 
@@ -126,7 +128,9 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.3...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.5...HEAD
+[0.3.5]: https://github.com/gadomsk/antimeridian/compare/v0.3.4...v0.3.5
+[0.3.4]: https://github.com/gadomsk/antimeridian/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/gadomsk/antimeridian/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/gadomsk/antimeridian/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/gadomsk/antimeridian/compare/v0.3.0...v0.3.1

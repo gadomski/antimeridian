@@ -1,6 +1,6 @@
 [project]
 name = "antimeridian"
-version = "0.3.4"
+version = "0.3.5"
 authors = [{ name = "Pete Gadomski", email = "pete.gadomski@gmail.com" }]
 description = "Fix GeoJSON geometries that cross the antimeridian"
 readme = "README.md"
@@ -26,7 +26,7 @@ dev = [
     "pre-commit~=3.2",
     "pytest~=8.0",
     "pytest-console-scripts~=1.3",
-    "ruff==0.4.2",
+    "ruff~=0.4.2",
     "tomli~=2.0; python_version<'3.11'",
     "typing_extensions; python_version<'3.10'",
 ]

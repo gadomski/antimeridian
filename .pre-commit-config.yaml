@@ -12,7 +12,7 @@ repos:
       - id: mypy
         additional_dependencies:
           - click~=8.1.6
-          - pytest~=7.3
+          - pytest~=8.0
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.3.4
     hooks:
