@@ -60,7 +60,7 @@ ignore_missing_imports = true
 filterwarnings = ["error"]
 
 [tool.ruff]
-select = ["F", "E", "W", "I", "ERA", "RUF"]
+lint.select = ["F", "E", "W", "I", "ERA", "RUF"]
 
 [build-system]
 requires = ["setuptools >= 64"]
