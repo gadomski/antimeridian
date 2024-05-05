@@ -381,8 +381,10 @@ def fix_polygon_to_list(
     force_south_pole: bool,
     fix_winding: bool,
 ) -> List[Polygon]:
-    segments = segment(list(polygon.exterior.coords))
+    exterior = normalize(list(polygon.exterior.coords))
+    segments = segment(exterior)
     if not segments:
+        polygon = Polygon(shell=exterior, holes=polygon.interiors)
         if fix_winding and (
             not shapely.is_ccw(polygon.exterior)
             or any(shapely.is_ccw(interior) for interior in polygon.interiors)
@@ -425,18 +427,40 @@ def fix_polygon_to_list(
     return polygons
 
 
-def segment(coords: List[XY]) -> List[List[XY]]:
-    segment = []
-    segments = []
+def normalize(coords: List[XY]) -> List[XY]:
+    original = list(coords)
+    all_are_on_antimeridian = True
     for i, point in enumerate(coords):
         # Ensure all longitudes are between -180 and 180, and that tiny floating
         # point differences are ignored.
         if numpy.isclose(point[0], 180):
-            coords[i] = (180, point[1])
+            # https://github.com/gadomski/antimeridian/issues/81
+            if abs(coords[i][1]) != 90 and numpy.isclose(
+                coords[(i - 1) % len(coords)][0], -180
+            ):
+                coords[i] = (-180, point[1])
+            else:
+                coords[i] = (180, point[1])
         elif numpy.isclose(point[0], -180):
-            coords[i] = (-180, point[1])
+            # https://github.com/gadomski/antimeridian/issues/81
+            if abs(coords[i][1]) != 90 and numpy.isclose(
+                coords[(i - 1) % len(coords)][0], 180
+            ):
+                coords[i] = (180, point[1])
+            else:
+                coords[i] = (-180, point[1])
         else:
             coords[i] = (((point[0] + 180) % 360) - 180, point[1])
+            all_are_on_antimeridian = False
+    if all_are_on_antimeridian:
+        return original
+    else:
+        return coords
+
+
+def segment(coords: List[XY]) -> List[List[XY]]:
+    segment = []
+    segments = []
     for start, end in zip(coords, coords[1:]):
         segment.append(start)
         if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left

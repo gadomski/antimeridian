@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Correct the case when neighboring points are on 180 and -180 and are not part of a latitude band ([#114](https://github.com/gadomski/antimeridian/pull/114))
+
 ## [0.3.4]
 
 ### Fixed
