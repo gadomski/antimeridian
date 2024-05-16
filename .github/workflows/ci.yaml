@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous integration
 
 concurrency:
   group: ${{ github.ref }}
@@ -44,14 +44,10 @@ jobs:
         with:
           python-version: "3.8"
           cache: "pip"
-      - name: Install geos
-        run: sudo apt-get install libgeos-dev
+      - name: Insall uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: Install with development dependencies
-        run: pip install .[cli,dev]
-      - name: Install minimum versions of dependencies
-        run: scripts/install-min-dependencies
-      - name: Check with pre-commit
-        run: pre-commit run --all-files
+        run: uv pip install .[cli,dev] --resolution lowest-direct --system
       - name: Test
         run: pytest
   docs:
