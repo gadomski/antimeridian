@@ -157,3 +157,10 @@ def test_centroid_split_with_shift(read_input: Reader) -> None:
     centroid = cast(Point, antimeridian.centroid(input))
     assert centroid.x == -179
     assert centroid.y == 45
+
+
+def test_z_coordinates() -> None:
+    # https://github.com/gadomski/antimeridian/issues/115
+    polygon = Polygon([[0, 0, 1], [10, 0, 2], [10, 10, 3], [0, 10, 4]])
+    fixed = antimeridian.fix_polygon(polygon)
+    assert fixed.has_z
