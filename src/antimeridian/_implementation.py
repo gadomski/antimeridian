@@ -452,6 +452,10 @@ def normalize(coords: List[XY]) -> List[XY]:
         else:
             coords[i] = (((point[0] + 180) % 360) - 180, point[1])
             all_are_on_antimeridian = False
+        if len(point) > 2:
+            point_as_list = list(coords[i])
+            point_as_list.extend(point[2:])
+            coords[i] = tuple(point_as_list)
     if all_are_on_antimeridian:
         return original
     else:

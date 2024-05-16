@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Preserve z coordinates ([#116](https://github.com/gadomski/antimeridian/pull/116))
+
 ## [0.3.5] - 2024-05-05
 
 ### Fixed
