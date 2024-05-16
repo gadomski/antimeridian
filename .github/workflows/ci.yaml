@@ -16,8 +16,9 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        # We can't just install without the cli extra, because black depends on click
-        with-click: [true, false]
+        extras:
+          - "dev"
+          - "cli,dev"
         python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - name: Checkout
@@ -28,10 +29,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
       - name: Install with development dependencies
-        run: pip install .[cli,dev]
-      - name: Uninstall click
-        if: ${{ !matrix.with-click }}
-        run: pip uninstall -y click
+        run: pip install .[${{ matrix.extras }}]
       - name: Check with pre-commit
         run: pre-commit run --all-files
       - name: Test
