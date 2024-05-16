@@ -9,6 +9,11 @@ keywords = ["geojson", "antimeridian", "shapely"]
 license = { text = "Apache-2.0" }
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Development Status :: 4 - Beta",
 ]
 dependencies = ["numpy>=1.17.4", "shapely>=2.0"]
