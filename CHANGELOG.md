@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.6] - 2024-05-16
+
 ### Fixed
 
 - Preserve z coordinates ([#116](https://github.com/gadomski/antimeridian/pull/116))
@@ -132,7 +134,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.5...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.6...HEAD
+[0.3.6]: https://github.com/gadomsk/antimeridian/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/gadomsk/antimeridian/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/gadomsk/antimeridian/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/gadomsk/antimeridian/compare/v0.3.2...v0.3.3

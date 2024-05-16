@@ -1,6 +1,6 @@
 [project]
 name = "antimeridian"
-version = "0.3.5"
+version = "0.3.6"
 authors = [{ name = "Pete Gadomski", email = "pete.gadomski@gmail.com" }]
 description = "Fix GeoJSON geometries that cross the antimeridian"
 readme = "README.md"
