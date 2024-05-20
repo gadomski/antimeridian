@@ -43,7 +43,7 @@ docs = [
     "pydata-sphinx-theme~=0.13",
     "scipy~=1.12",
     "sphinx~=7.0",
-    "sphinx-click~=5.0",
+    "sphinx-click~=6.0",
 ]
 
 [project.scripts]
