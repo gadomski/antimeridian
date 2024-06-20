@@ -14,7 +14,7 @@ repos:
           - click~=8.1.6
           - pytest~=8.0
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.4.4
+    rev: v0.4.9
     hooks:
       - id: ruff
         types_or: [python, pyi, jupyter]
