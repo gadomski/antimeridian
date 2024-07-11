@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import copy
 import warnings
+from collections import namedtuple
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
 
 import numpy
@@ -510,6 +511,9 @@ def crossing_latitude(start: XY, end: XY) -> float:
         )
 
 
+IndexAndLatitude = namedtuple("IndexAndLatitude", "index latitude")
+
+
 def extend_over_poles(
     segments: List[List[XY]],
     *,
@@ -517,38 +521,65 @@ def extend_over_poles(
     force_south_pole: bool,
     fix_winding: bool,
 ) -> List[List[XY]]:
-    left_starts = list()
-    right_starts = list()
-    left_ends = list()
-    right_ends = list()
+    left_start = None
+    right_start = None
+    left_end = None
+    right_end = None
     for i, segment in enumerate(segments):
-        if segment[0][0] == -180:
-            left_starts.append((i, segment[0][1]))
-        else:
-            right_starts.append((i, segment[0][1]))
-        if segment[-1][0] == -180:
-            left_ends.append((i, segment[-1][1]))
-        else:
-            right_ends.append((i, segment[-1][1]))
-    left_ends.sort(key=lambda v: v[1])
-    left_starts.sort(key=lambda v: v[1])
-    right_ends.sort(key=lambda v: v[1], reverse=True)
-    right_starts.sort(key=lambda v: v[1], reverse=True)
+        if segment[0][0] == -180 and (
+            left_start is None or segment[0][1] < left_start.latitude
+        ):
+            left_start = IndexAndLatitude(i, segment[0][1])
+        elif segment[0][0] == 180 and (
+            right_start is None or segment[0][1] > right_start.latitude
+        ):
+            right_start = IndexAndLatitude(i, segment[0][1])
+        if segment[-1][0] == -180 and (
+            left_end is None or segment[-1][1] < left_end.latitude
+        ):
+            left_end = IndexAndLatitude(i, segment[-1][1])
+        elif segment[-1][0] == 180 and (
+            right_end is None or segment[-1][1] > right_end.latitude
+        ):
+            right_end = IndexAndLatitude(i, segment[-1][1])
+
     is_over_north_pole = False
     is_over_south_pole = False
     original_segments = copy.deepcopy(segments)
+
     # If there's no segment ends between a start and the pole, extend the
     # segment over the pole.
-    if left_ends and (
-        force_south_pole or not left_starts or left_ends[0][1] < left_starts[0][1]
-    ):
-        is_over_south_pole = True
-        segments[left_ends[0][0]] += [(-180, -90), (180, -90)]
-    if right_ends and (
-        force_north_pole or not right_starts or right_ends[0][1] > right_starts[0][1]
-    ):
-        is_over_north_pole = True
-        segments[right_ends[0][0]] += [(180, 90), (-180, 90)]
+    if left_end:
+        if (
+            (force_north_pole and not force_south_pole)
+            and not right_end  # Total hack to skip the force if we're going to
+            # add points later from the right side
+            and (not left_start or left_end.latitude > left_start.latitude)
+        ):
+            is_over_north_pole = True
+            segments[left_end.index] += [(-180, 90), (180, 90)]
+            segments[left_end.index].reverse()
+        elif (
+            force_south_pole
+            or not left_start
+            or left_end.latitude < left_start.latitude
+        ):
+            is_over_south_pole = True
+            segments[left_end.index] += [(-180, -90), (180, -90)]
+    if right_end:
+        if (force_south_pole and not force_north_pole) and (
+            not right_start or right_end.latitude < right_start.latitude
+        ):
+            is_over_south_pole = True
+            segments[right_end.index] += [(180, -90), (-180, -90)]
+            segments[right_end.index].reverse()
+        elif (
+            force_north_pole
+            or not right_start
+            or right_end.latitude > right_start.latitude
+        ):
+            is_over_north_pole = True
+            segments[right_end.index] += [(180, 90), (-180, 90)]
     if fix_winding and is_over_north_pole and is_over_south_pole:
         # These assertions are here because we're assuming that we set
         # `fix_winding` to `False` up in `fix_polygon` if either of the

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Forcing the north or the south pole wasn't working in some cases ([#125](https://github.com/gadomski/antimeridian/pull/125))
+
 ## [0.3.7] - 2024-06-20
 
 ### Fixed
