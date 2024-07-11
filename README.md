@@ -7,7 +7,7 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
-<img src="docs/img/complex-split.png" style="width: 600px;" alt="Demonstration image" />
+<img src="https://github.com/gadomski/antimeridian/blob/main/docs/img/complex-split.png?raw=true" style="width: 600px;" alt="Demonstration image" />
 
 Fix shapes that cross the antimeridian.
 See [the documentation](https://antimeridian.readthedocs.io) for information about the underlying algorithm.
