@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Temporarily ceil **numpy** to avoid <https://github.com/shapely/shapely/issues/2098> ([#131](https://github.com/gadomski/antimeridian/pull/131))
+
 ## [0.3.8] - 2024-07-11
 
 ### Fixed
