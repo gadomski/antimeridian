@@ -28,7 +28,7 @@ cli = ["click~=8.1.6"]
 dev = [
     "mypy~=1.2",
     "packaging~=24.0",
-    "pre-commit~=3.2",
+    "pre-commit~=4.0",
     "pytest~=8.0",
     "pytest-console-scripts~=1.4",
     "ruff~=0.6.1",
