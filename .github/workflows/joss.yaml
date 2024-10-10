@@ -1,0 +1,26 @@
+name: JOSS paper
+
+on:
+  pull_request:
+    paths:
+      - docs/paper.*
+  push:
+    branches:
+      - main
+    paths:
+      - docs/paper.*
+
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    name: JOSS paper
+    steps:
+      - uses: actions/checkout@v4
+      - uses: openjournals/openjournals-draft-action@master
+        with:
+          journal: joss
+          paper-path: docs/paper.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paper
+          path: docs/paper.pdf
