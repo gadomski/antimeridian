@@ -663,7 +663,9 @@ def is_self_closing(segment: List[XY]) -> bool:
     )
 
 
-def bbox(shape: Dict[str, Any] | GeoInterface) -> List[float]:
+def bbox(
+    shape: Dict[str, Any] | GeoInterface, force_over_antimeridian: bool = False
+) -> List[float]:
     """Calculates a GeoJSON-spec conforming bounding box for a shape.
 
     Per `the GeoJSON spec
@@ -673,6 +675,7 @@ def bbox(shape: Dict[str, Any] | GeoInterface) -> List[float]:
 
     Args:
         shape: The polygon or multipolygon for which to calculate the bounding box.
+        force_over_antimeridan: Force the bounding box to be over the antimeridian.
 
     Returns:
         List[float]: The bounding box.
@@ -697,7 +700,7 @@ def bbox(shape: Dict[str, Any] | GeoInterface) -> List[float]:
             if is_coincident_to_antimeridian(polygon):
                 crosses_antimeridian = True
 
-        if crosses_antimeridian:
+        if crosses_antimeridian or force_over_antimeridian:
             return [max(xmins), ymin, min(xmaxs), ymax]
         else:
             return [min(xmins), ymin, max(xmaxs), ymax]

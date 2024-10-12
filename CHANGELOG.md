@@ -6,9 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- Temporarily ceil **numpy** to avoid <https://github.com/shapely/shapely/issues/2098> ([#131](https://github.com/gadomski/antimeridian/pull/131))
+- `force_over_antimeridian` argument to `bbox` ([#142](https://github.com/gadomski/antimeridian/pull/142))
 
 ## [0.3.8] - 2024-07-11
 
