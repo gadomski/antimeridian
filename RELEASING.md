@@ -1,6 +1,7 @@
 # Releasing
 
-1. Determine the next version. Try to follow [semantic versioning](https://semver.org/).
+1. Determine the next version.
+   We adhere to [semantic versioning](https://semver.org/).
    Our public API is every importable Python function and class, except for `antimeridian.main` -- the CLI is not part of the API, and can break at any time.
 2. Create a branch named `release/vX.Y.Z`.
 3. Update:
