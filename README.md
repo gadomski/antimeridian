@@ -22,7 +22,7 @@ Can fix:
 ## Usage
 
 ```shell
-pip install antimeridian
+python -m pip install antimeridian
 ```
 
 Then:
@@ -41,24 +41,25 @@ See [the documentation](https://antimeridian.readthedocs.io/) for a complete API
 Use the `cli` optional dependency to install the `antimeridian` CLI:
 
 ```shell
-pip install 'antimeridian[cli]'
+python -m pip install 'antimeridian[cli]'
 antimeridian fix input.json > output.json
 ```
 
 ## Developing
 
-Clone and install in editable mode with the development optional dependencies:
+Get [uv](https://docs.astral.sh/uv/getting-started/installation/).
+Then:
 
 ```shell
 git clone https://github.com/gadomski/antimeridian
 cd antimeridian
-pip install -e '.[dev,docs]'
+uv sync
 ```
 
 We use [pytest](https://docs.pytest.org) for tests:
 
 ```shell
-pytest
+uv run pytest
 ```
 
 We use [Sphinx](https://www.sphinx-doc.org) for docs:
