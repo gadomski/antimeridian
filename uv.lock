@@ -28,7 +28,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", marker = "extra == 'cli'", specifier = ">=8.1.6" },
-    { name = "numpy", specifier = ">=1.20.3" },
+    { name = "numpy", specifier = ">=1.22.4" },
     { name = "shapely", specifier = ">=2.0" },
 ]
 
