@@ -4,15 +4,15 @@ version = "0.3.8"
 authors = [{ name = "Pete Gadomski", email = "pete.gadomski@gmail.com" }]
 description = "Fix GeoJSON geometries that cross the antimeridian"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 keywords = ["geojson", "antimeridian", "shapely"]
 license = { text = "Apache-2.0" }
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Development Status :: 4 - Beta",
 ]
 dependencies = ["numpy>=1.20.3", "shapely>=2.0"]
@@ -23,27 +23,7 @@ Github = "https://github.com/gadomski/antimeridian"
 Changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-cli = ["click~=8.1.6"]
-dev = [
-    "mypy~=1.2",
-    "packaging~=24.0",
-    "pre-commit~=4.0",
-    "pytest~=8.0",
-    "pytest-console-scripts~=1.4",
-    "ruff~=0.6.1",
-    "tomli~=2.0; python_version<'3.11'",
-    "typing_extensions; python_version<'3.10'",
-]
-docs = [
-    "cartopy~=0.21",
-    "ipykernel~=6.22",
-    "jupytext~=1.14",
-    "nbsphinx~=0.9",
-    "pydata-sphinx-theme~=0.13",
-    "scipy~=1.12",
-    "sphinx~=8.0",
-    "sphinx-click~=6.0",
-]
+cli = ["click>=8.1.6"]
 
 [project.scripts]
 antimeridian = "antimeridian._cli:cli"
@@ -66,5 +46,17 @@ filterwarnings = ["error"]
 [tool.ruff]
 lint.select = ["F", "E", "W", "I", "ERA", "RUF"]
 
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.2",
+    "packaging>=24.0",
+    "pre-commit>=4.0",
+    "pytest-console-scripts>=1.4",
+    "pytest>=8.0",
+    "ruff>=0.6.1",
+]
+
+
 [build-system]
-requires = ["setuptools >= 64"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

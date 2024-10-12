@@ -4,8 +4,14 @@ channels:
 dependencies:
   - cartopy~=0.21
   - geos~=3.11
+  - ipykernel~=6.22
+  - jupytext~=1.14
+  - nbsphinx!=0.9
   - pandoc<3
   - pip~=22.3
+  - pydata-sphinx-theme>=0.13
   - scipy~=1.10.0 # need to stay below 1.11 due to https://github.com/SciTools/cartopy/issues/2199
+  - sphinx~=8.0
+  - sphinx-click>=6.0
   - pip:
-      - ..[docs]
+      - ..
