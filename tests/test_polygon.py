@@ -1,11 +1,12 @@
 from typing import cast
 
-import antimeridian
 import pytest
 import shapely.affinity
 import shapely.geometry
-from antimeridian import FixWindingWarning
 from shapely.geometry import MultiPolygon, Point, Polygon
+
+import antimeridian
+from antimeridian import FixWindingWarning
 
 from .conftest import Reader
 

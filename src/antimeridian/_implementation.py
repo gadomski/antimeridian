@@ -9,6 +9,7 @@ module can change at any time without warning.
 from __future__ import annotations
 
 import copy
+import itertools
 import warnings
 from collections import namedtuple
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
@@ -467,7 +468,7 @@ def normalize(coords: List[XY]) -> List[XY]:
 def segment(coords: List[XY]) -> List[List[XY]]:
     segment = []
     segments = []
-    for start, end in zip(coords, coords[1:]):
+    for start, end in itertools.pairwise(coords):
         segment.append(start)
         if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left
             latitude = crossing_latitude(start, end)

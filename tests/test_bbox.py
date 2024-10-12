@@ -1,7 +1,8 @@
 from typing import List
 
-import antimeridian
 import pytest
+
+import antimeridian
 
 from .conftest import Reader
 
