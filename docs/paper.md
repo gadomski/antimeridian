@@ -24,8 +24,7 @@ bibliography: paper.bib
 ## Summary
 
 Locations on and around planet Earth are commonly represented in a geodetic coordinate system with a longitude, a latitude, and a height. 
-Longitude, the "horizontal" dimension, covers the domain from -180° to 180° or 0° and 360°.
-Where the two domain bounds meet is known as the _180th meridian_ or the _antimeridian_.
+Longitude is the "horizontal" dimension with a domain from -180° to 180°, which spans the entire 360° circumference of the planet. Where the two domain bounds meet is known as the _180th meridian_ or the _antimeridian_.
 
 ![Earth map centered on the Pacific ocean, with the 180th meridian highlighted.](./img/antimeridian.jpg)
 
