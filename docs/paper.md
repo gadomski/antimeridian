@@ -1,5 +1,5 @@
 ---
-title: "antimeridian: A Python package for fixing geometries that cross the 180th meridian"
+title: "antimeridian: A Python package for correcting geometries that cross the 180th meridian"
 tags:
   - Python
   - geospatial
