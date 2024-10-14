@@ -23,7 +23,7 @@ bibliography: paper.bib
 
 ## Summary
 
-Locations on and around planet Earth can be represented in a geodetic coordinate system by a latitude, a longitude, and a height.
+Locations on and around planet Earth are commonly represented in a geodetic coordinate system with a longitude, a latitude, and a height. 
 Longitude, the "horizontal" dimension, covers the domain from -180° to 180° or 0° and 360°.
 Where the two domain bounds meet is known as the _180th meridian_ or the _antimeridian_.
 
