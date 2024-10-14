@@ -28,16 +28,18 @@ Longitude is the "horizontal" dimension with a domain from -180° to 180°, whic
 
 ![Earth map centered on the Pacific ocean, with the 180th meridian highlighted.](./img/antimeridian.jpg)
 
-The GeoJSON specification [@10.17487/RFC7946] describes how antimeridian-crossing shapes should be represented.
-For a variety of reasons, real-world geometries often do not comply with the specification, leading to confusing and unrepresentable geometries.
+The GeoJSON specification [@10.17487/RFC7946] describes how antimeridian-crossing shapes should be split into multiple shapes at the 180th meridian.
+Real-world geometries often do not comply with the specification, often due to projected coordinates being naively reprojected to geodetic coordinates systems.
+This leads confusing and unrepresentable geometries.
 Our **antimeridan** package provides Python functions for correcting improper geometries, as well as other related utilities.
 
 ## Statement of need
 
-Due to a variety of factors, including the relative lack of populated settlements on the other side of the world, the Prime Meridian (0°) runs through Greenwich, England [@alma992356353405961].
+Because of the relative lack of populated settlements on the other side of the world, the proliferation of British maps in the late 19th century, and more, the Prime Meridian (0°) runs through Greenwich, England [@alma992356353405961].
 Before the advent of satellite imagery, relatively few geospatial products crossed the 180th meridian, and so the problem of antimeridian-crossing geometries was usually avoidable.
-The proliferation of satellite remote sensing products, including Earth Observation (EO) imagery, coupled with the ubiquity of interactive online maps, the antimeridian has become a feature that can appear on almost anyone's tablet, web portal, or desktop Geographic Information System (GIS) software.
-There is a a need to create and fix antimeridian-crossing geometries at scale, e.g. for large SpatioTemporal Asset Catalog (STAC) [@STAC_Contributors_SpatioTemporal_Asset_Catalog_2024] catalogs that are used to search and discover petabytes of geospatial data.
+Now, satellite systems are producing data over the entire globe at an ever-increasing scale, meaning that more and more data exist that cross over the 180th meridian.
+At the same time, the combination of these products with interactive online maps has made the antimeridian a feature that can appear on almost anyone's tablet, web portal, or mapping app.
+There is a a need to create and correct antimeridian-crossing geometries at scale, e.g. for large SpatioTemporal Asset Catalog (STAC) [@STAC_Contributors_SpatioTemporal_Asset_Catalog_2024] catalogs that are used to search and discover petabytes of geospatial data.
 When creating these catalogs, improper antimeridian-crossing geometries need to be corrected before ingesting to a data store to ensure that queries do not break and visualizations do not go haywire.
 This is the problem for which **antimeridian** was designed.
 
@@ -45,6 +47,8 @@ To the best of our knowledge, the [algorithm](https://antimeridian.readthedocs.i
 Briefly, it breaks each polygon into segments and finds where a segment might cross the antimeridian.
 It then breaks that segment at that crossing point and closes that segment along the antimeridian to create a new polygon.
 This results in a multi polygon split on the antimeridian, as the GeoJSON specification requires.
+
+![A complex shape that has not been split on the antimeridian](./img/complex-split-uncorrected.png)
 
 ![A complex shape split at the antimeridian](./img/complex-split.png)
 
