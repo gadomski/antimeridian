@@ -70,7 +70,7 @@ make -C docs html
 
 ## Contributing
 
-Github [issues](https://github.com/gadomski/antimeridian/issues) and [pull requests](https://github.com/gadomski/antimeridian/pulls), please and thank you!
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
