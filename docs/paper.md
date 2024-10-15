@@ -45,14 +45,18 @@ This is the problem for which **antimeridian** was designed.
 
 To the best of our knowledge, the [algorithm](https://antimeridian.readthedocs.io/en/stable/the-algorithm.html) underlying **antimeridian** is a novel one.
 Briefly, it breaks each polygon into segments and finds where a segment might cross the antimeridian.
-It then breaks that segment at that crossing point and closes that segment along the antimeridian to create a new polygon.
+It splits that segment at the crossing point and closes each half of the segment along the antimeridian.
 This results in a multi polygon split on the antimeridian, as the GeoJSON specification requires.
 
 ![A complex shape that has not been split on the antimeridian](./img/complex-split-uncorrected.png)
 
 ![A complex shape split at the antimeridian](./img/complex-split.png)
 
-The library also includes utilities for calculating centriods from antimeridian-crossing geometries and generating valid GeoJSON antimeridian-crossing bounding boxes.
+Our algorithm has some limitations.
+While it can handle simple geometries that enclose the north or south pole, complex geometries can [cause failures](https://antimeridian.readthedocs.io/en/stable/failure-modes.html).
+Another failure mode occurs when geometries contain segments that span more than half of the globe.
+
+In addition to correcting GeoJSON geometries that cross the antimeridian, our library includes utilities for calculating the centriod of an antimeridian-crossing geometry and generating valid GeoJSON antimeridian-crossing bounding boxes.
 It has been ported to Go by another developer at [go-geospatial/antimeridian](https://pkg.go.dev/github.com/go-geospatial/antimeridian).
 
 ## Key references
