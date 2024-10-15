@@ -1,8 +1,7 @@
 from typing import List
 
-import pytest
-
 import antimeridian
+import pytest
 
 from .conftest import Reader
 
@@ -14,6 +13,7 @@ from .conftest import Reader
         ("split", [170, 40, -170, 50]),
         ("multi-no-antimeridian", [90, 10, 100, 50]),
         ("north-pole", [-180, 40, 180, 90]),
+        ("ocean", [-180.0, -85.609, 180.0, 90.0]),
     ],
 )
 def test_bbox(read_output: Reader, name: str, expected: List[float]) -> None:
