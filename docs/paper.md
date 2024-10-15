@@ -40,7 +40,7 @@ Before the advent of satellite imagery, relatively few geospatial products cross
 Now, satellite systems are producing data over the entire globe at an ever-increasing scale, meaning that more and more data exist that cross over the 180th meridian.
 At the same time, the combination of these products with interactive online maps has made the antimeridian a feature that can appear on almost anyone's tablet, web portal, or mapping app.
 There is a a need to create and correct antimeridian-crossing geometries at scale, e.g. for large SpatioTemporal Asset Catalog (STAC) [@STAC_Contributors_SpatioTemporal_Asset_Catalog_2024] catalogs that are used to search and discover petabytes of geospatial data.
-When creating these catalogs, improper antimeridian-crossing geometries need to be corrected before ingesting to a data store to ensure that queries do not break and visualizations do not go haywire.
+When creating these catalogs, improper antimeridian-crossing geometries need to be corrected before ingesting to a data store to ensure that queries do not break and visualizations do not incorrectly span the entire globe, often with chaotic representations.
 This is the problem for which **antimeridian** was designed.
 
 To the best of our knowledge, the [algorithm](https://antimeridian.readthedocs.io/en/stable/the-algorithm.html) underlying **antimeridian** is a novel one.
