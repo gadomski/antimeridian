@@ -35,7 +35,7 @@ Our **antimeridan** package provides Python functions for correcting improper ge
 
 ## Statement of need
 
-Because of the relative lack of populated settlements on the other side of the world, the proliferation of British maps in the late 19th century, and more, the Prime Meridian (0°) runs through Greenwich, England [@alma992356353405961].
+Because of factors such as the relative lack of populated settlements along the 180th meridian and the proliferation of British maps in the late 19th century, the Prime Meridian (0° longitude) runs through Greenwich, England [@alma992356353405961].
 Before the advent of satellite imagery, relatively few geospatial products crossed the 180th meridian, and so the problem of antimeridian-crossing geometries was usually avoidable.
 Now, satellite systems are producing data over the entire globe at an ever-increasing scale, meaning that more and more data exist that cross over the 180th meridian.
 At the same time, the combination of these products with interactive online maps has made the antimeridian a feature that can appear on almost anyone's tablet, web portal, or mapping app.
