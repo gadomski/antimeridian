@@ -30,7 +30,7 @@ Longitude is the "horizontal" dimension with a domain from -180° to 180°, whic
 
 The GeoJSON specification [@10.17487/RFC7946] describes how antimeridian-crossing shapes should be split into multiple shapes at the 180th meridian.
 Real-world geometries often do not comply with the specification, typically due to projected coordinates being naively reprojected to geodetic coordinates.
-This leads confusing and unrepresentable geometries.
+This leads to confusing and unrepresentable geometries.
 Our **antimeridan** package provides Python functions for correcting improper geometries, as well as other related utilities.
 
 ## Statement of need
