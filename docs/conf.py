@@ -18,7 +18,7 @@ extensions = [
 ]
 
 templates_path = ["_templates"]
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "paper.*"]
 
 html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
