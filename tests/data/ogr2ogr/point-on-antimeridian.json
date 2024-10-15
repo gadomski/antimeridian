@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "point-on-antimeridian",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -176.882485120000013, -12.82925277 ], [ -173.710267320000014, -14.73835555 ], [ -176.78115373, -18.58572933 ], [ -180.0, -15.7250416 ], [ -176.882485120000013, -12.82925277 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "north-pole",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 45.0, 40.0 ], [ 135.0, 40.0 ], [ -135.0, 40.0 ], [ -45.0, 40.0 ], [ 45.0, 40.0 ] ] ] } }
+]
+}
