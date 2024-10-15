@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "one-hole",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 170.0, 40.0 ], [ -170.0, 40.0 ], [ -170.0, 60.0 ], [ 170.0, 60.0 ], [ 170.0, 40.0 ] ], [ [ 175.0, 45.0 ], [ 175.0, 55.0 ], [ -175.0, 55.0 ], [ -175.0, 45.0 ], [ 175.0, 45.0 ] ] ] } }
+]
+}
