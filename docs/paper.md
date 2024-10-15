@@ -50,7 +50,7 @@ This results in a multi polygon split on the antimeridian, as the GeoJSON specif
 
 ![A complex shape that has not been split on the antimeridian and incorrectly spans the globe](./img/complex-split-uncorrected.png)
 
-![A complex shape split at the antimeridian](./img/complex-split.png)
+![A complex shape correctly split at the antimeridian](./img/complex-split.png)
 
 Our algorithm has some limitations.
 While it can handle simple geometries that enclose the north or south pole, complex geometries can [cause failures](https://antimeridian.readthedocs.io/en/stable/failure-modes.html).
