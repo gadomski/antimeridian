@@ -67,4 +67,4 @@ It has been ported to Go by another developer at [go-geospatial/antimeridian](ht
 # Acknowledgements
 
 We acknowledge Rob Emanuele, Tom Augspurger, and Matt McFarland for the technical and financial support they provided us through the Planetary Computer program at Microsoft.
-We would also like to acknowledge our employers, Development Seed and Element 84, who support open source software through direct funding and developer contribution time.
+We also acknowledge our employers, Development Seed and Element 84, who support open source software through direct funding and developer contribution time.
