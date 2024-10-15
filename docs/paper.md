@@ -48,7 +48,7 @@ Briefly, it breaks each polygon into segments and finds where a segment might cr
 It splits that segment at the crossing point and closes each half of the segment along the antimeridian.
 This results in a multi polygon split on the antimeridian, as the GeoJSON specification requires.
 
-![A complex shape that has not been split on the antimeridian](./img/complex-split-uncorrected.png)
+![A complex shape that has not been split on the antimeridian and incorrectly spans the globe](./img/complex-split-uncorrected.png)
 
 ![A complex shape split at the antimeridian](./img/complex-split.png)
 
