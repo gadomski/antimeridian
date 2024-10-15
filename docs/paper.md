@@ -56,13 +56,16 @@ Our algorithm has some limitations.
 While it can handle simple geometries that enclose the north or south pole, complex geometries can [cause failures](https://antimeridian.readthedocs.io/en/stable/failure-modes.html).
 Another failure mode occurs when geometries contain segments that span more than half of the globe.
 
-In addition to correcting GeoJSON geometries that cross the antimeridian, our library includes utilities for calculating the centriod of an antimeridian-crossing geometry and generating valid GeoJSON antimeridian-crossing bounding boxes.
-It has been ported to Go by another developer at [go-geospatial/antimeridian](https://pkg.go.dev/github.com/go-geospatial/antimeridian).
+In addition to correcting GeoJSON geometries that cross the antimeridian, our library includes utilities for calculating the centroid of an antimeridian-crossing geometry and generating valid GeoJSON antimeridian-crossing bounding boxes.
 
 ## Key references
 
 - The **antimeridian** package relies on Shapely [@Gillies_Shapely_2024] for geometry validation, conversions, and other operations.
 - We use Cartopy [@Cartopy] to generate visualizations for our documentation.
+- This library has been ported to Go by another developer at [go-geospatial/antimeridian](https://pkg.go.dev/github.com/go-geospatial/antimeridian).
+- GDAL [@Rouault_GDAL_2024] can wrap shapes at the dateline ([`-wrapdateline`](https://gdal.org/en/latest/programs/ogr2ogr.html#cmdoption-ogr2ogr-wrapdateline)) but this functionality is significantly less feature-full than **antimeridian**.
+  In many cases, the default usage of `-wrapdateline` does not correct the shape at all.
+  We provide [test cases](https://github.com/gadomski/antimeridian/tree/e67e96dd2041575ee7cf481c7dce35b047a4c2e0/tests/data/ogr2ogr) to demonstrate the differences in output.
 
 # Acknowledgements
 

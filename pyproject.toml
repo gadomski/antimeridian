@@ -49,6 +49,8 @@ lint.select = ["F", "E", "W", "I", "ERA", "RUF"]
 
 [tool.uv]
 dev-dependencies = [
+    "cartopy>=0.24.1",
+    "matplotlib>=3.9.2",
     "mypy>=1.2",
     "packaging>=24.0",
     "pre-commit>=4.0",
