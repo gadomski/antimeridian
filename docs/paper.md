@@ -67,7 +67,7 @@ In addition to correcting GeoJSON geometries that cross the antimeridian, our li
   In many cases, the default usage of `-wrapdateline` does not correct the shape at all.
   We provide [test cases](https://github.com/gadomski/antimeridian/tree/e67e96dd2041575ee7cf481c7dce35b047a4c2e0/tests/data/ogr2ogr) to demonstrate the differences in output.
 
-# Acknowledgements
+## Acknowledgements
 
 We acknowledge Rob Emanuele, Tom Augspurger, and Matt McFarland for the technical and financial support they provided us through the Planetary Computer program at Microsoft.
 We also acknowledge our employers, Development Seed and Element 84, who support open source software through direct funding and developer contribution time.
