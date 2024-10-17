@@ -36,8 +36,8 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "cartopy" },
-    { name = "matplotlib" },
+    { name = "cartopy", specifier = ">=0.24.1" },
+    { name = "matplotlib", specifier = ">=3.9.2" },
     { name = "mypy", specifier = ">=1.2" },
     { name = "packaging", specifier = ">=24.0" },
     { name = "pre-commit", specifier = ">=4.0" },
