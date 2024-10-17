@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.11] - 2024-10-17
+
+### Fixed
+
+- Bounding boxes for globe-spanning geometries ([#150](https://github.com/gadomski/antimeridian/pull/150))
+
 ## [0.3.10] - 2024-10-17
 
 ### Added
@@ -158,7 +164,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.10...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.11...HEAD
+[0.3.11]: https://github.com/gadomsk/antimeridian/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gadomsk/antimeridian/compare/v0.3.9...v0.3.10
 [0.3.9]: https://github.com/gadomsk/antimeridian/compare/v0.3.8...v0.3.9
 [0.3.8]: https://github.com/gadomsk/antimeridian/compare/v0.3.7...v0.3.8
