@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- `bbox` subcommand to CLI ([#148](https://github.com/gadomski/antimeridian/pull/148))
+
 ## [0.3.9]
 
 ### Added
