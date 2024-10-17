@@ -697,7 +697,9 @@ def bbox(
             xmaxs.append(bounds[2])
             if bounds[3] > ymax:
                 ymax = bounds[3]
-            if is_coincident_to_antimeridian(polygon):
+            if is_coincident_to_antimeridian(polygon) and not (
+                bounds[0] == -180 and bounds[2] == 180
+            ):
                 crosses_antimeridian = True
 
         if crosses_antimeridian or force_over_antimeridian:
