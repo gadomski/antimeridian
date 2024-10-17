@@ -14,6 +14,7 @@ from .conftest import Reader
         ("split", [170, 40, -170, 50]),
         ("multi-no-antimeridian", [90, 10, 100, 50]),
         ("north-pole", [-180, 40, 180, 90]),
+        ("ocean", [-180, -85.609, 180, 90]),
     ],
 )
 def test_bbox(read_output: Reader, name: str, expected: List[float]) -> None:
