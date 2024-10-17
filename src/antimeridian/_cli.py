@@ -1,10 +1,8 @@
-import fileinput
+import sys
 
 try:
     import click
 except ImportError:
-    import sys
-
     print(
         """"The `antimeridian` command line interface depends on the click package.
 Re-install the package with the 'cli' optional dependency:
@@ -20,6 +18,7 @@ import json
 from typing import Optional
 
 import shapely.geometry
+from click import File
 
 import antimeridian
 
@@ -30,7 +29,7 @@ def cli() -> None:
 
 
 @cli.command()
-@click.argument("infile", type=str)
+@click.argument("infile", type=File("r"), default=sys.stdin)
 @click.option(
     "--force-north-pole",
     is_flag=True,
@@ -55,19 +54,15 @@ def cli() -> None:
     ),
 )
 def fix(
-    infile: str, force_north_pole: bool, force_south_pole: bool, fix_winding: bool
+    infile: File, force_north_pole: bool, force_south_pole: bool, fix_winding: bool
 ) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
     Writes the fixed GeoJSON to standard output. If the filename is ``-`` the
     input GeoJSON is read from standard input.
     """
-    data = ""
-    with fileinput.input(infile) as f:
-        for line in f:
-            data += line + "\n"
     fixed = antimeridian.fix_geojson(
-        json.loads(data),
+        json.load(infile),  # type: ignore
         force_north_pole=force_north_pole,
         force_south_pole=force_south_pole,
         fix_winding=fix_winding,
@@ -76,21 +71,34 @@ def fix(
 
 
 @cli.command()
-@click.argument("infile", type=str)
+@click.argument("infile", type=File("r"), default=sys.stdin)
 @click.option(
     "-i", "--index", help="Return the single LineString at this index", type=int
 )
-def segment(infile: str, index: Optional[int]) -> None:
+def segment(infile: File, index: Optional[int]) -> None:
     """Segments the exterior coordinates of a GeoJSON file
 
     Prints the resulting MultiLineString to standard output. Useful mostly for
     debugging problems with `fix`.
     """
-    with open(infile) as f:
-        data = json.load(f)
+    data = json.load(infile)  # type: ignore
     segments = antimeridian.segment_geojson(data)
     if index is not None:
         data = shapely.geometry.mapping(segments.geoms[index])
     else:
         data = shapely.geometry.mapping(segments)
     print(json.dumps(data))
+
+
+@cli.command()
+@click.argument("infile", type=File("r"), default=sys.stdin)
+@click.option(
+    "-f",
+    "--force-over-antimeridian",
+    help="Force the bbox to be antimeridian-spanning",
+    type=bool,
+)
+def bbox(infile: File, force_over_antimeridian: bool) -> None:
+    """Calculates the antimeridian-spanning bbox for the input geometry."""
+    shape = json.load(infile)  # type: ignore
+    print(json.dumps(antimeridian.bbox(shape)))
