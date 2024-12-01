@@ -505,35 +505,35 @@
 its input, and outputs a fixed GeoJSON dictionary to standard output.</p>
 <h2 id="installation">Installation</h2>
 <p>Install with <strong>pip</strong>:</p>
-<pre><code class="language-shell">python -m pip install 'antimeridian[cli]'
-</code></pre>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;antimeridian[cli]&#39;</span>
+</code></pre></div>
 <h2 id="usage">Usage</h2>
 <h1 id="cli">cli</h1>
 <p><strong>Usage:</strong></p>
-<pre><code class="language-text">cli [OPTIONS] COMMAND [ARGS]...
-</code></pre>
+<div class="highlight"><pre><span></span><code>cli [OPTIONS] COMMAND [ARGS]...
+</code></pre></div>
 <p><strong>Options:</strong></p>
-<pre><code class="language-text">  --help  Show this message and exit.
-</code></pre>
+<div class="highlight"><pre><span></span><code>  --help  Show this message and exit.
+</code></pre></div>
 <h2 id="bbox">bbox</h2>
 <p>Calculates the antimeridian-spanning bbox for the input geometry.</p>
 <p><strong>Usage:</strong></p>
-<pre><code class="language-text">cli bbox [OPTIONS] [INFILE]
-</code></pre>
+<div class="highlight"><pre><span></span><code>cli bbox [OPTIONS] [INFILE]
+</code></pre></div>
 <p><strong>Options:</strong></p>
-<pre><code class="language-text">  -f, --force-over-antimeridian BOOLEAN
+<div class="highlight"><pre><span></span><code>  -f, --force-over-antimeridian BOOLEAN
                                   Force the bbox to be antimeridian-spanning
   --help                          Show this message and exit.
-</code></pre>
+</code></pre></div>
 <h2 id="fix">fix</h2>
 <p>Fixes any antimeridian problems a GeoJSON file</p>
 <p>Writes the fixed GeoJSON to standard output. If the filename is <code>-</code> the
 input GeoJSON is read from standard input.</p>
 <p><strong>Usage:</strong></p>
-<pre><code class="language-text">cli fix [OPTIONS] [INFILE]
-</code></pre>
+<div class="highlight"><pre><span></span><code>cli fix [OPTIONS] [INFILE]
+</code></pre></div>
 <p><strong>Options:</strong></p>
-<pre><code class="language-text">  --force-north-pole              Force the fixed polygon to enclose the north
+<div class="highlight"><pre><span></span><code>  --force-north-pole              Force the fixed polygon to enclose the north
                                   pole
   --force-south-pole              Force the fixed polygon to enclose the south
                                   pole
@@ -542,18 +542,18 @@ input GeoJSON is read from standard input.</p>
                                   the correct counterclockwise winding order
                                   [default: fix-winding]
   --help                          Show this message and exit.
-</code></pre>
+</code></pre></div>
 <h2 id="segment">segment</h2>
 <p>Segments the exterior coordinates of a GeoJSON file</p>
 <p>Prints the resulting MultiLineString to standard output. Useful mostly for
 debugging problems with <code>fix</code>.</p>
 <p><strong>Usage:</strong></p>
-<pre><code class="language-text">cli segment [OPTIONS] [INFILE]
-</code></pre>
+<div class="highlight"><pre><span></span><code>cli segment [OPTIONS] [INFILE]
+</code></pre></div>
 <p><strong>Options:</strong></p>
-<pre><code class="language-text">  -i, --index INTEGER  Return the single LineString at this index
+<div class="highlight"><pre><span></span><code>  -i, --index INTEGER  Return the single LineString at this index
   --help               Show this message and exit.
-</code></pre>
+</code></pre></div>
 
 
 

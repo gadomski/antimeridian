@@ -548,34 +548,34 @@ Many real-world geometries, however, don't follow this recommendation.
 It's very common to create a geometry in a projected coordinate system, then reproject that geometry to WGS84 to use it in GeoJSON.
 The reprojection process usually does not split the output geometry across the antimeridian, leading to invalid geometries.
 Here's a simple example, taken from a real-world <a href="https://landsat.gsfc.nasa.gov/">Landsat</a> <a href="https://stacspec.org">STAC</a> item:</p>
-<pre><code class="language-json">{
-    &quot;type&quot;: &quot;Polygon&quot;,
-    &quot;coordinates&quot;: [
-        [
-            [
-                -179.70358951407547,
-                52.750507455036264
-            ],
-            [
-                179.96672360880183,
-                52.00163609753924
-            ],
-            [
-                -177.89334479610974,
-                50.62805205289558
-            ],
-            [
-                -179.9847165338706,
-                51.002602948712465
-            ],
-            [
-                -179.70358951407547,
-                52.750507455036264
-            ]
-        ]
-    ]
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mf">-179.70358951407547</span><span class="p">,</span>
+<span class="w">                </span><span class="mf">52.750507455036264</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mf">179.96672360880183</span><span class="p">,</span>
+<span class="w">                </span><span class="mf">52.00163609753924</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mf">-177.89334479610974</span><span class="p">,</span>
+<span class="w">                </span><span class="mf">50.62805205289558</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mf">-179.9847165338706</span><span class="p">,</span>
+<span class="w">                </span><span class="mf">51.002602948712465</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mf">-179.70358951407547</span><span class="p">,</span>
+<span class="w">                </span><span class="mf">52.750507455036264</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>As you can see, one corner of the polygon crosses the antimeridian, leading to an invalid item:</p>
 <p><img alt="Visualizing the landsat geometry is hard" src="img/landsat-problem.png" /></p>
 <p>The issue also arises when geometries cross over a pole.</p>

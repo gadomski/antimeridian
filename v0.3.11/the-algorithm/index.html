@@ -548,72 +548,72 @@ Its lower left point is at <code>-40, -20</code>, and its upper right point is a
 <p>Now let's consider the same geometry, but shifted east 180 degrees.
 Its lower-left point is <code>140, -20</code>, and its upper-right point is at <code>220, 20</code>.
 Here's its representation in GeoJSON:</p>
-<pre><code class="language-json">{
-    &quot;type&quot;: &quot;Polygon&quot;,
-    &quot;coordinates&quot;: [
-        [
-            [
-                140,
-                -20
-            ],
-            [
-                220,
-                -20
-            ],
-            [
-                220,
-                20
-            ],
-            [
-                140,
-                20
-            ],
-            [
-                140,
-                -20
-            ]
-        ]
-    ]
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">220</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">220</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>And visualized:</p>
 <p><img alt="Crossing" src="../img/crossing.png" /></p>
 <p>So far, good enough.
 However, the bounds of <a href="https://epsg.io/4326">WGS84</a>, the coordinate system used by GeoJSON, go from -180° to 180° longitude.
 This means that the upper-right coordinate of our antimeridian-crossing box should be "wrapped" to <code>-140, 20</code>:</p>
-<pre><code class="language-json">{
-    &quot;type&quot;: &quot;Polygon&quot;,
-    &quot;coordinates&quot;: [
-        [
-            [
-                140,
-                -20
-            ],
-            [
-                -140,
-                -20
-            ],
-            [
-                -140,
-                20
-            ],
-            [
-                140,
-                20
-            ],
-            [
-                140,
-                -20
-            ]
-        ]
-    ]
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">-140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">-140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">20</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">140</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">-20</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>Let's consider the four points of our "wrapped" box, and the order in which they're connected:</p>
-<pre><code class="language-text">    1              2              3            4            1
+<div class="highlight"><pre><span></span><code>    1              2              3            4            1
 
 [140, -20] -&gt; [-140, -20] -&gt; [-140, 20] -&gt; [140, 20] -&gt; [140, 20]
-</code></pre>
+</code></pre></div>
 <p>Exterior rings in GeoJSON should be wound counter-clockwise, but you can see that our antimeridian-crossing box appears to be wound clockwise.</p>
 <p><img alt="Winding" src="../img/winding.png" /></p>
 <p>This leads to a confusing situation — because it's invalid GeoJSON!
