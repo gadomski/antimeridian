@@ -7,7 +7,7 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
-<img src="https://github.com/gadomski/antimeridian/blob/main/docs/img/complex-split.png?raw=true" style="width: 600px;" alt="Demonstration image" />
+![Demonstration image](./docs/img/complex-split.png)
 
 Fix shapes that cross the antimeridian.
 See [the documentation](https://antimeridian.readthedocs.io) for information about the underlying algorithm.
@@ -62,10 +62,10 @@ We use [pytest](https://docs.pytest.org) for tests:
 uv run pytest
 ```
 
-We use [Sphinx](https://www.sphinx-doc.org) for docs:
+To build and serve the docs locally:
 
 ```shell
-make -C docs html
+uv run mkdocs serve
 ```
 
 ## Contributing

@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     permissions:
       id-token: write

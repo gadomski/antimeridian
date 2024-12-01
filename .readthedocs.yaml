@@ -1,9 +1,0 @@
-version: 2
-build:
-  os: ubuntu-22.04
-  tools:
-    python: "mambaforge-4.10"
-conda:
-  environment: docs/environment.yaml
-sphinx:
-  configuration: docs/conf.py

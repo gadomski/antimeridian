@@ -1,0 +1,34 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: "docs"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v4
+      - name: Sync
+        run: uv sync
+      - name: Deploy
+        env:
+          GIT_COMMITTER_NAME: ci-bot
+          GIT_COMMITTER_EMAIL: ci-bot@example.com
+        run: |
+          VERSION=$(git describe --tags --match="v*" --abbrev=0)
+          uv run mike deploy $VERSION latest --update-aliases --push
