@@ -63,10 +63,6 @@ plugins:
             signature_crossrefs: true
           import:
             - https://shapely.readthedocs.io/en/stable/objects.inv
-  - redirects:
-      redirect_maps:
-        "en/stable/index.md": "index.md"
-        "en/latest/index.md": "index.md"
 
 markdown_extensions:
   - pymdownx.snippets

@@ -51,20 +51,19 @@ lint.select = ["F", "E", "W", "I", "ERA", "RUF"]
 dev-dependencies = [
     "cartopy>=0.24.1",
     "matplotlib>=3.9.2",
+    "mike>=2.1.3",
+    "mkdocs-click>=0.8.1",
+    "mkdocs-jupyter>=0.25.1",
+    "mkdocs-material[imaging]>=9.5.47",
+    "mkdocstrings[python]>=0.27.0",
     "mypy>=1.2",
     "packaging>=24.0",
     "pre-commit>=4.0",
     "pytest-console-scripts>=1.4",
     "pytest>=8.0",
     "ruff>=0.6.1",
-    "mkdocs-material[imaging]>=9.5.47",
-    "mkdocs-jupyter>=0.25.1",
-    "shapely>=2.0.6",
     "scipy>=1.14.1",
-    "mkdocstrings[python]>=0.27.0",
-    "mkdocs-click>=0.8.1",
-    "mike>=2.1.3",
-    "mkdocs-redirects>=1.2.2",
+    "shapely>=2.0.6",
 ]
 
 [build-system]
