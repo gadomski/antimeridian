@@ -70,4 +70,5 @@ plugins:
 
 markdown_extensions:
   - pymdownx.snippets
+  - pymdownx.superfences
   - mkdocs-click
