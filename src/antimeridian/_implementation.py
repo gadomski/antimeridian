@@ -55,12 +55,12 @@ class FixWindingWarning(AntimeridianWarning):
 
 
 class GeoInterface(Protocol):
-    """A simple protocol for things that have a ``__geo_interface__`` method.
+    """A simple protocol for things that have a `__geo_interface__` method.
 
-    The ``__geo_interface__`` protocol is described `here
-    <https://gist.github.com/sgillies/2217756>`_, and is used within `shapely
-    <https://shapely.readthedocs.io/en/stable/manual.html>`_ to
-    extract geometries from objects.
+    The `__geo_interface__` protocol is described
+    [here](https://gist.github.com/sgillies/2217756>), and is used within
+    [shapely](https://shapely.readthedocs.io/en/stable/manual.html) to extract
+    geometries from objects.
     """
 
     @property
@@ -78,8 +78,8 @@ def fix_geojson(
 
     If the object does not cross the antimeridian, it is returned unchanged.
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
-    ``force_south_pole``, and ``fix_winding`` arguments.
+    See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
+    `force_south_pole` and `fix_winding` arguments.
 
     Args:
         geojson: A GeoJSON object as a dictionary
@@ -170,13 +170,13 @@ def fix_shape(
 ) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
-    ``force_south_pole``, and ``fix_winding`` arguments.
+    See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
+    `force_south_pole` and `fix_winding` arguments.
 
     Args:
         shape: A polygon, multi-polygon, line string, or multi-line string,
-            either as a dictionary or as a :py:class:`GeoInterface`. Uses
-            :py:func:`shapely.geometry.shape` under the hood.
+            either as a dictionary or as a [antimeridian.GeoInterface][]. Uses
+            [shapely.geometry.shape][] under the hood.
         force_north_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the north pole.
         force_south_pole: If the polygon crosses the antimeridian, force the
@@ -242,10 +242,10 @@ def fix_multi_polygon(
     force_south_pole: bool = False,
     fix_winding: bool = True,
 ) -> MultiPolygon:
-    """Fixes a :py:class:`shapely.geometry.MultiPolygon`.
+    """Fixes a [shapely.MultiPolygon][].
 
-    See :py:func:`fix_polygon` for a description of the ``force_north_pole``,
-    ``force_south_pole``, and ``fix_winding`` arguments.
+    See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
+    `force_south_pole` and `fix_winding` arguments.
 
     Args:
         multi_polygon: The multi-polygon
@@ -277,22 +277,22 @@ def fix_polygon(
     force_south_pole: bool = False,
     fix_winding: bool = True,
 ) -> Union[Polygon, MultiPolygon]:
-    """Fixes a :py:class:`shapely.geometry.Polygon`.
+    """Fixes a [shapely.Polygon][].
 
     If the input polygon is wound clockwise, it will be fixed to be wound
-    counterclockwise _unless_ ``fix_winding`` is ``False``, in which case it
+    counterclockwise _unless_ `fix_winding` is `False` in which case it
     will be corrected by adding a counterclockwise polygon from (-180, -90) to
     (180, 90) as its exterior.
 
     In rare cases, the underlying algorithm might need a little help to fix the polygon.
     For example, a polygon that just barely crosses over a pole might have very
     few points at high latitudes, leading to ambiguous antimeridian crossing
-    points and invalid geometries. We provide two flags, ``force_north_pole``
-    and ``force_south_pole``, for those cases. Most users can ignore these
+    points and invalid geometries. We provide two flags, `force_north_pole`
+    and `force_south_pole` for those cases. Most users can ignore these
     flags.
 
-    If either ``force_north_pole`` or ``force_south_pole`` is ``True``,
-    ``fix_winding`` is set to ``False``.
+    If either `force_north_pole` or `force_south_pole` is `True`
+    `fix_winding` is set to `False`
 
     Args:
         polygon: The input polygon
@@ -329,7 +329,7 @@ def fix_polygon(
 
 
 def fix_line_string(line_string: LineString) -> Union[LineString, MultiLineString]:
-    """Fixes a :py:class:`shapely.geometry.LineString`.
+    """Fixes a [shapely.LineString][].
 
     Args:
         line_string: The input line string
@@ -346,7 +346,7 @@ def fix_line_string(line_string: LineString) -> Union[LineString, MultiLineStrin
 
 
 def fix_multi_line_string(multi_line_string: MultiLineString) -> MultiLineString:
-    """Fixes a :py:class:`shapely.geometry.MultiLineString`.
+    """Fixes a [shapely.MultiLineString][].
 
     Args:
         multi_line_string: The input multi line string
@@ -668,14 +668,14 @@ def bbox(
 ) -> List[float]:
     """Calculates a GeoJSON-spec conforming bounding box for a shape.
 
-    Per `the GeoJSON spec
-    <https://datatracker.ietf.org/doc/html/rfc7946#section-5.2>`_, an
+    Per the [GeoJSON
+    spec](https://datatracker.ietf.org/doc/html/rfc7946#section-5.2), an
     antimeridian-spanning bounding box should have its larger longitude as its
     first bounding box coordinate.
 
     Args:
         shape: The polygon or multipolygon for which to calculate the bounding box.
-        force_over_antimeridan: Force the bounding box to be over the antimeridian.
+        force_over_antimeridian: Force the bounding box to be over the antimeridian.
 
     Returns:
         List[float]: The bounding box.
@@ -715,7 +715,7 @@ def bbox(
 def centroid(shape: Dict[str, Any] | GeoInterface) -> Point:
     """Calculates the centroid for a polygon or multipolygon.
 
-    Polygons are easy, we just use :py:func:`shapely.centroid`. For
+    Polygons are easy, we just use [shapely.centroid][]. For
     multi-polygons, the antimeridian is taken into account by calculating the
     centroid from an identical multi-polygon with coordinates in [0, 360).
 

@@ -1,0 +1,69 @@
+site_name: antimeridian
+site_url: https://gadomski.github.io/antimeridian/
+site_author: Pete Gadomski
+repo_name: gadomski/antimeridian
+repo_url: https://github.com/gadomski/antimeridian
+edit_uri: edit/main/docs/
+
+extra:
+  social:
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/gadomski"
+  version:
+    provider: mike
+
+theme:
+  name: material
+  logo: img/complex-split.png
+  favicon: img/complex-split.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    primary: deep orange
+  features:
+    - content.action.edit
+    - content.code.annotate
+    - content.code.copy
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tracking
+    - search.share
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - the-algorithm.md
+  - examples.ipynb
+  - failure-modes.ipynb
+  - api.md
+  - cli.md
+
+exclude_docs: paper.md
+
+watch:
+  - docs
+  - src
+
+plugins:
+  - search
+  - social
+  - mike
+  - mkdocs-jupyter
+  - mkdocstrings:
+      enable_inventory: true
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_section_style: list
+            separate_signature: true
+            show_signature_annotations: true
+            show_symbol_type_toc: true
+            signature_crossrefs: true
+          import:
+            - https://shapely.readthedocs.io/en/stable/objects.inv
+
+markdown_extensions:
+  - pymdownx.snippets
+  - mkdocs-click
