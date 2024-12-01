@@ -1,9 +1,8 @@
 # antimeridian
 
 [![CI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge&label=CI)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
-[![Read the Docs](https://img.shields.io/readthedocs/antimeridian?style=for-the-badge)](https://antimeridian.readthedocs.io/en/stable/)
+[![Docs](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/docs.yaml?style=for-the-badge&label=Docs)](https://www.gadom.ski/antimeridian/)
 [![PyPI](https://img.shields.io/pypi/v/antimeridian?style=for-the-badge)](https://pypi.org/project/antimeridian/)
-
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
@@ -34,7 +33,7 @@ fixed = antimeridian.fix_geojson(geojson)
 ```
 
 We also have some utilities to create [bounding boxes](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.bbox) and [centroids](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.centroid) from antimeridian-crossing polygons and multipolygons.
-See [the documentation](https://antimeridian.readthedocs.io/) for a complete API reference.
+See [the documentation](https://www.gadom.ski/antimeridian/) for a complete API reference.
 
 ### Command line interface
 
