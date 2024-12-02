@@ -63,9 +63,11 @@ In addition to correcting GeoJSON geometries that cross the antimeridian, our li
 - The **antimeridian** package relies on Shapely [@Gillies_Shapely_2024] for geometry validation, conversions, and other operations.
 - We use Cartopy [@Cartopy] to generate visualizations for our documentation.
 - This library has been ported to Go by another developer at [go-geospatial/antimeridian](https://pkg.go.dev/github.com/go-geospatial/antimeridian).
-- GDAL [@Rouault_GDAL_2024] can wrap shapes at the dateline ([`-wrapdateline`](https://gdal.org/en/latest/programs/ogr2ogr.html#cmdoption-ogr2ogr-wrapdateline)) but this functionality is significantly less feature-full than **antimeridian**.
-  In many cases, the default usage of `-wrapdateline` does not correct the shape at all.
-  We provide [test cases](https://github.com/gadomski/antimeridian/tree/e67e96dd2041575ee7cf481c7dce35b047a4c2e0/tests/data/ogr2ogr) to demonstrate the differences in output.
+- GDAL [@Rouault_GDAL_2024] can wrap shapes at the dateline ([`-wrapdateline`](https://gdal.org/en/latest/programs/ogr2ogr.html#cmdoption-ogr2ogr-wrapdateline)) and can produce similar outputs to **antimeridian** if tuned with the `-datelineoffset` flag.
+  We created a [notebook](https://www.gadom.ski/antimeridian/v0.3.11/comparison/) to compare the two, and found the following:
+  - In general, `antimeridian` and `ogr2ogr` perform the same, provided `ogr2ogr` is correctly tuned with the `-datelineoffset` flag.
+  - `antimeridian` outputs the same geometry type as the input, whereas `ogr2ogr` outputs a `FeatureCollection`.
+  - `antimeridian` has functionality to handle the poles.
 
 ## Acknowledgements
 
