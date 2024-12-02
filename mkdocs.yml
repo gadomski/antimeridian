@@ -36,6 +36,7 @@ nav:
   - the-algorithm.md
   - examples.ipynb
   - failure-modes.ipynb
+  - comparison.ipynb
   - api.md
   - cli.md
 
