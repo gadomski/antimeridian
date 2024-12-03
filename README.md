@@ -6,6 +6,8 @@
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
+[![status](https://joss.theoj.org/papers/2a6c626b3774c8310e46c05fdf8d10de/status.svg)](https://joss.theoj.org/papers/2a6c626b3774c8310e46c05fdf8d10de)
+
 ![Demonstration image](./docs/img/complex-split.png)
 
 Fix shapes that cross the antimeridian.
