@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.12] - 2024-12-09
+
+### Changed
+
+- Documentation updates for [JOSS paper](https://github.com/openjournals/joss-reviews/issues/7530).
+
 ## [0.3.11] - 2024-10-17
 
 ### Fixed
@@ -164,7 +170,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.11...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.12...HEAD
+[0.3.12]: https://github.com/gadomsk/antimeridian/compare/v0.3.11...v0.3.12
 [0.3.11]: https://github.com/gadomsk/antimeridian/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gadomsk/antimeridian/compare/v0.3.9...v0.3.10
 [0.3.9]: https://github.com/gadomsk/antimeridian/compare/v0.3.8...v0.3.9
@@ -187,3 +194,5 @@ Initial release.
 [0.1.0]: https://github.com/gadomsk/antimeridian/compare/v0.0.2...v0.1.0
 [0.0.2]: https://github.com/gadomsk/antimeridian/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/gadomski/antimeridian/releases/tag/v0.0.1
+
+<!-- markdownlint-disable-file MD024 -->
