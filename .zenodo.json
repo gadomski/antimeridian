@@ -1,0 +1,19 @@
+{
+    "title": "antimeridian: A Python package for correcting geometries that cross the 180th meridian",
+    "creators": [
+        {
+            "orcid": "0000-0003-4877-7217",
+            "affiliation": "Development Seed",
+            "name": "Gadomski, Peter"
+        }
+    ],
+    "license": "Apache-2.0",
+    "contributors": [
+        {
+            "orcid": "0000-0002-8293-3706",
+            "affiliation": "Element 84",
+            "name": "Hartzell, Preston",
+            "type": "ProjectMember"
+        }
+    ]
+}
