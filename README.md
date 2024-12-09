@@ -7,6 +7,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
 [![status](https://joss.theoj.org/papers/2a6c626b3774c8310e46c05fdf8d10de/status.svg)](https://joss.theoj.org/papers/2a6c626b3774c8310e46c05fdf8d10de)
+[![DOI](https://zenodo.org/badge/626665725.svg)](https://doi.org/10.5281/zenodo.14335984)
 
 ![Demonstration image](./docs/img/complex-split.png)
 
