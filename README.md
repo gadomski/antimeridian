@@ -3,6 +3,7 @@
 [![CI Status](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/ci.yaml?style=for-the-badge&label=CI)](https://github.com/gadomski/antimeridian/actions/workflows/ci.yaml)
 [![Docs](https://img.shields.io/github/actions/workflow/status/gadomski/antimeridian/docs.yaml?style=for-the-badge&label=Docs)](https://www.gadom.ski/antimeridian/)
 [![PyPI](https://img.shields.io/pypi/v/antimeridian?style=for-the-badge)](https://pypi.org/project/antimeridian/)
+[![Conda Downloads](https://img.shields.io/conda/d/conda-forge/antimeridian?style=for-the-badge)](https://anaconda.org/conda-forge/antimeridian)
 [![GitHub](https://img.shields.io/github/license/gadomski/antimeridian?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=for-the-badge)](https://github.com/gadomski/antimeridian/blob/main/CODE_OF_CONDUCT)
 
