@@ -29,6 +29,7 @@ from shapely.geometry import (
 )
 
 XY = Tuple[float, float]
+XYZ = Tuple[float, float, float]
 
 
 class AntimeridianWarning(UserWarning):
@@ -492,11 +493,34 @@ def segment(coords: List[XY]) -> List[List[XY]]:
     return segments
 
 
-def crossing_latitude(start: XY, end: XY) -> float:
-    if abs(start[0]) == 180:
-        return start[1]
-    elif abs(end[0]) == 180:
-        return end[1]
+def spherical_degrees_to_cartesian(point: XY) -> XYZ:
+    lon, lat = numpy.deg2rad(point)
+    return (
+        float(numpy.cos(lon) * numpy.cos(lat)),
+        float(numpy.sin(lon) * numpy.cos(lat)),
+        float(numpy.sin(lat)),
+    )
+
+
+def crossing_latitude_great_circle(start: XY, end: XY) -> float:
+    # Compute a 3D vector representing the start and end points.
+    p1 = spherical_degrees_to_cartesian(start)
+    p2 = spherical_degrees_to_cartesian(end)
+    # The cross product of these vectors defines the plane passing through both points.
+    n1 = numpy.cross(p1, p2)
+    # The unit vector -Y defines the meridian plane.
+    n2 = numpy.array([0, -1, 0])
+    # The intersection of both planes is defined by their cross product, which we
+    # normalize to get its intersection with the unit sphere.
+    intersection = numpy.cross(n1, n2)
+    intersection /= numpy.linalg.norm(intersection)
+    # Convert back to spherical coordinates.
+    # We're only interested in the latitude, so the arcsin of the z-coordinate is
+    # sufficient.
+    return round(float(numpy.rad2deg(numpy.arcsin(intersection[2]))), 7)
+
+
+def crossing_latitude_flat(start: XY, end: XY) -> float:
     latitude_delta = end[1] - start[1]
     if end[0] > 0:
         return round(
@@ -510,6 +534,17 @@ def crossing_latitude(start: XY, end: XY) -> float:
             + (start[0] + 180.0) * latitude_delta / (start[0] + 360.0 - end[0]),
             7,
         )
+
+
+def crossing_latitude(start: XY, end: XY, great_circle: bool = False) -> float:
+    if abs(start[0]) == 180:
+        return start[1]
+    elif abs(end[0]) == 180:
+        return end[1]
+
+    if great_circle:
+        return crossing_latitude_great_circle(start, end)
+    return crossing_latitude_flat(start, end)
 
 
 IndexAndLatitude = namedtuple("IndexAndLatitude", "index latitude")
