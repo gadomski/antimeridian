@@ -74,6 +74,7 @@ def fix_geojson(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
+    great_circle: bool = False,
 ) -> Dict[str, Any]:
     """Fixes a GeoJSON object that crosses the antimeridian.
 
@@ -90,6 +91,8 @@ def fix_geojson(
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
             coordinates before applying the algorithm.
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Return:
         The same GeoJSON with a fixed geometry or geometries
@@ -106,6 +109,7 @@ def fix_geojson(
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
             fix_winding=fix_winding,
+            great_circle=great_circle,
         )
         return geojson
     elif type_ == "FeatureCollection":
@@ -118,6 +122,7 @@ def fix_geojson(
                 force_north_pole=force_north_pole,
                 force_south_pole=force_south_pole,
                 fix_winding=fix_winding,
+                great_circle=great_circle,
             )
         geojson["features"] = features
         return geojson
@@ -127,10 +132,11 @@ def fix_geojson(
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
             fix_winding=fix_winding,
+            great_circle=great_circle,
         )
 
 
-def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
+def segment_geojson(geojson: Dict[str, Any], great_circle: bool) -> MultiLineString:
     """Segments a GeoJSON object into a MultiLineString.
 
     If the object does not cross the antimeridian, its exterior and interior
@@ -138,6 +144,8 @@ def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
 
     Args:
         geojson: A GeoJSON object as a dictionary
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Return:
         A MutliLineString of segments.
@@ -149,17 +157,17 @@ def segment_geojson(geojson: Dict[str, Any]) -> MultiLineString:
         geometry = geojson.get("geometry", None)
         if geometry is None:
             raise ValueError("no 'geometry' field found in GeoJSON Feature")
-        return MultiLineString(segment_shape(geometry))
+        return MultiLineString(segment_shape(geometry, great_circle))
     elif type_ == "FeatureCollection":
         features = geojson.get("features", None)
         if features is None:
             raise ValueError("no 'features' field found in GeoJSON FeatureCollection")
         segments = list()
         for feature in features:
-            segments.extend(segment_geojson(feature))
+            segments.extend(segment_geojson(feature, great_circle))
         return MultiLineString(segments)
     else:
-        return MultiLineString(segment_shape(geojson))
+        return MultiLineString(segment_shape(geojson, great_circle))
 
 
 def fix_shape(
@@ -168,6 +176,7 @@ def fix_shape(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
+    great_circle: bool = False,
 ) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
@@ -184,6 +193,8 @@ def fix_shape(
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
             coordinates before applying the algorithm.
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Returns:
         The fixed shape as a dictionary
@@ -198,6 +209,7 @@ def fix_shape(
                     force_north_pole=force_north_pole,
                     force_south_pole=force_south_pole,
                     fix_winding=fix_winding,
+                    great_circle=great_circle,
                 )
             ),
         )
@@ -210,27 +222,34 @@ def fix_shape(
                     force_north_pole=force_north_pole,
                     force_south_pole=force_south_pole,
                     fix_winding=fix_winding,
+                    great_circle=great_circle,
                 )
             ),
         )
     elif geom.geom_type == "LineString":
-        return cast(Dict[str, Any], shapely.geometry.mapping(fix_line_string(geom)))
+        return cast(
+            Dict[str, Any],
+            shapely.geometry.mapping(fix_line_string(geom, great_circle)),
+        )
     elif geom.geom_type == "MultiLineString":
         return cast(
-            Dict[str, Any], shapely.geometry.mapping(fix_multi_line_string(geom))
+            Dict[str, Any],
+            shapely.geometry.mapping(fix_multi_line_string(geom, great_circle)),
         )
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
 
 
-def segment_shape(shape: Dict[str, Any] | GeoInterface) -> List[List[XY]]:
+def segment_shape(
+    shape: Dict[str, Any] | GeoInterface, great_circle: bool
+) -> List[List[XY]]:
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
-        return segment_polygon(geom)
+        return segment_polygon(geom, great_circle)
     elif geom.geom_type == "MultiPolygon":
         segments = list()
         for polygon in geom.geoms:
-            segments += segment_polygon(polygon)
+            segments += segment_polygon(polygon, great_circle)
         return segments
     else:
         raise ValueError(f"unsupported geom_type: {geom.geom_type}")
@@ -242,6 +261,7 @@ def fix_multi_polygon(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
+    great_circle: bool = False,
 ) -> MultiPolygon:
     """Fixes a [shapely.MultiPolygon][].
 
@@ -256,6 +276,8 @@ def fix_multi_polygon(
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
             coordinates before applying the algorithm.
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Returns:
         The fixed multi-polygon
@@ -267,6 +289,7 @@ def fix_multi_polygon(
             force_north_pole=force_north_pole,
             force_south_pole=force_south_pole,
             fix_winding=fix_winding,
+            great_circle=great_circle,
         )
     return MultiPolygon(polygons)
 
@@ -277,6 +300,7 @@ def fix_polygon(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
+    great_circle: bool = False,
 ) -> Union[Polygon, MultiPolygon]:
     """Fixes a [shapely.Polygon][].
 
@@ -303,6 +327,8 @@ def fix_polygon(
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
             coordinates before applying the algorithm.
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Returns:
         The fixed polygon, either as a single polygon or a multi-polygon (if it
@@ -315,6 +341,7 @@ def fix_polygon(
         force_north_pole=force_north_pole,
         force_south_pole=force_south_pole,
         fix_winding=fix_winding,
+        great_circle=great_circle,
     )
     if len(polygons) == 1:
         polygon = polygons[0]
@@ -329,35 +356,43 @@ def fix_polygon(
         return MultiPolygon(polygons)
 
 
-def fix_line_string(line_string: LineString) -> Union[LineString, MultiLineString]:
+def fix_line_string(
+    line_string: LineString, great_circle: bool
+) -> Union[LineString, MultiLineString]:
     """Fixes a [shapely.LineString][].
 
     Args:
         line_string: The input line string
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Returns:
         The fixed line string, either as a single line string or a multi-line
         string (if it was split)
     """
-    segments = segment(list(line_string.coords))
+    segments = segment(list(line_string.coords), great_circle)
     if not segments:
         return line_string
     else:
         return MultiLineString(segments)
 
 
-def fix_multi_line_string(multi_line_string: MultiLineString) -> MultiLineString:
+def fix_multi_line_string(
+    multi_line_string: MultiLineString, great_circle: bool
+) -> MultiLineString:
     """Fixes a [shapely.MultiLineString][].
 
     Args:
         multi_line_string: The input multi line string
+        great_circle: Compute meridian crossings on the sphere rather than
+            using 2D geometry.
 
     Returns:
         The fixed multi line string
     """
     line_strings = list()
     for line_string in multi_line_string.geoms:
-        fixed = fix_line_string(line_string)
+        fixed = fix_line_string(line_string, great_circle)
         if isinstance(fixed, LineString):
             line_strings.append(fixed)
         else:
@@ -365,12 +400,12 @@ def fix_multi_line_string(multi_line_string: MultiLineString) -> MultiLineString
     return MultiLineString(line_strings)
 
 
-def segment_polygon(polygon: Polygon) -> List[List[XY]]:
-    segments = segment(list(polygon.exterior.coords))
+def segment_polygon(polygon: Polygon, great_circle: bool) -> List[List[XY]]:
+    segments = segment(list(polygon.exterior.coords), great_circle)
     if not segments:
         segments = [list(polygon.exterior.coords)]
     for interior in polygon.interiors:
-        interior_segments = segment(list(interior.coords))
+        interior_segments = segment(list(interior.coords), great_circle)
         if interior_segments:
             segments.extend(interior_segments)
         else:
@@ -384,9 +419,10 @@ def fix_polygon_to_list(
     force_north_pole: bool,
     force_south_pole: bool,
     fix_winding: bool,
+    great_circle: bool,
 ) -> List[Polygon]:
     exterior = normalize(list(polygon.exterior.coords))
-    segments = segment(exterior)
+    segments = segment(exterior, great_circle)
     if not segments:
         polygon = Polygon(shell=exterior, holes=polygon.interiors)
         if fix_winding and (
@@ -400,7 +436,7 @@ def fix_polygon_to_list(
     else:
         interiors = []
         for interior in polygon.interiors:
-            interior_segments = segment(list(interior.coords))
+            interior_segments = segment(list(interior.coords), great_circle)
             if interior_segments:
                 if fix_winding:
                     unwrapped_linearring = LinearRing(
@@ -408,7 +444,9 @@ def fix_polygon_to_list(
                     )
                     if shapely.is_ccw(unwrapped_linearring):
                         FixWindingWarning.warn()
-                        interior_segments = segment(list(reversed(interior.coords)))
+                        interior_segments = segment(
+                            list(reversed(interior.coords)), great_circle
+                        )
                 segments.extend(interior_segments)
             else:
                 interiors.append(interior)
@@ -466,18 +504,18 @@ def normalize(coords: List[XY]) -> List[XY]:
         return coords
 
 
-def segment(coords: List[XY]) -> List[List[XY]]:
+def segment(coords: List[XY], great_circle: bool) -> List[List[XY]]:
     segment = []
     segments = []
     for start, end in itertools.pairwise(coords):
         segment.append(start)
         if (end[0] - start[0] > 180) and (end[0] - start[0] != 360):  # left
-            latitude = crossing_latitude(start, end)
+            latitude = crossing_latitude(start, end, great_circle)
             segment.append((-180, latitude))
             segments.append(segment)
             segment = [(180, latitude)]
         elif (start[0] - end[0] > 180) and (start[0] - end[0] != 360):  # right
-            latitude = crossing_latitude(end, start)
+            latitude = crossing_latitude(end, start, great_circle)
             segment.append((180, latitude))
             segments.append(segment)
             segment = [(-180, latitude)]
@@ -536,7 +574,7 @@ def crossing_latitude_flat(start: XY, end: XY) -> float:
         )
 
 
-def crossing_latitude(start: XY, end: XY, great_circle: bool = False) -> float:
+def crossing_latitude(start: XY, end: XY, great_circle: bool) -> float:
     if abs(start[0]) == 180:
         return start[1]
     elif abs(end[0]) == 180:
