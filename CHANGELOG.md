@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Optional `--no-great-circle` option to CLI ([#153](https://github.com/gadomski/antimeridian/issues/153))
+- Optional `great_circle` argument to geometry-fixing functions ([#153](https://github.com/gadomski/antimeridian/issues/153))
+
+### Changed
+
+- Default method for finding meridian crossings now relies on spherical geometry ([#153](https://github.com/gadomski/antimeridian/issues/153))
+
 ## [0.3.12] - 2024-12-09
 
 ### Changed
