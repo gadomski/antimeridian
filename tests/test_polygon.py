@@ -31,25 +31,39 @@ from .conftest import Reader
         "two-holes",
     ],
 )
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
 def test_fix_polygon(
     name: str,
     read_input: Reader,
     read_output: Reader,
+    subdirectory: str,
+    great_circle: bool,
 ) -> None:
     input = read_input(name)
     assert isinstance(input, Polygon)
-    output = read_output(name)
+    output = read_output(name, subdirectory)
     assert isinstance(input, Polygon) or isinstance(input, MultiPolygon)
-    fixed = antimeridian.fix_polygon(input).normalize()
+    fixed = antimeridian.fix_polygon(input, great_circle=great_circle).normalize()
     assert fixed == output.normalize()
 
 
-def test_both_poles(read_input: Reader, read_output: Reader) -> None:
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_both_poles(
+    read_input: Reader, read_output: Reader, subdirectory: str, great_circle: bool
+) -> None:
     input = read_input("both-poles")
     assert isinstance(input, Polygon)
-    output = read_output("both-poles")
+    output = read_output("both-poles", subdirectory)
     assert isinstance(input, Polygon)
-    fixed = antimeridian.fix_polygon(input, fix_winding=False).normalize()
+    fixed = antimeridian.fix_polygon(
+        input, fix_winding=False, great_circle=great_circle
+    ).normalize()
     assert fixed == output.normalize()
 
 
@@ -70,10 +84,18 @@ def test_double_fix(
     assert fixed.normalize() == output.normalize()
 
 
-def test_force_north_pole(read_input: Reader, read_output: Reader) -> None:
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_force_north_pole(
+    read_input: Reader, read_output: Reader, subdirectory: str, great_circle: bool
+) -> None:
     input = read_input("force-north-pole")
-    output = read_output("force-north-pole")
-    fixed = antimeridian.fix_polygon(input, force_north_pole=True)
+    output = read_output("force-north-pole", subdirectory)
+    fixed = antimeridian.fix_polygon(
+        input, force_north_pole=True, great_circle=great_circle
+    )
     assert fixed.normalize() == output.normalize()
 
 
@@ -85,19 +107,41 @@ def test_dont_segment_antimeridian_overlap(minx: float, maxx: float) -> None:
 
 
 @pytest.mark.parametrize("name", ("cw-only", "cw-split"))
-def test_fix_winding(read_input: Reader, read_output: Reader, name: str) -> None:
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_fix_winding(
+    read_input: Reader,
+    read_output: Reader,
+    name: str,
+    subdirectory: str,
+    great_circle: bool,
+) -> None:
     input = read_input(name)
-    output = read_output(name)
+    output = read_output(name, subdirectory)
     with pytest.warns(FixWindingWarning):
-        fixed = antimeridian.fix_polygon(input)
+        fixed = antimeridian.fix_polygon(input, great_circle=great_circle)
     assert fixed.normalize() == output.normalize()
 
 
 @pytest.mark.parametrize("name", ("cw-only", "cw-split"))
-def test_no_fix_winding(read_input: Reader, read_output: Reader, name: str) -> None:
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_no_fix_winding(
+    read_input: Reader,
+    read_output: Reader,
+    name: str,
+    subdirectory: str,
+    great_circle: bool,
+) -> None:
     input = read_input(name)
-    output = read_output(f"{name}-no-fix")
-    fixed = antimeridian.fix_polygon(input, fix_winding=False)
+    output = read_output(f"{name}-no-fix", subdirectory)
+    fixed = antimeridian.fix_polygon(
+        input, fix_winding=False, great_circle=great_circle
+    )
     assert fixed.normalize() == output.normalize()
 
 
@@ -167,11 +211,19 @@ def test_z_coordinates() -> None:
     assert fixed.has_z
 
 
-def test_force_south_pole(read_input: Reader, read_output: Reader) -> None:
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_force_south_pole(
+    read_input: Reader, read_output: Reader, subdirectory: str, great_circle: bool
+) -> None:
     # https://github.com/gadomski/antimeridian/issues/124
     input = read_input("issues-124")
-    output = read_output("issues-124")
-    fixed = antimeridian.fix_polygon(input, force_south_pole=True)
+    output = read_output("issues-124", subdirectory)
+    fixed = antimeridian.fix_polygon(
+        input, force_south_pole=True, great_circle=great_circle
+    )
     assert fixed.normalize() == output.normalize()
 
 
