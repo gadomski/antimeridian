@@ -74,7 +74,7 @@ def fix_geojson(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
-    great_circle: bool = False,
+    great_circle: bool = True,
 ) -> Dict[str, Any]:
     """Fixes a GeoJSON object that crosses the antimeridian.
 
@@ -176,7 +176,7 @@ def fix_shape(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
-    great_circle: bool = False,
+    great_circle: bool = True,
 ) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
@@ -261,7 +261,7 @@ def fix_multi_polygon(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
-    great_circle: bool = False,
+    great_circle: bool = True,
 ) -> MultiPolygon:
     """Fixes a [shapely.MultiPolygon][].
 
@@ -300,7 +300,7 @@ def fix_polygon(
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
-    great_circle: bool = False,
+    great_circle: bool = True,
 ) -> Union[Polygon, MultiPolygon]:
     """Fixes a [shapely.Polygon][].
 

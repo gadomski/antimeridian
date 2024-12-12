@@ -73,14 +73,20 @@ def test_fix_shape(read_input: Reader) -> None:
     antimeridian.fix_shape(input)
 
 
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
 def test_double_fix(
     read_input: Reader,
     read_output: Reader,
+    subdirectory: str,
+    great_circle: bool,
 ) -> None:
     input = read_input("north-pole")
-    output = read_output("north-pole")
-    fixed = antimeridian.fix_polygon(input)
-    fixed = antimeridian.fix_polygon(fixed)
+    output = read_output("north-pole", subdirectory)
+    fixed = antimeridian.fix_polygon(input, great_circle=great_circle)
+    fixed = antimeridian.fix_polygon(fixed, great_circle=great_circle)
     assert fixed.normalize() == output.normalize()
 
 
@@ -149,19 +155,26 @@ def test_no_fix_winding(
 @pytest.mark.parametrize(
     "force_north_pole,force_south_pole", [(True, False), (False, True), (True, True)]
 )
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
 def test_no_fix_winding_when_forcing_poles(
     read_input: Reader,
     read_output: Reader,
     name: str,
     force_north_pole: bool,
     force_south_pole: bool,
+    subdirectory: str,
+    great_circle: bool,
 ) -> None:
     input = read_input(name)
-    output = read_output(f"{name}-no-fix")
+    output = read_output(f"{name}-no-fix", subdirectory)
     fixed = antimeridian.fix_polygon(
         input,
         force_north_pole=force_north_pole,
         force_south_pole=force_south_pole,
+        great_circle=great_circle,
     )
     assert fixed.normalize() == output.normalize()
 
@@ -175,7 +188,7 @@ def test_fix_winding_interior_no_segments(read_input: Reader) -> None:
 
 def test_fix_winding_interior_segments(read_input: Reader, read_output: Reader) -> None:
     input = read_input("one-ccw-hole")
-    output = read_output("one-hole")
+    output = read_output("one-hole", "spherical")
     with pytest.warns(FixWindingWarning):
         fixed = antimeridian.fix_polygon(input)
     assert fixed.normalize() == output.normalize()
@@ -198,7 +211,7 @@ def test_centroid_split(read_output: Reader) -> None:
 def test_centroid_split_with_shift(read_input: Reader) -> None:
     input = read_input("split")
     input = shapely.affinity.translate(input, xoff=+1)
-    input = antimeridian.fix_polygon(input)
+    input = antimeridian.fix_polygon(input, great_circle=False)
     centroid = cast(Point, antimeridian.centroid(input))
     assert centroid.x == -179
     assert centroid.y == 45
