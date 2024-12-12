@@ -71,6 +71,7 @@ def input_path() -> Callable[[str], Path]:
 def read_output() -> Reader:
     def read_output(
         name: str,
+        subdirectory: str = "flat",
     ) -> Union[
         Point,
         MultiPoint,
@@ -81,7 +82,9 @@ def read_output() -> Reader:
         LinearRing,
         GeometryCollection,
     ]:
-        return read_file((OUTPUT_DATA_DIRECTORY / name).with_suffix(".json"))
+        return read_file(
+            (OUTPUT_DATA_DIRECTORY / subdirectory / name).with_suffix(".json")
+        )
 
     return read_output
 
