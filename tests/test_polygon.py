@@ -173,3 +173,16 @@ def test_force_south_pole(read_input: Reader, read_output: Reader) -> None:
     output = read_output("issues-124")
     fixed = antimeridian.fix_polygon(input, force_south_pole=True)
     assert fixed.normalize() == output.normalize()
+
+
+@pytest.mark.parametrize(
+    "subdirectory,great_circle", (("flat", False), ("spherical", True))
+)
+def test_great_circle(
+    read_input: Reader, read_output: Reader, subdirectory: str, great_circle: bool
+) -> None:
+    # https://github.com/gadomski/antimeridian/issues/153
+    input = read_input("great-circle")
+    output = read_output("great-circle", subdirectory)
+    fixed = antimeridian.fix_polygon(input, great_circle=great_circle)
+    assert fixed.normalize() == output.normalize()
