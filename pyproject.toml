@@ -1,8 +1,8 @@
 [project]
 name = "antimeridian"
-version = "0.3.12"
+version = "0.4.0"
 authors = [{ name = "Pete Gadomski", email = "pete.gadomski@gmail.com" }]
-description = "Fix GeoJSON geometries that cross the 180th meridian"
+description = "Correct GeoJSON geometries that cross the 180th meridian"
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = ["geojson", "antimeridian", "shapely"]
@@ -18,7 +18,7 @@ classifiers = [
 dependencies = ["numpy>=1.22.4", "shapely>=2.0"]
 
 [project.urls]
-Documentation = "https://antimeridian.readthedocs.io"
+Documentation = "https://www.gadom.ski/antimeridian"
 Github = "https://github.com/gadomski/antimeridian"
 Issues = "https://github.com/gadomski/antimeridian/issues"
 Changelog = "https://github.com/gadomski/antimeridian/blob/main/CHANGELOG.md"

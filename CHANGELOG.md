@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2024-12-17
+
 ### Added
 
 - Optional `--no-great-circle` option to CLI ([#153](https://github.com/gadomski/antimeridian/issues/153))
@@ -179,7 +181,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.3.12...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/gadomsk/antimeridian/compare/v0.3.12...v0.4.0
 [0.3.12]: https://github.com/gadomsk/antimeridian/compare/v0.3.11...v0.3.12
 [0.3.11]: https://github.com/gadomsk/antimeridian/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gadomsk/antimeridian/compare/v0.3.9...v0.3.10
