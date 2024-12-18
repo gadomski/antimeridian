@@ -1,7 +1,7 @@
 import json
-import sys
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Union
+from typing import Protocol, Union
 
 import pytest
 import shapely.geometry
@@ -16,18 +16,15 @@ from shapely.geometry import (
     Polygon,
 )
 
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
-
 TEST_DATA_DIRECTORY = Path(__file__).parent / "data"
 INPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "input"
 OUTPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "output"
 
-Reader: TypeAlias = Callable[
-    [str],
-    Union[
+
+class Reader(Protocol):
+    def __call__(
+        self, name: str, subdirectory: str | None = None
+    ) -> Union[
         Point,
         MultiPoint,
         LineString,
@@ -36,14 +33,14 @@ Reader: TypeAlias = Callable[
         MultiPolygon,
         LinearRing,
         GeometryCollection,
-    ],
-]
+    ]: ...
 
 
 @pytest.fixture
 def read_input() -> Reader:
     def read_input(
         name: str,
+        subdirectory: str | None = None,
     ) -> Union[
         Point,
         MultiPoint,
@@ -54,7 +51,8 @@ def read_input() -> Reader:
         LinearRing,
         GeometryCollection,
     ]:
-        return read_file((INPUT_DATA_DIRECTORY / name).with_suffix(".json"))
+        path = Path(subdirectory) / name if subdirectory is not None else Path(name)
+        return read_file((INPUT_DATA_DIRECTORY / path).with_suffix(".json"))
 
     return read_input
 
@@ -71,6 +69,7 @@ def input_path() -> Callable[[str], Path]:
 def read_output() -> Reader:
     def read_output(
         name: str,
+        subdirectory: str | None = "flat",
     ) -> Union[
         Point,
         MultiPoint,
@@ -81,7 +80,8 @@ def read_output() -> Reader:
         LinearRing,
         GeometryCollection,
     ]:
-        return read_file((OUTPUT_DATA_DIRECTORY / name).with_suffix(".json"))
+        path = Path(subdirectory) / name if subdirectory is not None else Path(name)
+        return read_file((OUTPUT_DATA_DIRECTORY / path).with_suffix(".json"))
 
     return read_output
 

@@ -53,8 +53,18 @@ def cli() -> None:
         "winding order"
     ),
 )
+@click.option(
+    "--great-circle/--no-great-circle",
+    show_default=True,
+    default=True,
+    help="Compute meridian crossings on the sphere rather than using 2D geometry",
+)
 def fix(
-    infile: File, force_north_pole: bool, force_south_pole: bool, fix_winding: bool
+    infile: File,
+    force_north_pole: bool,
+    force_south_pole: bool,
+    fix_winding: bool,
+    great_circle: bool,
 ) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
@@ -66,6 +76,7 @@ def fix(
         force_north_pole=force_north_pole,
         force_south_pole=force_south_pole,
         fix_winding=fix_winding,
+        great_circle=great_circle,
     )
     print(json.dumps(fixed))
 
@@ -75,14 +86,20 @@ def fix(
 @click.option(
     "-i", "--index", help="Return the single LineString at this index", type=int
 )
-def segment(infile: File, index: Optional[int]) -> None:
+@click.option(
+    "--great-circle/--no-great-circle",
+    show_default=True,
+    default=True,
+    help="Compute meridian crossings on the sphere rather than using 2D geometry",
+)
+def segment(infile: File, index: Optional[int], great_circle: bool) -> None:
     """Segments the exterior coordinates of a GeoJSON file
 
     Prints the resulting MultiLineString to standard output. Useful mostly for
     debugging problems with `fix`.
     """
     data = json.load(infile)  # type: ignore
-    segments = antimeridian.segment_geojson(data)
+    segments = antimeridian.segment_geojson(data, great_circle)
     if index is not None:
         data = shapely.geometry.mapping(segments.geoms[index])
     else:
