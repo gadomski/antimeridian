@@ -561,6 +561,10 @@ input GeoJSON is read from standard input.</p>
                                   Automatically fix clockwise polygons to be
                                   the correct counterclockwise winding order
                                   [default: fix-winding]
+  --great-circle / --no-great-circle
+                                  Compute meridian crossings on the sphere
+                                  rather than using 2D geometry  [default:
+                                  great-circle]
   --help                          Show this message and exit.
 </code></pre></div>
 <h2 id="segment">segment</h2>
@@ -571,8 +575,12 @@ debugging problems with <code>fix</code>.</p>
 <div class="highlight"><pre><span></span><code>cli segment [OPTIONS] [INFILE]
 </code></pre></div>
 <p><strong>Options:</strong></p>
-<div class="highlight"><pre><span></span><code>  -i, --index INTEGER  Return the single LineString at this index
-  --help               Show this message and exit.
+<div class="highlight"><pre><span></span><code>  -i, --index INTEGER             Return the single LineString at this index
+  --great-circle / --no-great-circle
+                                  Compute meridian crossings on the sphere
+                                  rather than using 2D geometry  [default:
+                                  great-circle]
+  --help                          Show this message and exit.
 </code></pre></div>
 
 
