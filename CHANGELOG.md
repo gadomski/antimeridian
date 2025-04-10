@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.1] - 2025-04-10
+
+### Added
+
+- Reverse argument ([#167](https://github.com/gadomski/antimeridian/pull/167))
+
 ## [0.4.0] - 2024-12-17
 
 ### Added
@@ -181,7 +187,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/gadomsk/antimeridian/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/gadomsk/antimeridian/compare/v0.3.12...v0.4.0
 [0.3.12]: https://github.com/gadomsk/antimeridian/compare/v0.3.11...v0.3.12
 [0.3.11]: https://github.com/gadomsk/antimeridian/compare/v0.3.10...v0.3.11
