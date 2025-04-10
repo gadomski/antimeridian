@@ -332,7 +332,7 @@ def fix_polygon(
 
     Returns:
         The fixed polygon, either as a single polygon or a multi-polygon (if it
-        was split)
+            was split)
     """
     if force_north_pole or force_south_pole:
         fix_winding = False
