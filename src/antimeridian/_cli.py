@@ -59,12 +59,20 @@ def cli() -> None:
     default=True,
     help="Compute meridian crossings on the sphere rather than using 2D geometry",
 )
+@click.option(
+    "--reverse",
+    show_default=True,
+    default=False,
+    is_flag=True,
+    help="Reverse the coordinates before fixing",
+)
 def fix(
     infile: File,
     force_north_pole: bool,
     force_south_pole: bool,
     fix_winding: bool,
     great_circle: bool,
+    reverse: bool,
 ) -> None:
     """Fixes any antimeridian problems a GeoJSON file
 
@@ -77,6 +85,7 @@ def fix(
         force_south_pole=force_south_pole,
         fix_winding=fix_winding,
         great_circle=great_circle,
+        reverse=reverse,
     )
     print(json.dumps(fixed))
 
