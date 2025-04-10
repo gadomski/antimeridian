@@ -1,6 +1,7 @@
 import copy
 
 import pytest
+import shapely.geometry
 
 import antimeridian
 
@@ -41,3 +42,19 @@ def test_segment_feature(read_input: Reader, great_circle: bool) -> None:
     feature = {"type": "Feature", "geometry": input}
     fixed = antimeridian.segment_geojson(feature, great_circle)
     assert len(fixed.geoms) == 2
+
+
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_reverse(
+    read_input: Reader, read_output: Reader, subdirectory: str, great_circle: bool
+) -> None:
+    input = read_input("issues-164")
+    feature = {"type": "Feature", "geometry": input}
+    fixed = antimeridian.fix_geojson(feature, reverse=True, great_circle=great_circle)
+    assert (
+        shapely.geometry.shape(fixed["geometry"]).normalize()
+        == read_output("issues-164", subdirectory).normalize()
+    )

@@ -75,6 +75,7 @@ def fix_geojson(
     force_south_pole: bool = False,
     fix_winding: bool = True,
     great_circle: bool = True,
+    reverse: bool = False,
 ) -> Dict[str, Any]:
     """Fixes a GeoJSON object that crosses the antimeridian.
 
@@ -93,6 +94,7 @@ def fix_geojson(
             coordinates before applying the algorithm.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
+        reverse: Reverse the coordinates before fixing.
 
     Return:
         The same GeoJSON with a fixed geometry or geometries
@@ -110,6 +112,7 @@ def fix_geojson(
             force_south_pole=force_south_pole,
             fix_winding=fix_winding,
             great_circle=great_circle,
+            reverse=reverse,
         )
         return geojson
     elif type_ == "FeatureCollection":
@@ -123,6 +126,7 @@ def fix_geojson(
                 force_south_pole=force_south_pole,
                 fix_winding=fix_winding,
                 great_circle=great_circle,
+                reverse=reverse,
             )
         geojson["features"] = features
         return geojson
@@ -133,6 +137,7 @@ def fix_geojson(
             force_south_pole=force_south_pole,
             fix_winding=fix_winding,
             great_circle=great_circle,
+            reverse=reverse,
         )
 
 
@@ -177,6 +182,7 @@ def fix_shape(
     force_south_pole: bool = False,
     fix_winding: bool = True,
     great_circle: bool = True,
+    reverse: bool = False,
 ) -> Dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
@@ -195,11 +201,14 @@ def fix_shape(
             coordinates before applying the algorithm.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
+        reverse: Reverse the coordinates before fixing.
 
     Returns:
         The fixed shape as a dictionary
     """
     geom = shapely.geometry.shape(shape)
+    if reverse:
+        geom = geom.reverse()
     if geom.geom_type == "Polygon":
         return cast(
             Dict[str, Any],
