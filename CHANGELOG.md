@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Multiple interiors ([#172](https://github.com/gadomski/antimeridian/pull/172))
+
 ## [0.4.1] - 2025-04-10
 
 ### Added
