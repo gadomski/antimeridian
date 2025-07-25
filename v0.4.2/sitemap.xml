@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/api/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/cli/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/comparison/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/examples/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/failure-modes/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+    <url>
+         <loc>https://gadomski.github.io/antimeridian/v0.4.2/the-algorithm/</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
+</urlset>
