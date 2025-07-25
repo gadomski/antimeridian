@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import copy
 import itertools
+import math
 import warnings
 from collections import namedtuple
 from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
@@ -487,7 +488,7 @@ def normalize(coords: List[XY]) -> List[XY]:
     for i, point in enumerate(coords):
         # Ensure all longitudes are between -180 and 180, and that tiny floating
         # point differences are ignored.
-        if numpy.isclose(point[0], 180):
+        if math.isclose(point[0], 180):
             # https://github.com/gadomski/antimeridian/issues/81
             if abs(coords[i][1]) != 90 and numpy.isclose(
                 coords[(i - 1) % len(coords)][0], -180
@@ -495,7 +496,7 @@ def normalize(coords: List[XY]) -> List[XY]:
                 coords[i] = (-180, point[1])
             else:
                 coords[i] = (180, point[1])
-        elif numpy.isclose(point[0], -180):
+        elif math.isclose(point[0], -180):
             # https://github.com/gadomski/antimeridian/issues/81
             if abs(coords[i][1]) != 90 and numpy.isclose(
                 coords[(i - 1) % len(coords)][0], 180
