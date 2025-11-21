@@ -22,6 +22,11 @@ Can fix:
 - GeoJSON [Polygons](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6), [MultiPolygons](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.7), [Features](https://datatracker.ietf.org/doc/html/rfc7946#section-3.2) and [FeatureCollections](https://datatracker.ietf.org/doc/html/rfc7946#section-3.3), as dictionaries
 - Anything that has a [`__geo_interface__`](https://gist.github.com/sgillies/2217756)
 
+This repo has been ported to a few other languages:
+
+- Typescript: https://github.com/krisaoe/antimeridian-ts
+- Go: https://github.com/go-geospatial/antimeridian
+
 ## Usage
 
 ```shell
