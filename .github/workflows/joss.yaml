@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: JOSS paper
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: openjournals/openjournals-draft-action@master
         with:
           journal: joss
