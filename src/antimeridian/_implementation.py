@@ -358,10 +358,19 @@ def fix_polygon(
         if shapely.is_ccw(polygon.exterior):
             return polygon
         else:
-            return Polygon(
+            pole_covering_polygon = Polygon(
                 [(-180, 90), (-180, -90), (180, -90), (180, 90)],
                 [polygon.exterior.coords],
             )
+            if shapely.is_valid(pole_covering_polygon):
+                return pole_covering_polygon
+            else:
+                raise ValueError(
+                    "Fixed polygon is invalid, check your input polygon for validity. "
+                    "Reason your polygon is invalid: "
+                    + shapely.is_valid_reason(polygon)
+                )
+
     else:
         return MultiPolygon(polygons)
 
