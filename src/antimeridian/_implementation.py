@@ -573,7 +573,7 @@ def crossing_latitude_great_circle(start: XY, end: XY) -> float:
 
 def crossing_latitude_flat(start: XY, end: XY) -> float:
     latitude_delta = end[1] - start[1]
-    if end[0] > 0:
+    if end[0] < 0:
         return round(
             start[1]
             + (180.0 - start[0]) * latitude_delta / (end[0] + 360.0 - start[0]),
