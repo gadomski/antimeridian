@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.4.5] - 2025-11-26
+
 ### Added
 
 - Error response for unfixable polygons ([#190](https://github.com/gadomski/antimeridian/pull/190))
@@ -209,7 +211,8 @@ This v0.1.0 release is to indicate that we think that this package is ready to u
 
 Initial release.
 
-[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.4.4...HEAD
+[unreleased]: https://github.com/gadomski/antimeridian/compare/v0.4.5...HEAD
+[0.4.5]: https://github.com/gadomsk/antimeridian/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/gadomsk/antimeridian/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/gadomsk/antimeridian/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/gadomsk/antimeridian/compare/v0.4.1...v0.4.2
