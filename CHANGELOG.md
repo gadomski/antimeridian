@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Error response for unfixable polygons ([#190](https://github.com/gadomski/antimeridian/pull/190))
+
 ## [0.4.4] - 2025-11-26
 
 ### Fixed
