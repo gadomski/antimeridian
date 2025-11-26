@@ -18,8 +18,9 @@ from .conftest import Reader
         "complex-split",
         "crossing-latitude",
         "extra-crossing",
-        "issues-81",
         "issues-171",
+        "issues-187",
+        "issues-81",
         "latitude-band",
         "north-pole",
         "one-hole",
@@ -30,7 +31,6 @@ from .conftest import Reader
         "south-pole",
         "split",
         "two-holes",
-        "issues-187",
     ],
 )
 @pytest.mark.parametrize(
@@ -253,3 +253,10 @@ def test_great_circle(
     output = read_output("great-circle", subdirectory)
     fixed = antimeridian.fix_polygon(input, great_circle=great_circle)
     assert fixed.normalize() == output.normalize()
+
+
+def test_invalid_polygon(read_input: Reader) -> None:
+    input = read_input("issues-182")
+    with pytest.warns(FixWindingWarning):
+        with pytest.raises(ValueError):
+            antimeridian.fix_polygon(input)
