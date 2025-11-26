@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Crossing latitude for flat geometries ([#188](https://github.com/gadomski/antimeridian/pull/188))
+
 ## [0.4.3] - 2025-07-25
 
 ### Fixed

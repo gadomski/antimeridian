@@ -30,6 +30,7 @@ from .conftest import Reader
         "south-pole",
         "split",
         "two-holes",
+        "issues-187",
     ],
 )
 @pytest.mark.parametrize(
