@@ -85,6 +85,11 @@ def fix_geojson(
     See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
     `force_south_pole` and `fix_winding` arguments.
 
+    Warning:
+        This function mutates the input dictionary in-place. If you need to
+        preserve the original GeoJSON, make a copy before calling this function
+        (e.g., using `copy.deepcopy(geojson)`).
+
     Args:
         geojson: A GeoJSON object as a dictionary
         force_north_pole: If the polygon crosses the antimeridian, force the
@@ -189,6 +194,11 @@ def fix_shape(
 
     See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
     `force_south_pole` and `fix_winding` arguments.
+
+    Note:
+        When `shape` is a dictionary, this function does not mutate it directly,
+        but converts it to a Shapely geometry first. However, if called via
+        [antimeridian.fix_geojson][], the input dictionary will be mutated.
 
     Args:
         shape: A polygon, multi-polygon, line string, or multi-line string,
