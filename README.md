@@ -41,6 +41,13 @@ import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
+> **Note:** `fix_geojson` mutates the input dictionary in-place. If you need to preserve the original GeoJSON, make a copy first:
+>
+> ```python
+> import copy
+> fixed = antimeridian.fix_geojson(copy.deepcopy(geojson))
+> ```
+
 We also have some utilities to create [bounding boxes](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.bbox) and [centroids](https://antimeridian.readthedocs.io/en/latest/api.html#antimeridian.centroid) from antimeridian-crossing polygons and multipolygons.
 See [the documentation](https://www.gadom.ski/antimeridian/) for a complete API reference.
 
