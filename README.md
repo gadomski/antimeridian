@@ -41,7 +41,8 @@ import antimeridian
 fixed = antimeridian.fix_geojson(geojson)
 ```
 
-> **Note:** `fix_geojson` mutates the input dictionary in-place. If you need to preserve the original GeoJSON, make a copy first:
+> [!NOTE]
+> `fix_geojson` mutates the input dictionary in-place. If you need to preserve the original GeoJSON, make a copy first:
 >
 > ```python
 > import copy
