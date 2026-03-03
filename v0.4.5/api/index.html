@@ -967,7 +967,7 @@ geometries from objects.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">__geo_interface__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__geo_interface__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1002,9 +1002,9 @@ geometries from objects.</p>
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">bbox</span><span class="p">(</span>
-    <span class="n">shape</span><span class="p">:</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">,</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">,</span>
     <span class="n">force_over_antimeridian</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.List">List</span></span><span class="p">[</span><span class="n"><span title="float">float</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="list">list</span></span><span class="p">[</span><span class="n"><span title="float">float</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1020,7 +1020,7 @@ first bounding box coordinate.</p>
     <ul>
         <li class="doc-section-item field-body">
             <b><code>shape</code></b>
-              (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
+              (<code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
           –
           <div class="doc-md-description">
             <p>The polygon or multipolygon for which to calculate the bounding box.</p>
@@ -1042,7 +1042,7 @@ first bounding box coordinate.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-              <code><span title="typing.List">List</span>[<span title="float">float</span>]</code>
+              <code><span title="list">list</span>[<span title="float">float</span>]</code>
           –
           <div class="doc-md-description">
             <p>List[float]: The bounding box.</p>
@@ -1100,8 +1100,8 @@ first bounding box coordinate.</p>
 <span class="normal">834</span>
 <span class="normal">835</span>
 <span class="normal">836</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bbox</span><span class="p">(</span>
-    <span class="n">shape</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">,</span> <span class="n">force_over_antimeridian</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">,</span> <span class="n">force_over_antimeridian</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates a GeoJSON-spec conforming bounding box for a shape.</span>
 
 <span class="sd">    Per the [GeoJSON</span>
@@ -1160,7 +1160,7 @@ first bounding box coordinate.</p>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="shapely.geometry.Point">Point</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="shapely.geometry.Point">Point</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1175,7 +1175,7 @@ centroid from an identical multi-polygon with coordinates in [0, 360).</p>
     <ul>
         <li class="doc-section-item field-body">
             <b><code>shape</code></b>
-              (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
+              (<code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
           –
           <div class="doc-md-description">
             <p>The polygon or multipolygon for which to calculate the centroid.</p>
@@ -1232,7 +1232,7 @@ centroid from an identical multi-polygon with coordinates in [0, 360).</p>
 <span class="normal">870</span>
 <span class="normal">871</span>
 <span class="normal">872</span>
-<span class="normal">873</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="normal">873</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the centroid for a polygon or multipolygon.</span>
 
 <span class="sd">    Polygons are easy, we just use [shapely.centroid][]. For</span>
@@ -1282,14 +1282,14 @@ centroid from an identical multi-polygon with coordinates in [0, 360).</p>
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">fix_geojson</span><span class="p">(</span>
-    <span class="n">geojson</span><span class="p">:</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span>
+    <span class="n">geojson</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">reverse</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1311,7 +1311,7 @@ preserve the original GeoJSON, make a copy before calling this function
     <ul>
         <li class="doc-section-item field-body">
             <b><code>geojson</code></b>
-              (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>)
+              (<code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>)
           –
           <div class="doc-md-description">
             <p>A GeoJSON object as a dictionary</p>
@@ -1457,14 +1457,14 @@ using 2D geometry.</p>
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_geojson</span><span class="p">(</span>
-    <span class="n">geojson</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">geojson</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fixes a GeoJSON object that crosses the antimeridian.</span>
 
 <span class="sd">    If the object does not cross the antimeridian, it is returned unchanged.</span>
@@ -1548,7 +1548,7 @@ using 2D geometry.</p>
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">fix_line_string</span><span class="p">(</span>
     <span class="n">line_string</span><span class="p">:</span> <span class="n"><span title="shapely.geometry.LineString">LineString</span></span><span class="p">,</span> <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Union">Union</span></span><span class="p">[</span><span class="n"><span title="shapely.geometry.LineString">LineString</span></span><span class="p">,</span> <span class="n"><span title="shapely.geometry.MultiLineString">MultiLineString</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="shapely.geometry.LineString">LineString</span></span> <span class="o">|</span> <span class="n"><span title="shapely.geometry.MultiLineString">MultiLineString</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -1581,14 +1581,14 @@ using 2D geometry.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-              <code><span title="typing.Union">Union</span>[<span title="shapely.geometry.LineString">LineString</span>, <span title="shapely.geometry.MultiLineString">MultiLineString</span>]</code>
+              <code><span title="shapely.geometry.LineString">LineString</span> | <span title="shapely.geometry.MultiLineString">MultiLineString</span></code>
           –
           <div class="doc-md-description">
             <p>The fixed line string, either as a single line string or a multi-line</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
-              <code><span title="typing.Union">Union</span>[<span title="shapely.geometry.LineString">LineString</span>, <span title="shapely.geometry.MultiLineString">MultiLineString</span>]</code>
+              <code><span title="shapely.geometry.LineString">LineString</span> | <span title="shapely.geometry.MultiLineString">MultiLineString</span></code>
           –
           <div class="doc-md-description">
             <p>string (if it was split)</p>
@@ -1619,7 +1619,7 @@ using 2D geometry.</p>
 <span class="normal">405</span>
 <span class="normal">406</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_line_string</span><span class="p">(</span>
     <span class="n">line_string</span><span class="p">:</span> <span class="n">LineString</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">LineString</span><span class="p">,</span> <span class="n">MultiLineString</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LineString</span> <span class="o">|</span> <span class="n">MultiLineString</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fixes a [shapely.LineString][].</span>
 
 <span class="sd">    Args:</span>
@@ -1933,7 +1933,7 @@ using 2D geometry.</p>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Union">Union</span></span><span class="p">[</span><span class="n"><span title="shapely.geometry.Polygon">Polygon</span></span><span class="p">,</span> <span class="n"><span title="shapely.geometry.MultiPolygon">MultiPolygon</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="shapely.geometry.Polygon">Polygon</span></span> <span class="o">|</span> <span class="n"><span title="shapely.geometry.MultiPolygon">MultiPolygon</span></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2013,7 +2013,7 @@ using 2D geometry.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-              <code><span title="typing.Union">Union</span>[<span title="shapely.geometry.Polygon">Polygon</span>, <span title="shapely.geometry.MultiPolygon">MultiPolygon</span>]</code>
+              <code><span title="shapely.geometry.Polygon">Polygon</span> | <span title="shapely.geometry.MultiPolygon">MultiPolygon</span></code>
           –
           <div class="doc-md-description">
             <p>The fixed polygon, either as a single polygon or a multi-polygon (if it
@@ -2100,7 +2100,7 @@ was split)</p>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Polygon</span><span class="p">,</span> <span class="n">MultiPolygon</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Polygon</span> <span class="o">|</span> <span class="n">MultiPolygon</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fixes a [shapely.Polygon][].</span>
 
 <span class="sd">    If the input polygon is wound clockwise, it will be fixed to be wound</span>
@@ -2177,14 +2177,14 @@ was split)</p>
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">fix_shape</span><span class="p">(</span>
-    <span class="n">shape</span><span class="p">:</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">,</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">reverse</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2205,7 +2205,7 @@ but converts it to a Shapely geometry first. However, if called via
     <ul>
         <li class="doc-section-item field-body">
             <b><code>shape</code></b>
-              (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
+              (<code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <a class="autorefs autorefs-internal" title="GeoInterface (antimeridian._implementation.GeoInterface)" href="#antimeridian.GeoInterface">GeoInterface</a></code>)
           –
           <div class="doc-md-description">
             <p>A polygon, multi-polygon, line string, or multi-line string,
@@ -2273,7 +2273,7 @@ using 2D geometry.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-              <code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+              <code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
           –
           <div class="doc-md-description">
             <p>The fixed shape as a dictionary</p>
@@ -2361,14 +2361,14 @@ using 2D geometry.</p>
 <span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_shape</span><span class="p">(</span>
-    <span class="n">shape</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">,</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">force_south_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fix_winding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fixes a shape that crosses the antimeridian.</span>
 
 <span class="sd">    See [antimeridian.fix_polygon][] for a description of the `force_north_pole`</span>
@@ -2401,7 +2401,7 @@ using 2D geometry.</p>
         <span class="n">geom</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+            <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
             <span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span>
                 <span class="n">fix_polygon</span><span class="p">(</span>
                     <span class="n">geom</span><span class="p">,</span>
@@ -2414,7 +2414,7 @@ using 2D geometry.</p>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">&quot;MultiPolygon&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+            <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
             <span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span>
                 <span class="n">fix_multi_polygon</span><span class="p">(</span>
                     <span class="n">geom</span><span class="p">,</span>
@@ -2427,12 +2427,12 @@ using 2D geometry.</p>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">&quot;LineString&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+            <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
             <span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">fix_line_string</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">)),</span>
         <span class="p">)</span>
     <span class="k">elif</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="o">==</span> <span class="s2">&quot;MultiLineString&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+            <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
             <span class="n">shapely</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">fix_multi_line_string</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">)),</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -2452,7 +2452,7 @@ using 2D geometry.</p>
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">segment_geojson</span><span class="p">(</span>
-    <span class="n">geojson</span><span class="p">:</span> <span class="n"><span title="typing.Dict">Dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span> <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span>
+    <span class="n">geojson</span><span class="p">:</span> <span class="n"><span title="dict">dict</span></span><span class="p">[</span><span class="n"><span title="str">str</span></span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span> <span class="n">great_circle</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="shapely.geometry.MultiLineString">MultiLineString</span></span>
 </code></pre></div>
 
@@ -2467,7 +2467,7 @@ line strings are returned unchanged.</p>
     <ul>
         <li class="doc-section-item field-body">
             <b><code>geojson</code></b>
-              (<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>)
+              (<code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>)
           –
           <div class="doc-md-description">
             <p>A GeoJSON object as a dictionary</p>
@@ -2523,7 +2523,7 @@ using 2D geometry.</p>
 <span class="normal">178</span>
 <span class="normal">179</span>
 <span class="normal">180</span>
-<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">segment_geojson</span><span class="p">(</span><span class="n">geojson</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultiLineString</span><span class="p">:</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">segment_geojson</span><span class="p">(</span><span class="n">geojson</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultiLineString</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Segments a GeoJSON object into a MultiLineString.</span>
 
 <span class="sd">    If the object does not cross the antimeridian, its exterior and interior</span>
