@@ -1,5 +1,5 @@
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import pytest
 from pytest_console_scripts import ScriptRunner
