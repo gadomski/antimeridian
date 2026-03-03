@@ -15,7 +15,6 @@ Re-install the package with the 'cli' optional dependency:
 
 
 import json
-from typing import Optional
 
 import shapely.geometry
 from click import File
@@ -101,7 +100,7 @@ def fix(
     default=True,
     help="Compute meridian crossings on the sphere rather than using 2D geometry",
 )
-def segment(infile: File, index: Optional[int], great_circle: bool) -> None:
+def segment(infile: File, index: int | None, great_circle: bool) -> None:
     """Segments the exterior coordinates of a GeoJSON file
 
     Prints the resulting MultiLineString to standard output. Useful mostly for

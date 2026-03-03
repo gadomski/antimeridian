@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 import antimeridian
@@ -17,7 +15,7 @@ from .conftest import Reader
         ("ocean", [-180, -85.609, 180, 90]),
     ],
 )
-def test_bbox(read_output: Reader, name: str, expected: List[float]) -> None:
+def test_bbox(read_output: Reader, name: str, expected: list[float]) -> None:
     shape = read_output(name)
     bbox = antimeridian.bbox(shape)
     assert bbox == expected

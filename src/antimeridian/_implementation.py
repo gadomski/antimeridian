@@ -13,7 +13,7 @@ import itertools
 import math
 import warnings
 from collections import namedtuple
-from typing import Any, Dict, List, Optional, Protocol, Tuple, Union, cast
+from typing import Any, Protocol, cast
 
 import numpy
 import shapely
@@ -29,8 +29,8 @@ from shapely.geometry import (
     Polygon,
 )
 
-XY = Tuple[float, float]
-XYZ = Tuple[float, float, float]
+XY = tuple[float, float]
+XYZ = tuple[float, float, float]
 
 
 class AntimeridianWarning(UserWarning):
@@ -66,18 +66,18 @@ class GeoInterface(Protocol):
     """
 
     @property
-    def __geo_interface__(self) -> Dict[str, Any]: ...
+    def __geo_interface__(self) -> dict[str, Any]: ...
 
 
 def fix_geojson(
-    geojson: Dict[str, Any],
+    geojson: dict[str, Any],
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
     great_circle: bool = True,
     reverse: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Fixes a GeoJSON object that crosses the antimeridian.
 
     If the object does not cross the antimeridian, it is returned unchanged.
@@ -147,7 +147,7 @@ def fix_geojson(
         )
 
 
-def segment_geojson(geojson: Dict[str, Any], great_circle: bool) -> MultiLineString:
+def segment_geojson(geojson: dict[str, Any], great_circle: bool) -> MultiLineString:
     """Segments a GeoJSON object into a MultiLineString.
 
     If the object does not cross the antimeridian, its exterior and interior
@@ -182,14 +182,14 @@ def segment_geojson(geojson: Dict[str, Any], great_circle: bool) -> MultiLineStr
 
 
 def fix_shape(
-    shape: Dict[str, Any] | GeoInterface,
+    shape: dict[str, Any] | GeoInterface,
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
     fix_winding: bool = True,
     great_circle: bool = True,
     reverse: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Fixes a shape that crosses the antimeridian.
 
     See [antimeridian.fix_polygon][] for a description of the `force_north_pole`
@@ -222,7 +222,7 @@ def fix_shape(
         geom = geom.reverse()
     if geom.geom_type == "Polygon":
         return cast(
-            Dict[str, Any],
+            dict[str, Any],
             shapely.geometry.mapping(
                 fix_polygon(
                     geom,
@@ -235,7 +235,7 @@ def fix_shape(
         )
     elif geom.geom_type == "MultiPolygon":
         return cast(
-            Dict[str, Any],
+            dict[str, Any],
             shapely.geometry.mapping(
                 fix_multi_polygon(
                     geom,
@@ -248,12 +248,12 @@ def fix_shape(
         )
     elif geom.geom_type == "LineString":
         return cast(
-            Dict[str, Any],
+            dict[str, Any],
             shapely.geometry.mapping(fix_line_string(geom, great_circle)),
         )
     elif geom.geom_type == "MultiLineString":
         return cast(
-            Dict[str, Any],
+            dict[str, Any],
             shapely.geometry.mapping(fix_multi_line_string(geom, great_circle)),
         )
     else:
@@ -261,8 +261,8 @@ def fix_shape(
 
 
 def segment_shape(
-    shape: Dict[str, Any] | GeoInterface, great_circle: bool
-) -> List[List[XY]]:
+    shape: dict[str, Any] | GeoInterface, great_circle: bool
+) -> list[list[XY]]:
     geom = shapely.geometry.shape(shape)
     if geom.geom_type == "Polygon":
         return segment_polygon(geom, great_circle)
@@ -321,7 +321,7 @@ def fix_polygon(
     force_south_pole: bool = False,
     fix_winding: bool = True,
     great_circle: bool = True,
-) -> Union[Polygon, MultiPolygon]:
+) -> Polygon | MultiPolygon:
     """Fixes a [shapely.Polygon][].
 
     If the input polygon is wound clockwise, it will be fixed to be wound
@@ -387,7 +387,7 @@ def fix_polygon(
 
 def fix_line_string(
     line_string: LineString, great_circle: bool
-) -> Union[LineString, MultiLineString]:
+) -> LineString | MultiLineString:
     """Fixes a [shapely.LineString][].
 
     Args:
@@ -429,7 +429,7 @@ def fix_multi_line_string(
     return MultiLineString(line_strings)
 
 
-def segment_polygon(polygon: Polygon, great_circle: bool) -> List[List[XY]]:
+def segment_polygon(polygon: Polygon, great_circle: bool) -> list[list[XY]]:
     segments = segment(list(polygon.exterior.coords), great_circle)
     if not segments:
         segments = [list(polygon.exterior.coords)]
@@ -449,7 +449,7 @@ def fix_polygon_to_list(
     force_south_pole: bool,
     fix_winding: bool,
     great_circle: bool,
-) -> List[Polygon]:
+) -> list[Polygon]:
     exterior = remove_consecutive_duplicates(normalize(list(polygon.exterior.coords)))
     segments = segment(exterior, great_circle)
     if not segments:
@@ -501,7 +501,7 @@ def fix_polygon_to_list(
     return polygons
 
 
-def normalize(coords: List[XY]) -> List[XY]:
+def normalize(coords: list[XY]) -> list[XY]:
     original = list(coords)
     all_are_on_antimeridian = True
     for i, point in enumerate(coords):
@@ -536,7 +536,7 @@ def normalize(coords: List[XY]) -> List[XY]:
         return coords
 
 
-def remove_consecutive_duplicates(coords: List[XY]) -> List[XY]:
+def remove_consecutive_duplicates(coords: list[XY]) -> list[XY]:
     """Remove consecutive near-duplicate points from a coordinate list.
 
     Args:
@@ -554,7 +554,7 @@ def remove_consecutive_duplicates(coords: List[XY]) -> List[XY]:
     return result
 
 
-def segment(coords: List[XY], great_circle: bool) -> List[List[XY]]:
+def segment(coords: list[XY], great_circle: bool) -> list[list[XY]]:
     coords = remove_consecutive_duplicates(coords)
     segment = []
     segments = []
@@ -640,12 +640,12 @@ IndexAndLatitude = namedtuple("IndexAndLatitude", "index latitude")
 
 
 def extend_over_poles(
-    segments: List[List[XY]],
+    segments: list[list[XY]],
     *,
     force_north_pole: bool,
     force_south_pole: bool,
     fix_winding: bool,
-) -> List[List[XY]]:
+) -> list[list[XY]]:
     left_start = None
     right_start = None
     left_end = None
@@ -724,13 +724,13 @@ def extend_over_poles(
 
 
 def build_polygons(
-    segments: List[List[XY]],
-) -> List[Polygon]:
+    segments: list[list[XY]],
+) -> list[Polygon]:
     if not segments:
         return []
     segment = segments.pop()
     is_right = segment[-1][0] == 180
-    candidates: List[Tuple[Optional[int], float]] = list()
+    candidates: list[tuple[int | None, float]] = list()
     if is_self_closing(segment):
         # Self-closing segments might end up joining up with themselves. They
         # might not, e.g. donuts.
@@ -779,7 +779,7 @@ def build_polygons(
         return polygons
 
 
-def is_self_closing(segment: List[XY]) -> bool:
+def is_self_closing(segment: list[XY]) -> bool:
     is_right = segment[-1][0] == 180
     return segment[0][0] == segment[-1][0] and (
         (is_right and segment[0][1] > segment[-1][1])
@@ -788,8 +788,8 @@ def is_self_closing(segment: List[XY]) -> bool:
 
 
 def bbox(
-    shape: Dict[str, Any] | GeoInterface, force_over_antimeridian: bool = False
-) -> List[float]:
+    shape: dict[str, Any] | GeoInterface, force_over_antimeridian: bool = False
+) -> list[float]:
     """Calculates a GeoJSON-spec conforming bounding box for a shape.
 
     Per the [GeoJSON
@@ -836,7 +836,7 @@ def bbox(
         )
 
 
-def centroid(shape: Dict[str, Any] | GeoInterface) -> Point:
+def centroid(shape: dict[str, Any] | GeoInterface) -> Point:
     """Calculates the centroid for a polygon or multipolygon.
 
     Polygons are easy, we just use [shapely.centroid][]. For

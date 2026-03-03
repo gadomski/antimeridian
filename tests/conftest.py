@@ -1,7 +1,7 @@
 import json
 from collections.abc import Callable
 from pathlib import Path
-from typing import Protocol, Union
+from typing import Protocol
 
 import pytest
 import shapely.geometry
@@ -24,16 +24,16 @@ OUTPUT_DATA_DIRECTORY = TEST_DATA_DIRECTORY / "output"
 class Reader(Protocol):
     def __call__(
         self, name: str, subdirectory: str | None = None
-    ) -> Union[
-        Point,
-        MultiPoint,
-        LineString,
-        MultiLineString,
-        Polygon,
-        MultiPolygon,
-        LinearRing,
-        GeometryCollection,
-    ]: ...
+    ) -> (
+        Point
+        | MultiPoint
+        | LineString
+        | MultiLineString
+        | Polygon
+        | MultiPolygon
+        | LinearRing
+        | GeometryCollection
+    ): ...
 
 
 @pytest.fixture
@@ -41,16 +41,16 @@ def read_input() -> Reader:
     def read_input(
         name: str,
         subdirectory: str | None = None,
-    ) -> Union[
-        Point,
-        MultiPoint,
-        LineString,
-        MultiLineString,
-        Polygon,
-        MultiPolygon,
-        LinearRing,
-        GeometryCollection,
-    ]:
+    ) -> (
+        Point
+        | MultiPoint
+        | LineString
+        | MultiLineString
+        | Polygon
+        | MultiPolygon
+        | LinearRing
+        | GeometryCollection
+    ):
         path = Path(subdirectory) / name if subdirectory is not None else Path(name)
         return read_file((INPUT_DATA_DIRECTORY / path).with_suffix(".json"))
 
@@ -70,16 +70,16 @@ def read_output() -> Reader:
     def read_output(
         name: str,
         subdirectory: str | None = "flat",
-    ) -> Union[
-        Point,
-        MultiPoint,
-        LineString,
-        MultiLineString,
-        Polygon,
-        MultiPolygon,
-        LinearRing,
-        GeometryCollection,
-    ]:
+    ) -> (
+        Point
+        | MultiPoint
+        | LineString
+        | MultiLineString
+        | Polygon
+        | MultiPolygon
+        | LinearRing
+        | GeometryCollection
+    ):
         path = Path(subdirectory) / name if subdirectory is not None else Path(name)
         return read_file((OUTPUT_DATA_DIRECTORY / path).with_suffix(".json"))
 
@@ -88,16 +88,16 @@ def read_output() -> Reader:
 
 def read_file(
     path: Path,
-) -> Union[
-    Point,
-    MultiPoint,
-    LineString,
-    MultiLineString,
-    Polygon,
-    MultiPolygon,
-    LinearRing,
-    GeometryCollection,
-]:
+) -> (
+    Point
+    | MultiPoint
+    | LineString
+    | MultiLineString
+    | Polygon
+    | MultiPolygon
+    | LinearRing
+    | GeometryCollection
+):
     with open(path) as f:
         data = json.load(f)
     shape = shapely.geometry.shape(data)

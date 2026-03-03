@@ -65,7 +65,7 @@ ignore_missing_imports = true
 filterwarnings = ["error"]
 
 [tool.ruff]
-lint.select = ["F", "E", "W", "I", "ERA", "RUF"]
+lint.select = ["F", "E", "W", "I", "ERA", "RUF", "UP"]
 
 [build-system]
 requires = ["hatchling"]
