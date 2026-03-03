@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.6](https://github.com/gadomski/antimeridian/compare/v0.4.5...v0.4.6) (2026-03-03)
+
+
+### Bug Fixes
+
+* remove consecutive duplicate points ([4ef3a2c](https://github.com/gadomski/antimeridian/commit/4ef3a2cb28340f6e64e670bc94426336007c0af0))
+
+
+### Documentation
+
+* add notes about mutation ([#192](https://github.com/gadomski/antimeridian/issues/192)) ([2cda72b](https://github.com/gadomski/antimeridian/commit/2cda72b62af6fe260fd4846109ca0b8baae5f138))
+
 ## [0.4.5] - 2025-11-26
 
 ### Added
