@@ -450,7 +450,7 @@ def fix_polygon_to_list(
     fix_winding: bool,
     great_circle: bool,
 ) -> List[Polygon]:
-    exterior = normalize(list(polygon.exterior.coords))
+    exterior = remove_consecutive_duplicates(normalize(list(polygon.exterior.coords)))
     segments = segment(exterior, great_circle)
     if not segments:
         polygon = Polygon(shell=exterior, holes=polygon.interiors)
@@ -536,7 +536,26 @@ def normalize(coords: List[XY]) -> List[XY]:
         return coords
 
 
+def remove_consecutive_duplicates(coords: List[XY]) -> List[XY]:
+    """Remove consecutive near-duplicate points from a coordinate list.
+
+    Args:
+        coords: The coordinate list.
+
+    Returns:
+        The coordinate list with consecutive near-duplicates removed.
+    """
+    if len(coords) < 2:
+        return coords
+    result = [coords[0]]
+    for coord in coords[1:]:
+        if not numpy.allclose(coord, result[-1]):
+            result.append(coord)
+    return result
+
+
 def segment(coords: List[XY], great_circle: bool) -> List[List[XY]]:
+    coords = remove_consecutive_duplicates(coords)
     segment = []
     segments = []
     for start, end in itertools.pairwise(coords):

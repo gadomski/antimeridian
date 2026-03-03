@@ -114,7 +114,7 @@ def test_dont_segment_antimeridian_overlap(minx: float, maxx: float) -> None:
     assert fixed.geom_type == "Polygon"
 
 
-@pytest.mark.parametrize("name", ("cw-only", "cw-split", "issues-174"))
+@pytest.mark.parametrize("name", ("cw-only", "cw-split", "issues-174", "issues-201"))
 @pytest.mark.parametrize(
     "subdirectory,great_circle",
     [("flat", False), ("spherical", True)],
