@@ -1,3 +1,5 @@
+name: Release please
+
 on:
   push:
     branches:
