@@ -46,10 +46,10 @@ def cli() -> None:
 @click.option(
     "--fix-winding/--no-fix-winding",
     show_default=True,
-    default=True,
+    default=None,
     help=(
         "Automatically fix clockwise polygons to be the correct counterclockwise "
-        "winding order"
+        "winding order. If not provided, defaults to fixing with a warning."
     ),
 )
 @click.option(
@@ -69,7 +69,7 @@ def fix(
     infile: File,
     force_north_pole: bool,
     force_south_pole: bool,
-    fix_winding: bool,
+    fix_winding: bool | None,
     great_circle: bool,
     reverse: bool,
 ) -> None:
