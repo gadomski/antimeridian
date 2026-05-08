@@ -42,6 +42,7 @@ dev = [
     "mypy>=1.2",
     "packaging>=24.0",
     "pre-commit>=4.0",
+    "pygments==2.19.2",  # https://github.com/pygments/pygments/issues/3076
     "pytest-console-scripts>=1.4",
     "pytest>=8.0",
     "ruff>=0.6.1",
