@@ -196,6 +196,24 @@ def test_fix_winding_interior_segments(read_input: Reader, read_output: Reader) 
     assert fixed.normalize() == output.normalize()
 
 
+@pytest.mark.parametrize("name", ("cw-only", "cw-split", "issues-174", "issues-201"))
+@pytest.mark.parametrize(
+    "subdirectory,great_circle",
+    [("flat", False), ("spherical", True)],
+)
+def test_fix_winding_no_warning_when_explicit(
+    read_input: Reader,
+    read_output: Reader,
+    name: str,
+    subdirectory: str,
+    great_circle: bool,
+) -> None:
+    input = read_input(name)
+    output = read_output(name, subdirectory)
+    fixed = antimeridian.fix_polygon(input, fix_winding=True, great_circle=great_circle)
+    assert fixed.normalize() == output.normalize()
+
+
 def test_centroid_simple(read_input: Reader) -> None:
     input = read_input("simple")
     centroid = cast(Point, antimeridian.centroid(input))

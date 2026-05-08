@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.7](https://github.com/gadomski/antimeridian/compare/v0.4.6...v0.4.7) (2026-04-03)
+
+
+### Bug Fixes
+
+* don't warn if user sets fix_winding ([#213](https://github.com/gadomski/antimeridian/issues/213)) ([291df23](https://github.com/gadomski/antimeridian/commit/291df233654265228698a552021f2c1d2492e83e))
+
 ## [0.4.6](https://github.com/gadomski/antimeridian/compare/v0.4.5...v0.4.6) (2026-03-03)
 
 

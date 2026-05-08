@@ -48,7 +48,8 @@ class FixWindingWarning(AntimeridianWarning):
         "geometries, this package is reversing the exterior coordinates of the "
         "input shape before running its algorithm. If you know that your input "
         "shape is correct (i.e. if your data encompasses both poles), pass "
-        "`fix_winding=False`."
+        "`fix_winding=False`. To silence this warning while keeping the fix, "
+        "pass `fix_winding=True`."
     )
 
     @classmethod
@@ -74,7 +75,7 @@ def fix_geojson(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
-    fix_winding: bool = True,
+    fix_winding: bool | None = None,
     great_circle: bool = True,
     reverse: bool = False,
 ) -> dict[str, Any]:
@@ -97,7 +98,10 @@ def fix_geojson(
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
-            coordinates before applying the algorithm.
+            coordinates before applying the algorithm. Defaults to `None`,
+            which behaves like `True` but emits a warning when winding is
+            corrected. Pass `True` to fix winding silently, or `False` to
+            disable winding correction entirely.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
         reverse: Reverse the coordinates before fixing.
@@ -186,7 +190,7 @@ def fix_shape(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
-    fix_winding: bool = True,
+    fix_winding: bool | None = None,
     great_circle: bool = True,
     reverse: bool = False,
 ) -> dict[str, Any]:
@@ -209,7 +213,10 @@ def fix_shape(
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
-            coordinates before applying the algorithm.
+            coordinates before applying the algorithm. Defaults to `None`,
+            which behaves like `True` but emits a warning when winding is
+            corrected. Pass `True` to fix winding silently, or `False` to
+            disable winding correction entirely.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
         reverse: Reverse the coordinates before fixing.
@@ -280,7 +287,7 @@ def fix_multi_polygon(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
-    fix_winding: bool = True,
+    fix_winding: bool | None = None,
     great_circle: bool = True,
 ) -> MultiPolygon:
     """Fixes a [shapely.MultiPolygon][].
@@ -295,7 +302,10 @@ def fix_multi_polygon(
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
-            coordinates before applying the algorithm.
+            coordinates before applying the algorithm. Defaults to `None`,
+            which behaves like `True` but emits a warning when winding is
+            corrected. Pass `True` to fix winding silently, or `False` to
+            disable winding correction entirely.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
 
@@ -319,7 +329,7 @@ def fix_polygon(
     *,
     force_north_pole: bool = False,
     force_south_pole: bool = False,
-    fix_winding: bool = True,
+    fix_winding: bool | None = None,
     great_circle: bool = True,
 ) -> Polygon | MultiPolygon:
     """Fixes a [shapely.Polygon][].
@@ -346,7 +356,10 @@ def fix_polygon(
         force_south_pole: If the polygon crosses the antimeridian, force the
             joined segments to enclose the south pole.
         fix_winding: If the polygon is wound clockwise, reverse its
-            coordinates before applying the algorithm.
+            coordinates before applying the algorithm. Defaults to `None`,
+            which behaves like `True` but emits a warning when winding is
+            corrected. Pass `True` to fix winding silently, or `False` to
+            disable winding correction entirely.
         great_circle: Compute meridian crossings on the sphere rather than
             using 2D geometry.
 
@@ -447,18 +460,19 @@ def fix_polygon_to_list(
     *,
     force_north_pole: bool,
     force_south_pole: bool,
-    fix_winding: bool,
+    fix_winding: bool | None,
     great_circle: bool,
 ) -> list[Polygon]:
     exterior = remove_consecutive_duplicates(normalize(list(polygon.exterior.coords)))
     segments = segment(exterior, great_circle)
     if not segments:
         polygon = Polygon(shell=exterior, holes=polygon.interiors)
-        if fix_winding and (
+        if fix_winding is not False and (
             not shapely.is_ccw(polygon.exterior)
             or any(shapely.is_ccw(interior) for interior in polygon.interiors)
         ):
-            FixWindingWarning.warn()
+            if fix_winding is None:
+                FixWindingWarning.warn()
             return [shapely.geometry.polygon.orient(polygon)]
         else:
             return [polygon]
@@ -467,12 +481,13 @@ def fix_polygon_to_list(
         for interior in polygon.interiors:
             interior_segments = segment(list(interior.coords), great_circle)
             if interior_segments:
-                if fix_winding:
+                if fix_winding is not False:
                     unwrapped_linearring = LinearRing(
                         list((x % 360, y) for x, y in interior.coords)
                     )
                     if shapely.is_ccw(unwrapped_linearring):
-                        FixWindingWarning.warn()
+                        if fix_winding is None:
+                            FixWindingWarning.warn()
                         interior_segments = segment(
                             list(reversed(interior.coords)), great_circle
                         )
@@ -644,7 +659,7 @@ def extend_over_poles(
     *,
     force_north_pole: bool,
     force_south_pole: bool,
-    fix_winding: bool,
+    fix_winding: bool | None,
 ) -> list[list[XY]]:
     left_start = None
     right_start = None
@@ -705,7 +720,7 @@ def extend_over_poles(
         ):
             is_over_north_pole = True
             segments[right_end.index] += [(180, 90), (-180, 90)]
-    if fix_winding and is_over_north_pole and is_over_south_pole:
+    if fix_winding is not False and is_over_north_pole and is_over_south_pole:
         # These assertions are here because we're assuming that we set
         # `fix_winding` to `False` up in `fix_polygon` if either of the
         # `force_*` variables are set.
@@ -715,7 +730,8 @@ def extend_over_poles(
         # If we're over both poles and we haven't explicitly disabled the
         # fix behavior, reverse all segments, effectively reversing the
         # winding order.
-        FixWindingWarning.warn()
+        if fix_winding is None:
+            FixWindingWarning.warn()
         for segment in original_segments:
             segment.reverse()
         return original_segments
