@@ -179,7 +179,7 @@ def segment_geojson(geojson: dict[str, Any], great_circle: bool) -> MultiLineStr
             raise ValueError("no 'features' field found in GeoJSON FeatureCollection")
         segments = list()
         for feature in features:
-            segments.extend(segment_geojson(feature, great_circle))
+            segments.extend(segment_geojson(feature, great_circle).geoms)
         return MultiLineString(segments)
     else:
         return MultiLineString(segment_shape(geojson, great_circle))
