@@ -2589,7 +2589,7 @@ using 2D geometry.</p>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no &#39;features&#39; field found in GeoJSON FeatureCollection&quot;</span><span class="p">)</span>
         <span class="n">segments</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
-            <span class="n">segments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">segment_geojson</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">))</span>
+            <span class="n">segments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">segment_geojson</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">)</span><span class="o">.</span><span class="n">geoms</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MultiLineString</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">MultiLineString</span><span class="p">(</span><span class="n">segment_shape</span><span class="p">(</span><span class="n">geojson</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">))</span>
