@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.8](https://github.com/gadomski/antimeridian/compare/v0.4.7...v0.4.8) (2026-06-22)
+
+
+### Bug Fixes
+
+* segment geojson for feature collections ([#231](https://github.com/gadomski/antimeridian/issues/231)) ([c1678c2](https://github.com/gadomski/antimeridian/commit/c1678c2a37048ac6e3a8614458386d1c2a004c64))
+
+
+### Documentation
+
+* pin pygments version ([#221](https://github.com/gadomski/antimeridian/issues/221)) ([16f0ed2](https://github.com/gadomski/antimeridian/commit/16f0ed2745e01059a8b804bbcab12a987ce27fc0))
+
 ## [0.4.7](https://github.com/gadomski/antimeridian/compare/v0.4.6...v0.4.7) (2026-04-03)
 
 
