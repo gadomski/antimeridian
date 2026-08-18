@@ -564,7 +564,7 @@ def remove_consecutive_duplicates(coords: list[XY]) -> list[XY]:
         return coords
     result = [coords[0]]
     for coord in coords[1:]:
-        if not numpy.allclose(coord, result[-1]):
+        if not numpy.allclose(coord, result[-1], rtol=0, atol=1e-8):
             result.append(coord)
     return result
 

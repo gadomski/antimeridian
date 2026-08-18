@@ -244,6 +244,29 @@ def test_z_coordinates() -> None:
     assert fixed.has_z
 
 
+def test_small_polygon_away_from_antimeridian() -> None:
+    # https://github.com/gadomski/antimeridian/issues/230
+    # A small but valid triangle far from the antimeridian must not be
+    # collapsed to a single point. Duplicate detection previously used
+    # numpy.allclose with its default relative tolerance, which scales with
+    # coordinate magnitude: near longitude 88 it treated points ~0.0009
+    # degrees (~100 m) apart as duplicates, dropping the ring below the four
+    # coordinates shapely requires and raising a ValueError on valid input.
+    polygon = Polygon(
+        [
+            (-88.3991, 30.3873),
+            (-88.39895, 30.3873),
+            (-88.39913, 30.3875),
+            (-88.3991, 30.3873),
+        ]
+    )
+    assert polygon.is_valid
+    fixed = antimeridian.fix_polygon(polygon)
+    assert isinstance(fixed, (Polygon, MultiPolygon))
+    assert fixed.is_valid
+    assert not fixed.is_empty
+
+
 @pytest.mark.parametrize(
     "subdirectory,great_circle",
     [("flat", False), ("spherical", True)],
