@@ -633,8 +633,8 @@ Its lower left point is at <code>-40, -20</code>, and its upper right point is a
 Its lower-left point is <code>140, -20</code>, and its upper-right point is at <code>220, 20</code>.
 Here's its representation in GeoJSON:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">[</span>
 <span class="w">                </span><span class="mi">140</span><span class="p">,</span>
@@ -666,8 +666,8 @@ Here's its representation in GeoJSON:</p>
 However, the bounds of <a href="https://epsg.io/4326">WGS84</a>, the coordinate system used by GeoJSON, go from -180° to 180° longitude.
 This means that the upper-right coordinate of our antimeridian-crossing box should be "wrapped" to <code>-140, 20</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">[</span>
 <span class="w">                </span><span class="mi">140</span><span class="p">,</span>
