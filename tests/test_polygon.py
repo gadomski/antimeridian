@@ -20,6 +20,7 @@ from .conftest import Reader
         "extra-crossing",
         "issues-171",
         "issues-187",
+        "issues-230",
         "issues-81",
         "latitude-band",
         "north-pole",
