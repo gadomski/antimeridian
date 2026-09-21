@@ -813,6 +813,11 @@ def bbox(
     antimeridian-spanning bounding box should have its larger longitude as its
     first bounding box coordinate.
 
+    For an antimeridian-spanning multipolygon, the box excludes the largest gap
+    between the polygons' longitude ranges, so it contains every polygon. Equal
+    gaps are resolved from west to east. If there is no gap, the ordinary bounds
+    are returned.
+
     Args:
         shape: The polygon or multipolygon for which to calculate the bounding box.
         force_over_antimeridian: Force the bounding box to be over the antimeridian.
@@ -843,7 +848,18 @@ def bbox(
                 crosses_antimeridian = True
 
         if crosses_antimeridian or force_over_antimeridian:
-            return [max(xmins), ymin, min(xmaxs), ymax]
+            intervals = sorted(zip(xmins, xmaxs))
+            west, east = min(xmins), max(xmaxs)
+            right = intervals[0][1]
+            largest_gap = 0.0
+            for left, end in intervals[1:]:
+                if left - right > largest_gap:
+                    largest_gap = left - right
+                    west, east = left, right
+                # Keep overlapping and nested ranges together: a gap between
+                # two adjacent endpoints may still be covered by another polygon.
+                right = max(right, end)
+            return [west, ymin, east, ymax]
         else:
             return [min(xmins), ymin, max(xmaxs), ymax]
     else:
