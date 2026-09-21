@@ -34,6 +34,11 @@ def test_bbox_force_over_antimeridian(read_output: Reader) -> None:
     assert bbox == expected
 
 
+def test_bbox_islands_input(read_input: Reader) -> None:
+    shape = read_input("bbox-islands")
+    assert antimeridian.bbox(shape) == [170, 0, -140, 2.5]
+
+
 @pytest.mark.parametrize("reverse", [False, True])
 @pytest.mark.parametrize(
     "intervals,expected",
