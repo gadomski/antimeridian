@@ -120,10 +120,12 @@ def segment(infile: File, index: int | None, great_circle: bool) -> None:
 @click.option(
     "-f",
     "--force-over-antimeridian",
+    is_flag=True,
+    show_default=True,
+    default=False,
     help="Force the bbox to be antimeridian-spanning",
-    type=bool,
 )
 def bbox(infile: File, force_over_antimeridian: bool) -> None:
     """Calculates the antimeridian-spanning bbox for the input geometry."""
     shape = json.load(infile)  # type: ignore
-    print(json.dumps(antimeridian.bbox(shape)))
+    print(json.dumps(antimeridian.bbox(shape, force_over_antimeridian)))
