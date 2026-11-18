@@ -312,6 +312,8 @@ def fix_multi_polygon(
     Returns:
         The fixed multi-polygon
     """
+    if force_north_pole or force_south_pole:
+        fix_winding = False
     polygons = list()
     for polygon in multi_polygon.geoms:
         polygons += fix_polygon_to_list(
