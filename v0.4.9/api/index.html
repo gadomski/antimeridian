@@ -1055,9 +1055,7 @@ first bounding box coordinate.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/antimeridian/_implementation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">806</span>
-<span class="normal">807</span>
-<span class="normal">808</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">808</span>
 <span class="normal">809</span>
 <span class="normal">810</span>
 <span class="normal">811</span>
@@ -1101,7 +1099,9 @@ first bounding box coordinate.</p>
 <span class="normal">849</span>
 <span class="normal">850</span>
 <span class="normal">851</span>
-<span class="normal">852</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bbox</span><span class="p">(</span>
+<span class="normal">852</span>
+<span class="normal">853</span>
+<span class="normal">854</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bbox</span><span class="p">(</span>
     <span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">,</span> <span class="n">force_over_antimeridian</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""Calculates a GeoJSON-spec conforming bounding box for a shape.</span>
@@ -1200,9 +1200,7 @@ centroid from an identical multi-polygon with coordinates in [0, 360).</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/antimeridian/_implementation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">855</span>
-<span class="normal">856</span>
-<span class="normal">857</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">857</span>
 <span class="normal">858</span>
 <span class="normal">859</span>
 <span class="normal">860</span>
@@ -1234,7 +1232,9 @@ centroid from an identical multi-polygon with coordinates in [0, 360).</p>
 <span class="normal">886</span>
 <span class="normal">887</span>
 <span class="normal">888</span>
-<span class="normal">889</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="normal">889</span>
+<span class="normal">890</span>
+<span class="normal">891</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">centroid</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">GeoInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Calculates the centroid for a polygon or multipolygon.</span>
 
 <span class="sd">    Polygons are easy, we just use [shapely.centroid][]. For</span>
@@ -1610,9 +1610,7 @@ using 2D geometry.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/antimeridian/_implementation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">401</span>
-<span class="normal">402</span>
-<span class="normal">403</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">403</span>
 <span class="normal">404</span>
 <span class="normal">405</span>
 <span class="normal">406</span>
@@ -1628,7 +1626,9 @@ using 2D geometry.</p>
 <span class="normal">416</span>
 <span class="normal">417</span>
 <span class="normal">418</span>
-<span class="normal">419</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_line_string</span><span class="p">(</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_line_string</span><span class="p">(</span>
     <span class="n">line_string</span><span class="p">:</span> <span class="n">LineString</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LineString</span> <span class="o">|</span> <span class="n">MultiLineString</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Fixes a [shapely.LineString][].</span>
@@ -1707,9 +1707,7 @@ using 2D geometry.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/antimeridian/_implementation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">422</span>
-<span class="normal">423</span>
-<span class="normal">424</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">424</span>
 <span class="normal">425</span>
 <span class="normal">426</span>
 <span class="normal">427</span>
@@ -1727,7 +1725,9 @@ using 2D geometry.</p>
 <span class="normal">439</span>
 <span class="normal">440</span>
 <span class="normal">441</span>
-<span class="normal">442</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_multi_line_string</span><span class="p">(</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_multi_line_string</span><span class="p">(</span>
     <span class="n">multi_line_string</span><span class="p">:</span> <span class="n">MultiLineString</span><span class="p">,</span> <span class="n">great_circle</span><span class="p">:</span> <span class="nb">bool</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultiLineString</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Fixes a [shapely.MultiLineString][].</span>
@@ -1892,7 +1892,9 @@ using 2D geometry.</p>
 <span class="normal">321</span>
 <span class="normal">322</span>
 <span class="normal">323</span>
-<span class="normal">324</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_multi_polygon</span><span class="p">(</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_multi_polygon</span><span class="p">(</span>
     <span class="n">multi_polygon</span><span class="p">:</span> <span class="n">MultiPolygon</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -1922,6 +1924,8 @@ using 2D geometry.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        The fixed multi-polygon</span>
 <span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">force_north_pole</span> <span class="ow">or</span> <span class="n">force_south_pole</span><span class="p">:</span>
+        <span class="n">fix_winding</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">polygons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">multi_polygon</span><span class="o">.</span><span class="n">geoms</span><span class="p">:</span>
         <span class="n">polygons</span> <span class="o">+=</span> <span class="n">fix_polygon_to_list</span><span class="p">(</span>
@@ -2048,9 +2052,7 @@ was split)</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/antimeridian/_implementation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
 <span class="normal">332</span>
@@ -2119,7 +2121,9 @@ was split)</p>
 <span class="normal">395</span>
 <span class="normal">396</span>
 <span class="normal">397</span>
-<span class="normal">398</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_polygon</span><span class="p">(</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_polygon</span><span class="p">(</span>
     <span class="n">polygon</span><span class="p">:</span> <span class="n">Polygon</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">force_north_pole</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
