@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0](https://github.com/gadomski/antimeridian/compare/v0.4.9...v0.5.0) (2026-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* pass force-over-antimeridian to bbox in the CLI ([#260](https://github.com/gadomski/antimeridian/issues/260))
+
+### Bug Fixes
+
+* keep every hole when splitting a polygon ([#258](https://github.com/gadomski/antimeridian/issues/258)) ([3862a8c](https://github.com/gadomski/antimeridian/commit/3862a8ca8986fe32e8dfc3e0fd2d9ffb5ac15a9e))
+* pass force-over-antimeridian to bbox in the CLI ([#260](https://github.com/gadomski/antimeridian/issues/260)) ([2275256](https://github.com/gadomski/antimeridian/commit/22752562199569f753f64b2c4a6e0b5bb69da03c))
+* turn off winding fix when forcing a pole in fix_multi_polygon ([#259](https://github.com/gadomski/antimeridian/issues/259)) ([a83be03](https://github.com/gadomski/antimeridian/commit/a83be03bdef0aa2ede31d605c69b7f68a68237a7))
+
 ## [0.4.9](https://github.com/gadomski/antimeridian/compare/v0.4.8...v0.4.9) (2026-09-03)
 
 
